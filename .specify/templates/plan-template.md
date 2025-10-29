@@ -31,7 +31,16 @@
 
 *GATE: Must pass before Phase 0 research. Re-check after Phase 1 design.*
 
-[Gates determined based on constitution file]
+This project enforces the Forensic Economics constitution. The plan MUST explicitly demonstrate how it satisfies these gates before Phase 0 completes:
+
+- Code Modularity: All agent implementations referenced by the plan MUST be single-file and annotated with an estimated line count (<=300 lines).
+- Agent Autonomy: Design MUST show which agents operate independently and include a short description of their research/data inputs.
+- Data Integrity: Plans MUST list required data sources, provenance requirements, and how calculation logs will be produced and stored.
+- Minimal Dependencies: Any third-party dependency MUST be justified and documented in the plan's "Primary Dependencies" section.
+- Excel Compatibility: The plan MUST identify the Excel export template and provide a validation checklist confirming legal-document compatibility.
+- Simple Architecture: The plan MUST map the flow: Web dashboard → agents → Excel output and identify integration contracts (JSON/CSV schema).
+
+The plan author MUST include a completed checklist that references constitutional sections and any deviations that require explicit approval.
 
 ## Project Structure
 

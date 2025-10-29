@@ -1,0 +1,93 @@
+openapi: 3.0.3
+info:
+  title: Wrongful Death Economic Loss Calculator API
+  version: 0.1.0
+  description: API for submitting an intake and retrieving a generated Excel workbook.
+paths:
+  /api/generate:
+    post:
+      summary: Submit intake and generate workbook
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Intake'
+      responses:
+        '202':
+          description: Accepted — job queued
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  job_id:
+                    type: string
+                  status_url:
+                    type: string
+  /api/status/{job_id}:
+    get:
+      summary: Get job status
+      parameters:
+        - in: path
+          name: job_id
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Job status
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  job_id:
+                    type: string
+                  status:
+                    type: string
+                    enum: [queued, running, failed, complete]
+                  download_url:
+                    type: string
+  /api/download/{job_id}:
+    get:
+      summary: Download generated workbook
+      parameters:
+        - in: path
+          name: job_id
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: XLSX file stream
+          content:
+            application/vnd.openxmlformats-officedocument.spreadsheetml.sheet:
+              schema:
+                type: string
+                format: binary
+components:
+  schemas:
+    Intake:
+      type: object
+      properties:
+        victim_age:
+          type: integer
+        victim_sex:
+          type: string
+        occupation:
+          type: string
+        salary:
+          type: number
+          format: double
+        salary_type:
+          type: string
+        location:
+          type: string
+        education:
+          type: string
+        dependents:
+          type: integer
+        benefits:
+          type: object
+      required: [victim_age, occupation, salary, location]
