@@ -12,11 +12,11 @@
 | Metric | Status |
 |--------|--------|
 | **Total Tasks** | 107 |
-| **Completed** | ✅ 35 tasks (32.7%) |
-| **Remaining** | ⏳ 72 tasks (67.3%) |
-| **Critical Path** | ⚠️ 21 tasks (P0 + P1) |
+| **Completed** | ✅ 39 tasks (36.4%) |
+| **Remaining** | ⏳ 68 tasks (63.6%) |
+| **Critical Path** | ⚠️ 17 tasks (P0 + P1) |
 | **MVP Status** | ✅ **WORKING** (Phases 1-4 complete) |
-| **Assignment Compliance** | ⚠️ **IN PROGRESS** (Phase 5 complete, 72 tasks remain) |
+| **Assignment Compliance** | ⚠️ **IN PROGRESS** (Phases 5-6 complete, 68 tasks remain) |
 
 ## What's Working (MVP - Phases 1-4) ✅
 
@@ -31,12 +31,12 @@
 
 ## What's Missing (Assignment Compliance) ❌
 
-### P0 BLOCKING (8 tasks - MUST DO)
+### P0 BLOCKING (4 tasks remaining - MUST DO)
 - ✅ Dashboard fields don't match assignment (Phase 4 - COMPLETE)
 - ✅ Skoog Tables not included (Phase 5 - COMPLETE)
 - ✅ CDC Life Tables not included (Phase 5 - COMPLETE)
-- ❌ Federal Reserve H.15 live API (Phase 6)
-- ❌ CA Labor Market Info live API (Phase 6)
+- ✅ Federal Reserve H.15 live API (Phase 6 - COMPLETE)
+- ✅ CA Labor Market Info live API (Phase 6 - COMPLETE)
 - ❌ Federal Reserve Rate Agent (Phase 7)
 - ❌ Skoog Table Agent (Phase 7)
 
@@ -47,11 +47,11 @@
 
 ## 🚀 Next Steps
 
-**START HERE:** Phase 6 - Live API Integrations (T049..T052)
+**START HERE:** Phase 7 - Supporting Agents (T053..T056)
 
 1. ✅ Update form fields to match assignment exactly (Phase 4 complete)
 2. ✅ Add Skoog Tables and CDC Life Tables data (Phase 5 complete)
-3. Implement live API clients (Federal Reserve H.15, CA Labor Market)
+3. ✅ Implement live API clients (Federal Reserve H.15, CA Labor Market) (Phase 6 complete)
 4. Create supporting agents
 5. Build supervisor agent
 6. Add real-time progress UI
@@ -204,7 +204,7 @@
 - ✅ `data/skoog_tables/` - Skoog worklife tables (Phase 5 complete)
 - ✅ `data/life_tables/` - CDC life expectancy tables (Phase 5 complete)
 - ✅ `src/utils/data_loader.py` - Data loading utility (Phase 5 complete)
-- ❌ `src/utils/external_apis.py` - Live API clients
+- ✅ `src/utils/external_apis.py` - Live API clients (Phase 6 complete)
 - ❌ `src/agents/fed_rate_agent.py` - NEW supporting agent
 - ❌ `src/agents/skoog_table_agent.py` - NEW supporting agent
 - ❌ `src/agents/supervisor_agent.py` - NEW coordination agent
@@ -223,7 +223,7 @@
 **What's Missing (Per Assignment):**
 - ✅ Dashboard fields don't match (Phase 4 complete)
 - ✅ Static data files (Skoog, CDC) not included (Phase 5 complete)
-- ❌ Live APIs (Fed H.15, CA Labor Market) not implemented
+- ✅ Live APIs (Fed H.15, CA Labor Market) not implemented (Phase 6 complete)
 - ❌ Supporting agents (Fed Rate, Skoog Table) don't exist
 - ❌ Supervisor agent doesn't exist
 - ❌ Real-time progress dashboard not implemented
@@ -357,15 +357,15 @@ Reference:
   - Note any preprocessing or formatting applied ✅
   - Include license information for each source ✅
 
-## Phase 6: Assignment Compliance - Live API Integrations (Priority: P0 - BLOCKING)
+## Phase 6: Assignment Compliance - Live API Integrations (Priority: P0 - BLOCKING) ✅ COMPLETE
 
 **Goal**: Implement real-time data fetching from Federal Reserve H.15 and California Labor Market Info.
 
 **Critical**: Assignment explicitly requires LIVE fetching of these sources (right side of sources slide).
 
-### Live API Clients (T049-T052)
+### Live API Clients (T049-T052) ✅ ALL COMPLETE
 
-- [ ] T049 [P0] Implement Federal Reserve H.15 live data fetching in `src/utils/external_apis.py`:
+- [x] T049 [P0] Implement Federal Reserve H.15 live data fetching in `src/utils/external_apis.py`: ✅
   - Update FedClient.get_treasury_rates() to fetch real data
   - Source: https://www.federalreserve.gov/releases/h15/current/
   - Target: 1-Year Treasury Constant Maturity Rate (daily updates)
@@ -374,7 +374,7 @@ Reference:
   - Include error handling with fallback to recent cached rate
   - Add provenance: retrieval timestamp, source URL, data vintage
 
-- [ ] T050 [P0] Add California Labor Market Info client to `src/utils/external_apis.py`:
+- [x] T050 [P0] Add California Labor Market Info client to `src/utils/external_apis.py`: ✅
   - Create CALaborMarketClient class extending ExternalAPIClient
   - Source: https://labormarketinfo.edd.ca.gov/
   - Function: get_wage_growth_by_occupation(occupation, county) → annual growth rate
@@ -384,14 +384,14 @@ Reference:
   - Include error handling with fallback to state average
   - Add provenance: retrieval timestamp, source URL, occupation/county used
 
-- [ ] T051 [P0] Add API integration tests `tests/integration/test_live_apis.py`:
+- [x] T051 [P0] Add API integration tests `tests/integration/test_live_apis.py`: ✅
   - Test: Federal Reserve H.15 rate fetch succeeds and returns valid rate
   - Test: CA Labor Market Info fetch succeeds for sample occupation
   - Test: Fallback handling when APIs are unavailable
   - Test: Provenance data is correctly captured
   - Note: Use mocking for CI/CD to avoid rate limits
 
-- [ ] T052 [P0] Update `.env.example` with API configuration:
+- [x] T052 [P0] Update `.env.example` with API configuration: ✅
   - Add: FED_API_TIMEOUT=30
   - Add: CA_LABOR_API_TIMEOUT=30
   - Add: API_CACHE_TTL=3600 (cache for 1 hour)
@@ -613,8 +613,8 @@ Reference:
 ## Summary
 
 - **Total task count: 107**
-  - **Completed: 35** ✅ (Phases 1-5: MVP + Dashboard + Static Data complete)
-  - **Remaining: 72** ⏳ (Assignment compliance work)
+  - **Completed: 39** ✅ (Phases 1-6: MVP + Dashboard + Static Data + Live APIs complete)
+  - **Remaining: 68** ⏳ (Assignment compliance work)
 
 - Task count by phase:
   - **Phase 1 - Setup**: 5 tasks (T001..T005) ✅ COMPLETE
@@ -622,7 +622,7 @@ Reference:
   - **Phase 3 - US1 MVP**: 12 tasks (T014..T025) ✅ COMPLETE
   - **Phase 4 - Dashboard Fixes (P0 BLOCKING)**: 6 tasks (T039..T044) ✅ COMPLETE
   - **Phase 5 - Static Data Sources (P0 BLOCKING)**: 4 tasks (T045..T048) ✅ COMPLETE
-  - **Phase 6 - Live API Integrations (P0 BLOCKING)**: 4 tasks (T049..T052) ⏳ TODO
+  - **Phase 6 - Live API Integrations (P0 BLOCKING)**: 4 tasks (T049..T052) ✅ COMPLETE
   - **Phase 7 - Supporting Agents (P0 BLOCKING)**: 4 tasks (T053..T056) ⏳ TODO
   - **Phase 8 - Supervisor Agent (P1)**: 4 tasks (T057..T060) ⏳ TODO
   - **Phase 9 - Real-Time Progress Dashboard (P1)**: 5 tasks (T061..T065) ⏳ TODO
@@ -631,14 +631,14 @@ Reference:
   - **Phase 12 - US3 Parameter Overrides**: 4 tasks (T030..T033) ⏳ TODO
   - **Phase N - Polish**: 5 tasks (T034..T038) ⏳ TODO
 
-- **CRITICAL PATH for Assignment Compliance (72 tasks remaining):**
-  1. ⏳ Complete Phases 6-7 (P0 BLOCKING tasks: T049..T056) - 8 tasks
+- **CRITICAL PATH for Assignment Compliance (68 tasks remaining):**
+  1. ⏳ Complete Phase 7 (P0 BLOCKING tasks: T053..T056) - 4 tasks
   2. ⏳ Complete Phases 8-10 (P1 tasks: T057..T069) - 13 tasks
-  3. These 21 tasks (T049..T069) are essential for matching assignment requirements
+  3. These 17 tasks (T053..T069) are essential for matching assignment requirements
   4. Remaining 51 tasks (T026..T038) are nice-to-have enhancements
 
 - **Priority Breakdown (Remaining Work):**
-  - P0 (BLOCKING): 8 tasks ⚠️ - APIs, supporting agents
+  - P0 (BLOCKING): 4 tasks ⚠️ - Supporting agents (Fed Rate, Skoog Table)
   - P1 (HIGH): 13 tasks 🔥 - Supervisor, real-time dashboard, Excel verification
   - P2 (MEDIUM): 4 tasks - Provenance
   - P3 (LOW): 4 tasks - Parameter overrides
@@ -650,17 +650,17 @@ Reference:
   - Dashboard updates and Excel verification can run concurrently
 
 - **Recommended Execution Order:**
-  1. ✅ **DONE** - Phases 1-5 (MVP + Dashboard + Static Data - 35 tasks complete)
-  2. ⏳ **START HERE → Phase 6**: Implement live APIs (T049..T052) - 4 tasks
-  3. ⏳ **Phase 7**: Create supporting agents (T053..T056) - 4 tasks
+  1. ✅ **DONE** - Phases 1-6 (MVP + Dashboard + Static Data + Live APIs - 39 tasks complete)
+  2. ⏳ **START HERE → Phase 7**: Create supporting agents (T053..T056) - 4 tasks
+  3. ⏳ **Phase 8**: Build supervisor agent (T057..T060) - 4 tasks
   4. ⏳ **Phase 8**: Build supervisor agent (T057..T060) - 4 tasks
   5. ⏳ **Phase 9**: Add real-time dashboard (T061..T065) - 5 tasks
   6. ⏳ **Phase 10**: Verify Excel output (T066..T069) - 4 tasks
   7. ⏳ Phases 11-12: Provenance and parameter overrides (if time permits) - 8 tasks
   8. ⏳ Phase N: Polish and documentation - 5 tasks
 
-**Progress: 35/107 tasks complete (32.7%)**
-**Critical path remaining: 21/72 tasks (29.2% of remaining work)**
+**Progress: 39/107 tasks complete (36.4%)**
+**Critical path remaining: 17/68 tasks (25.0% of remaining work)**
 
 ## Files created by this task generator
 - `specs/1-wrongful-death-econ/tasks.md` (this file)

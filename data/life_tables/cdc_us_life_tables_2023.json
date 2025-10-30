@@ -1,113 +1,1030 @@
 {
-  "metadata": {
-    "title": "United States Life Tables, 2023",
-    "source": "National Vital Statistics Reports",
-    "publisher": "U.S. Department of Health and Human Services, Centers for Disease Control and Prevention, National Center for Health Statistics",
-    "url": "https://www.cdc.gov/nchs/products/life_tables.htm",
-    "report_volume": "Volume 73, Number X",
-    "publication_date": "2023",
-    "data_year": 2023,
-    "citation": "Arias, E., Xu, J. (2023). United States Life Tables, 2023. National Vital Statistics Reports, 73(X). Hyattsville, MD: National Center for Health Statistics.",
-    "description": "Complete period life tables for the United States based on mortality data",
-    "methodology": "Life tables based on age-specific death rates for the calendar year, using mortality data from the National Vital Statistics System",
-    "note": "This is representative data based on recent CDC life table patterns. For actual litigation use, please obtain the most current official CDC life tables."
-  },
-  "summary_statistics": {
-    "male": {
-      "life_expectancy_at_birth": 73.5,
-      "life_expectancy_at_65": 17.8
+  "Table_1_US_Life_Table_2023": {
+    "title": "Life table for the total population: United States, 2023",
+    "description": "National Vital Statistics Reports, Vol. 74, No. 6, July 15, 2025",
+    "source": "National Center for Health Statistics, National Vital Statistics System",
+    "year": 2023,
+    "columns": {
+      "Age": "Age range in years",
+      "qx_Probability_of_Dying": "Probability of dying between ages x and x + 1",
+      "lx_Number_Surviving": "Number surviving to age x (out of 100,000)",
+      "dx_Number_Dying": "Number dying between ages x and x + 1",
+      "Lx_Person_Years_Lived": "Person-years lived between ages x and x + 1",
+      "Tx_Total_Person_Years_Above_Age": "Total number of person-years lived above age x",
+      "ex_Life_Expectancy": "Expectation of life at age x (years)"
     },
-    "female": {
-      "life_expectancy_at_birth": 79.3,
-      "life_expectancy_at_65": 20.8
-    },
-    "total": {
-      "life_expectancy_at_birth": 76.4,
-      "life_expectancy_at_65": 19.4
-    }
-  },
-  "life_expectancy": {
-    "male": {
-      "0": 73.5, "1": 73.1, "2": 72.1, "3": 71.1, "4": 70.2, "5": 69.2,
-      "6": 68.2, "7": 67.2, "8": 66.2, "9": 65.2, "10": 64.2,
-      "11": 63.3, "12": 62.3, "13": 61.3, "14": 60.3, "15": 59.3,
-      "16": 58.4, "17": 57.4, "18": 56.5, "19": 55.6, "20": 54.7,
-      "21": 53.8, "22": 52.9, "23": 52.0, "24": 51.1, "25": 50.2,
-      "26": 49.3, "27": 48.4, "28": 47.5, "29": 46.6, "30": 45.7,
-      "31": 44.8, "32": 43.9, "33": 43.0, "34": 42.1, "35": 41.2,
-      "36": 40.3, "37": 39.4, "38": 38.5, "39": 37.7, "40": 36.8,
-      "41": 35.9, "42": 35.1, "43": 34.2, "44": 33.4, "45": 32.5,
-      "46": 31.7, "47": 30.9, "48": 30.1, "49": 29.2, "50": 28.4,
-      "51": 27.6, "52": 26.8, "53": 26.1, "54": 25.3, "55": 24.5,
-      "56": 23.7, "57": 23.0, "58": 22.2, "59": 21.5, "60": 20.8,
-      "61": 20.0, "62": 19.3, "63": 18.6, "64": 17.9, "65": 17.2,
-      "66": 16.5, "67": 15.9, "68": 15.2, "69": 14.5, "70": 13.9,
-      "71": 13.2, "72": 12.6, "73": 12.0, "74": 11.4, "75": 10.8,
-      "76": 10.2, "77": 9.7, "78": 9.1, "79": 8.6, "80": 8.1,
-      "81": 7.6, "82": 7.1, "83": 6.7, "84": 6.2, "85": 5.8,
-      "86": 5.4, "87": 5.1, "88": 4.7, "89": 4.4, "90": 4.1,
-      "91": 3.8, "92": 3.5, "93": 3.3, "94": 3.0, "95": 2.8,
-      "96": 2.6, "97": 2.4, "98": 2.2, "99": 2.0, "100": 1.9
-    },
-    "female": {
-      "0": 79.3, "1": 78.8, "2": 77.9, "3": 76.9, "4": 75.9, "5": 74.9,
-      "6": 73.9, "7": 72.9, "8": 71.9, "9": 70.9, "10": 70.0,
-      "11": 69.0, "12": 68.0, "13": 67.0, "14": 66.0, "15": 65.0,
-      "16": 64.1, "17": 63.1, "18": 62.1, "19": 61.1, "20": 60.2,
-      "21": 59.2, "22": 58.2, "23": 57.2, "24": 56.3, "25": 55.3,
-      "26": 54.3, "27": 53.4, "28": 52.4, "29": 51.4, "30": 50.5,
-      "31": 49.5, "32": 48.5, "33": 47.6, "34": 46.6, "35": 45.6,
-      "36": 44.7, "37": 43.7, "38": 42.8, "39": 41.8, "40": 40.9,
-      "41": 39.9, "42": 39.0, "43": 38.0, "44": 37.1, "45": 36.1,
-      "46": 35.2, "47": 34.3, "48": 33.4, "49": 32.5, "50": 31.5,
-      "51": 30.6, "52": 29.7, "53": 28.8, "54": 27.9, "55": 27.0,
-      "56": 26.2, "57": 25.3, "58": 24.4, "59": 23.6, "60": 22.7,
-      "61": 21.9, "62": 21.1, "63": 20.2, "64": 19.4, "65": 18.6,
-      "66": 17.8, "67": 17.1, "68": 16.3, "69": 15.5, "70": 14.8,
-      "71": 14.0, "72": 13.3, "73": 12.6, "74": 11.9, "75": 11.2,
-      "76": 10.6, "77": 9.9, "78": 9.3, "79": 8.7, "80": 8.1,
-      "81": 7.5, "82": 7.0, "83": 6.5, "84": 6.0, "85": 5.5,
-      "86": 5.1, "87": 4.7, "88": 4.3, "89": 4.0, "90": 3.7,
-      "91": 3.4, "92": 3.1, "93": 2.9, "94": 2.6, "95": 2.4,
-      "96": 2.2, "97": 2.0, "98": 1.9, "99": 1.7, "100": 1.6
-    }
-  },
-  "mortality_rates": {
-    "description": "Age-specific death rates per 100,000 population",
-    "male": {
-      "0-1": 628.9, "1-4": 25.8, "5-14": 12.5, "15-24": 85.6, "25-34": 143.2,
-      "35-44": 223.4, "45-54": 432.8, "55-64": 971.3, "65-74": 2089.5,
-      "75-84": 4785.2, "85+": 13456.8
-    },
-    "female": {
-      "0-1": 523.1, "1-4": 21.2, "5-14": 10.1, "15-24": 38.7, "25-34": 69.8,
-      "35-44": 134.2, "45-54": 289.7, "55-64": 624.1, "65-74": 1398.3,
-      "75-84": 3421.9, "85+": 11234.6
-    }
-  },
-  "survival_probabilities": {
-    "description": "Probability of surviving from birth to specified age",
-    "male": {
-      "1": 0.99371, "5": 0.99301, "10": 0.99239, "18": 0.99069, "21": 0.98835,
-      "25": 0.98476, "30": 0.97892, "35": 0.97104, "40": 0.95937, "45": 0.94137,
-      "50": 0.91342, "55": 0.87156, "60": 0.81243, "65": 0.73278, "70": 0.63145,
-      "75": 0.50834, "80": 0.37245, "85": 0.24158, "90": 0.13289, "95": 0.05834,
-      "100": 0.01823
-    },
-    "female": {
-      "1": 0.99477, "5": 0.99419, "10": 0.99371, "18": 0.99257, "21": 0.99135,
-      "25": 0.98931, "30": 0.98615, "35": 0.98176, "40": 0.97538, "45": 0.96588,
-      "50": 0.95143, "55": 0.93002, "60": 0.89868, "65": 0.85412, "70": 0.78924,
-      "75": 0.70108, "80": 0.58456, "85": 0.44267, "90": 0.28935, "95": 0.15678,
-      "100": 0.06234
-    }
-  },
-  "notes": {
-    "usage": "To lookup life expectancy, use: life_expectancy[gender][age]",
-    "gender_values": ["male", "female"],
-    "age_range": "Ages 0-100",
-    "interpolation": "For ages with decimal values (e.g., 40.5), use linear interpolation between adjacent integer ages",
-    "data_quality": "Life tables are based on mortality data from all 50 states and the District of Columbia",
-    "updates": "CDC publishes updated life tables annually. Check https://www.cdc.gov/nchs/products/life_tables.htm for the most recent data"
+    "rows": 101,
+    "data": [
+      {
+        "Age": "0-1",
+        "Age_Start": "0",
+        "qx_Probability_of_Dying": "0.005588",
+        "lx_Number_Surviving": "100,000",
+        "dx_Number_Dying": "559",
+        "Lx_Person_Years_Lived": "99,515",
+        "Tx_Total_Person_Years_Above_Age": "7,842,141",
+        "ex_Life_Expectancy": "78.4"
+      },
+      {
+        "Age": "1-2",
+        "Age_Start": "1",
+        "qx_Probability_of_Dying": "0.000439",
+        "lx_Number_Surviving": "99,441",
+        "dx_Number_Dying": "44",
+        "Lx_Person_Years_Lived": "99,419",
+        "Tx_Total_Person_Years_Above_Age": "7,742,626",
+        "ex_Life_Expectancy": "77.9"
+      },
+      {
+        "Age": "2-3",
+        "Age_Start": "2",
+        "qx_Probability_of_Dying": "0.000283",
+        "lx_Number_Surviving": "99,398",
+        "dx_Number_Dying": "28",
+        "Lx_Person_Years_Lived": "99,384",
+        "Tx_Total_Person_Years_Above_Age": "7,643,207",
+        "ex_Life_Expectancy": "76.9"
+      },
+      {
+        "Age": "3-4",
+        "Age_Start": "3",
+        "qx_Probability_of_Dying": "0.000213",
+        "lx_Number_Surviving": "99,369",
+        "dx_Number_Dying": "21",
+        "Lx_Person_Years_Lived": "99,359",
+        "Tx_Total_Person_Years_Above_Age": "7,543,824",
+        "ex_Life_Expectancy": "75.9"
+      },
+      {
+        "Age": "4-5",
+        "Age_Start": "4",
+        "qx_Probability_of_Dying": "0.000161",
+        "lx_Number_Surviving": "99,348",
+        "dx_Number_Dying": "16",
+        "Lx_Person_Years_Lived": "99,340",
+        "Tx_Total_Person_Years_Above_Age": "7,444,465",
+        "ex_Life_Expectancy": "74.9"
+      },
+      {
+        "Age": "5-6",
+        "Age_Start": "5",
+        "qx_Probability_of_Dying": "0.000149",
+        "lx_Number_Surviving": "99,332",
+        "dx_Number_Dying": "15",
+        "Lx_Person_Years_Lived": "99,325",
+        "Tx_Total_Person_Years_Above_Age": "7,345,124",
+        "ex_Life_Expectancy": "73.9"
+      },
+      {
+        "Age": "6-7",
+        "Age_Start": "6",
+        "qx_Probability_of_Dying": "0.000136",
+        "lx_Number_Surviving": "99,317",
+        "dx_Number_Dying": "13",
+        "Lx_Person_Years_Lived": "99,311",
+        "Tx_Total_Person_Years_Above_Age": "7,245,799",
+        "ex_Life_Expectancy": "73.0"
+      },
+      {
+        "Age": "7-8",
+        "Age_Start": "7",
+        "qx_Probability_of_Dying": "0.000125",
+        "lx_Number_Surviving": "99,304",
+        "dx_Number_Dying": "12",
+        "Lx_Person_Years_Lived": "99,298",
+        "Tx_Total_Person_Years_Above_Age": "7,146,489",
+        "ex_Life_Expectancy": "72.0"
+      },
+      {
+        "Age": "8-9",
+        "Age_Start": "8",
+        "qx_Probability_of_Dying": "0.000113",
+        "lx_Number_Surviving": "99,292",
+        "dx_Number_Dying": "11",
+        "Lx_Person_Years_Lived": "99,286",
+        "Tx_Total_Person_Years_Above_Age": "7,047,191",
+        "ex_Life_Expectancy": "71.0"
+      },
+      {
+        "Age": "9-10",
+        "Age_Start": "9",
+        "qx_Probability_of_Dying": "0.000100",
+        "lx_Number_Surviving": "99,280",
+        "dx_Number_Dying": "10",
+        "Lx_Person_Years_Lived": "99,275",
+        "Tx_Total_Person_Years_Above_Age": "6,947,905",
+        "ex_Life_Expectancy": "70.0"
+      },
+      {
+        "Age": "10-11",
+        "Age_Start": "10",
+        "qx_Probability_of_Dying": "0.000092",
+        "lx_Number_Surviving": "99,271",
+        "dx_Number_Dying": "9",
+        "Lx_Person_Years_Lived": "99,266",
+        "Tx_Total_Person_Years_Above_Age": "6,848,629",
+        "ex_Life_Expectancy": "69.0"
+      },
+      {
+        "Age": "11-12",
+        "Age_Start": "11",
+        "qx_Probability_of_Dying": "0.000101",
+        "lx_Number_Surviving": "99,261",
+        "dx_Number_Dying": "10",
+        "Lx_Person_Years_Lived": "99,256",
+        "Tx_Total_Person_Years_Above_Age": "6,749,364",
+        "ex_Life_Expectancy": "68.0"
+      },
+      {
+        "Age": "12-13",
+        "Age_Start": "12",
+        "qx_Probability_of_Dying": "0.000137",
+        "lx_Number_Surviving": "99,251",
+        "dx_Number_Dying": "14",
+        "Lx_Person_Years_Lived": "99,245",
+        "Tx_Total_Person_Years_Above_Age": "6,650,107",
+        "ex_Life_Expectancy": "67.0"
+      },
+      {
+        "Age": "13-14",
+        "Age_Start": "13",
+        "qx_Probability_of_Dying": "0.000206",
+        "lx_Number_Surviving": "99,238",
+        "dx_Number_Dying": "20",
+        "Lx_Person_Years_Lived": "99,228",
+        "Tx_Total_Person_Years_Above_Age": "6,550,863",
+        "ex_Life_Expectancy": "66.0"
+      },
+      {
+        "Age": "14-15",
+        "Age_Start": "14",
+        "qx_Probability_of_Dying": "0.000299",
+        "lx_Number_Surviving": "99,217",
+        "dx_Number_Dying": "30",
+        "Lx_Person_Years_Lived": "99,203",
+        "Tx_Total_Person_Years_Above_Age": "6,451,635",
+        "ex_Life_Expectancy": "65.0"
+      },
+      {
+        "Age": "15-16",
+        "Age_Start": "15",
+        "qx_Probability_of_Dying": "0.000400",
+        "lx_Number_Surviving": "99,188",
+        "dx_Number_Dying": "40",
+        "Lx_Person_Years_Lived": "99,168",
+        "Tx_Total_Person_Years_Above_Age": "6,352,432",
+        "ex_Life_Expectancy": "64.0"
+      },
+      {
+        "Age": "16-17",
+        "Age_Start": "16",
+        "qx_Probability_of_Dying": "0.000497",
+        "lx_Number_Surviving": "99,148",
+        "dx_Number_Dying": "49",
+        "Lx_Person_Years_Lived": "99,123",
+        "Tx_Total_Person_Years_Above_Age": "6,253,265",
+        "ex_Life_Expectancy": "63.1"
+      },
+      {
+        "Age": "17-18",
+        "Age_Start": "17",
+        "qx_Probability_of_Dying": "0.000587",
+        "lx_Number_Surviving": "99,099",
+        "dx_Number_Dying": "58",
+        "Lx_Person_Years_Lived": "99,070",
+        "Tx_Total_Person_Years_Above_Age": "6,154,141",
+        "ex_Life_Expectancy": "62.1"
+      },
+      {
+        "Age": "18-19",
+        "Age_Start": "18",
+        "qx_Probability_of_Dying": "0.000666",
+        "lx_Number_Surviving": "99,041",
+        "dx_Number_Dying": "66",
+        "Lx_Person_Years_Lived": "99,008",
+        "Tx_Total_Person_Years_Above_Age": "6,055,072",
+        "ex_Life_Expectancy": "61.1"
+      },
+      {
+        "Age": "19-20",
+        "Age_Start": "19",
+        "qx_Probability_of_Dying": "0.000739",
+        "lx_Number_Surviving": "98,975",
+        "dx_Number_Dying": "73",
+        "Lx_Person_Years_Lived": "98,938",
+        "Tx_Total_Person_Years_Above_Age": "5,956,064",
+        "ex_Life_Expectancy": "60.2"
+      },
+      {
+        "Age": "20-21",
+        "Age_Start": "20",
+        "qx_Probability_of_Dying": "0.000817",
+        "lx_Number_Surviving": "98,901",
+        "dx_Number_Dying": "81",
+        "Lx_Person_Years_Lived": "98,861",
+        "Tx_Total_Person_Years_Above_Age": "5,857,126",
+        "ex_Life_Expectancy": "59.2"
+      },
+      {
+        "Age": "21-22",
+        "Age_Start": "21",
+        "qx_Probability_of_Dying": "0.000899",
+        "lx_Number_Surviving": "98,821",
+        "dx_Number_Dying": "89",
+        "Lx_Person_Years_Lived": "98,776",
+        "Tx_Total_Person_Years_Above_Age": "5,758,265",
+        "ex_Life_Expectancy": "58.3"
+      },
+      {
+        "Age": "22-23",
+        "Age_Start": "22",
+        "qx_Probability_of_Dying": "0.000971",
+        "lx_Number_Surviving": "98,732",
+        "dx_Number_Dying": "96",
+        "Lx_Person_Years_Lived": "98,684",
+        "Tx_Total_Person_Years_Above_Age": "5,659,489",
+        "ex_Life_Expectancy": "57.3"
+      },
+      {
+        "Age": "23-24",
+        "Age_Start": "23",
+        "qx_Probability_of_Dying": "0.001031",
+        "lx_Number_Surviving": "98,636",
+        "dx_Number_Dying": "102",
+        "Lx_Person_Years_Lived": "98,585",
+        "Tx_Total_Person_Years_Above_Age": "5,560,805",
+        "ex_Life_Expectancy": "56.4"
+      },
+      {
+        "Age": "24-25",
+        "Age_Start": "24",
+        "qx_Probability_of_Dying": "0.001081",
+        "lx_Number_Surviving": "98,534",
+        "dx_Number_Dying": "106",
+        "Lx_Person_Years_Lived": "98,481",
+        "Tx_Total_Person_Years_Above_Age": "5,462,220",
+        "ex_Life_Expectancy": "55.4"
+      },
+      {
+        "Age": "25-26",
+        "Age_Start": "25",
+        "qx_Probability_of_Dying": "0.001126",
+        "lx_Number_Surviving": "98,428",
+        "dx_Number_Dying": "111",
+        "Lx_Person_Years_Lived": "98,372",
+        "Tx_Total_Person_Years_Above_Age": "5,363,739",
+        "ex_Life_Expectancy": "54.5"
+      },
+      {
+        "Age": "26-27",
+        "Age_Start": "26",
+        "qx_Probability_of_Dying": "0.001177",
+        "lx_Number_Surviving": "98,317",
+        "dx_Number_Dying": "116",
+        "Lx_Person_Years_Lived": "98,259",
+        "Tx_Total_Person_Years_Above_Age": "5,265,367",
+        "ex_Life_Expectancy": "53.6"
+      },
+      {
+        "Age": "27-28",
+        "Age_Start": "27",
+        "qx_Probability_of_Dying": "0.001243",
+        "lx_Number_Surviving": "98,201",
+        "dx_Number_Dying": "122",
+        "Lx_Person_Years_Lived": "98,140",
+        "Tx_Total_Person_Years_Above_Age": "5,167,108",
+        "ex_Life_Expectancy": "52.6"
+      },
+      {
+        "Age": "28-29",
+        "Age_Start": "28",
+        "qx_Probability_of_Dying": "0.001327",
+        "lx_Number_Surviving": "98,079",
+        "dx_Number_Dying": "130",
+        "Lx_Person_Years_Lived": "98,014",
+        "Tx_Total_Person_Years_Above_Age": "5,068,967",
+        "ex_Life_Expectancy": "51.7"
+      },
+      {
+        "Age": "29-30",
+        "Age_Start": "29",
+        "qx_Probability_of_Dying": "0.001422",
+        "lx_Number_Surviving": "97,949",
+        "dx_Number_Dying": "139",
+        "Lx_Person_Years_Lived": "97,879",
+        "Tx_Total_Person_Years_Above_Age": "4,970,953",
+        "ex_Life_Expectancy": "50.8"
+      },
+      {
+        "Age": "30-31",
+        "Age_Start": "30",
+        "qx_Probability_of_Dying": "0.001520",
+        "lx_Number_Surviving": "97,810",
+        "dx_Number_Dying": "149",
+        "Lx_Person_Years_Lived": "97,735",
+        "Tx_Total_Person_Years_Above_Age": "4,873,074",
+        "ex_Life_Expectancy": "49.8"
+      },
+      {
+        "Age": "31-32",
+        "Age_Start": "31",
+        "qx_Probability_of_Dying": "0.001611",
+        "lx_Number_Surviving": "97,661",
+        "dx_Number_Dying": "157",
+        "Lx_Person_Years_Lived": "97,582",
+        "Tx_Total_Person_Years_Above_Age": "4,775,339",
+        "ex_Life_Expectancy": "48.9"
+      },
+      {
+        "Age": "32-33",
+        "Age_Start": "32",
+        "qx_Probability_of_Dying": "0.001693",
+        "lx_Number_Surviving": "97,504",
+        "dx_Number_Dying": "165",
+        "Lx_Person_Years_Lived": "97,421",
+        "Tx_Total_Person_Years_Above_Age": "4,677,756",
+        "ex_Life_Expectancy": "48.0"
+      },
+      {
+        "Age": "33-34",
+        "Age_Start": "33",
+        "qx_Probability_of_Dying": "0.001765",
+        "lx_Number_Surviving": "97,339",
+        "dx_Number_Dying": "172",
+        "Lx_Person_Years_Lived": "97,253",
+        "Tx_Total_Person_Years_Above_Age": "4,580,335",
+        "ex_Life_Expectancy": "47.1"
+      },
+      {
+        "Age": "34-35",
+        "Age_Start": "34",
+        "qx_Probability_of_Dying": "0.001834",
+        "lx_Number_Surviving": "97,167",
+        "dx_Number_Dying": "178",
+        "Lx_Person_Years_Lived": "97,078",
+        "Tx_Total_Person_Years_Above_Age": "4,483,082",
+        "ex_Life_Expectancy": "46.1"
+      },
+      {
+        "Age": "35-36",
+        "Age_Start": "35",
+        "qx_Probability_of_Dying": "0.001904",
+        "lx_Number_Surviving": "96,989",
+        "dx_Number_Dying": "185",
+        "Lx_Person_Years_Lived": "96,896",
+        "Tx_Total_Person_Years_Above_Age": "4,386,005",
+        "ex_Life_Expectancy": "45.2"
+      },
+      {
+        "Age": "36-37",
+        "Age_Start": "36",
+        "qx_Probability_of_Dying": "0.001983",
+        "lx_Number_Surviving": "96,804",
+        "dx_Number_Dying": "192",
+        "Lx_Person_Years_Lived": "96,708",
+        "Tx_Total_Person_Years_Above_Age": "4,289,109",
+        "ex_Life_Expectancy": "44.3"
+      },
+      {
+        "Age": "37-38",
+        "Age_Start": "37",
+        "qx_Probability_of_Dying": "0.002074",
+        "lx_Number_Surviving": "96,612",
+        "dx_Number_Dying": "200",
+        "Lx_Person_Years_Lived": "96,512",
+        "Tx_Total_Person_Years_Above_Age": "4,192,401",
+        "ex_Life_Expectancy": "43.4"
+      },
+      {
+        "Age": "38-39",
+        "Age_Start": "38",
+        "qx_Probability_of_Dying": "0.002179",
+        "lx_Number_Surviving": "96,412",
+        "dx_Number_Dying": "210",
+        "Lx_Person_Years_Lived": "96,307",
+        "Tx_Total_Person_Years_Above_Age": "4,095,889",
+        "ex_Life_Expectancy": "42.5"
+      },
+      {
+        "Age": "39-40",
+        "Age_Start": "39",
+        "qx_Probability_of_Dying": "0.002295",
+        "lx_Number_Surviving": "96,202",
+        "dx_Number_Dying": "221",
+        "Lx_Person_Years_Lived": "96,091",
+        "Tx_Total_Person_Years_Above_Age": "3,999,582",
+        "ex_Life_Expectancy": "41.6"
+      },
+      {
+        "Age": "40-41",
+        "Age_Start": "40",
+        "qx_Probability_of_Dying": "0.002424",
+        "lx_Number_Surviving": "95,981",
+        "dx_Number_Dying": "233",
+        "Lx_Person_Years_Lived": "95,864",
+        "Tx_Total_Person_Years_Above_Age": "3,903,491",
+        "ex_Life_Expectancy": "40.7"
+      },
+      {
+        "Age": "41-42",
+        "Age_Start": "41",
+        "qx_Probability_of_Dying": "0.002557",
+        "lx_Number_Surviving": "95,748",
+        "dx_Number_Dying": "245",
+        "Lx_Person_Years_Lived": "95,626",
+        "Tx_Total_Person_Years_Above_Age": "3,807,627",
+        "ex_Life_Expectancy": "39.8"
+      },
+      {
+        "Age": "42-43",
+        "Age_Start": "42",
+        "qx_Probability_of_Dying": "0.002678",
+        "lx_Number_Surviving": "95,503",
+        "dx_Number_Dying": "256",
+        "Lx_Person_Years_Lived": "95,375",
+        "Tx_Total_Person_Years_Above_Age": "3,712,001",
+        "ex_Life_Expectancy": "38.9"
+      },
+      {
+        "Age": "43-44",
+        "Age_Start": "43",
+        "qx_Probability_of_Dying": "0.002784",
+        "lx_Number_Surviving": "95,247",
+        "dx_Number_Dying": "265",
+        "Lx_Person_Years_Lived": "95,115",
+        "Tx_Total_Person_Years_Above_Age": "3,616,626",
+        "ex_Life_Expectancy": "38.0"
+      },
+      {
+        "Age": "44-45",
+        "Age_Start": "44",
+        "qx_Probability_of_Dying": "0.002888",
+        "lx_Number_Surviving": "94,982",
+        "dx_Number_Dying": "274",
+        "Lx_Person_Years_Lived": "94,845",
+        "Tx_Total_Person_Years_Above_Age": "3,521,511",
+        "ex_Life_Expectancy": "37.1"
+      },
+      {
+        "Age": "45-46",
+        "Age_Start": "45",
+        "qx_Probability_of_Dying": "0.003008",
+        "lx_Number_Surviving": "94,708",
+        "dx_Number_Dying": "285",
+        "Lx_Person_Years_Lived": "94,566",
+        "Tx_Total_Person_Years_Above_Age": "3,426,666",
+        "ex_Life_Expectancy": "36.2"
+      },
+      {
+        "Age": "46-47",
+        "Age_Start": "46",
+        "qx_Probability_of_Dying": "0.003163",
+        "lx_Number_Surviving": "94,423",
+        "dx_Number_Dying": "299",
+        "Lx_Person_Years_Lived": "94,274",
+        "Tx_Total_Person_Years_Above_Age": "3,332,100",
+        "ex_Life_Expectancy": "35.3"
+      },
+      {
+        "Age": "47-48",
+        "Age_Start": "47",
+        "qx_Probability_of_Dying": "0.003356",
+        "lx_Number_Surviving": "94,124",
+        "dx_Number_Dying": "316",
+        "Lx_Person_Years_Lived": "93,966",
+        "Tx_Total_Person_Years_Above_Age": "3,237,826",
+        "ex_Life_Expectancy": "34.4"
+      },
+      {
+        "Age": "48-49",
+        "Age_Start": "48",
+        "qx_Probability_of_Dying": "0.003586",
+        "lx_Number_Surviving": "93,809",
+        "dx_Number_Dying": "336",
+        "Lx_Person_Years_Lived": "93,640",
+        "Tx_Total_Person_Years_Above_Age": "3,143,860",
+        "ex_Life_Expectancy": "33.5"
+      },
+      {
+        "Age": "49-50",
+        "Age_Start": "49",
+        "qx_Probability_of_Dying": "0.003843",
+        "lx_Number_Surviving": "93,472",
+        "dx_Number_Dying": "359",
+        "Lx_Person_Years_Lived": "93,293",
+        "Tx_Total_Person_Years_Above_Age": "3,050,220",
+        "ex_Life_Expectancy": "32.6"
+      },
+      {
+        "Age": "50-51",
+        "Age_Start": "50",
+        "qx_Probability_of_Dying": "0.004120",
+        "lx_Number_Surviving": "93,113",
+        "dx_Number_Dying": "384",
+        "Lx_Person_Years_Lived": "92,921",
+        "Tx_Total_Person_Years_Above_Age": "2,956,927",
+        "ex_Life_Expectancy": "31.8"
+      },
+      {
+        "Age": "51-52",
+        "Age_Start": "51",
+        "qx_Probability_of_Dying": "0.004420",
+        "lx_Number_Surviving": "92,729",
+        "dx_Number_Dying": "410",
+        "Lx_Person_Years_Lived": "92,524",
+        "Tx_Total_Person_Years_Above_Age": "2,864,006",
+        "ex_Life_Expectancy": "30.9"
+      },
+      {
+        "Age": "52-53",
+        "Age_Start": "52",
+        "qx_Probability_of_Dying": "0.004752",
+        "lx_Number_Surviving": "92,319",
+        "dx_Number_Dying": "439",
+        "Lx_Person_Years_Lived": "92,100",
+        "Tx_Total_Person_Years_Above_Age": "2,771,481",
+        "ex_Life_Expectancy": "30.0"
+      },
+      {
+        "Age": "53-54",
+        "Age_Start": "53",
+        "qx_Probability_of_Dying": "0.005130",
+        "lx_Number_Surviving": "91,881",
+        "dx_Number_Dying": "471",
+        "Lx_Person_Years_Lived": "91,645",
+        "Tx_Total_Person_Years_Above_Age": "2,679,381",
+        "ex_Life_Expectancy": "29.2"
+      },
+      {
+        "Age": "54-55",
+        "Age_Start": "54",
+        "qx_Probability_of_Dying": "0.005562",
+        "lx_Number_Surviving": "91,409",
+        "dx_Number_Dying": "508",
+        "Lx_Person_Years_Lived": "91,155",
+        "Tx_Total_Person_Years_Above_Age": "2,587,736",
+        "ex_Life_Expectancy": "28.3"
+      },
+      {
+        "Age": "55-56",
+        "Age_Start": "55",
+        "qx_Probability_of_Dying": "0.006022",
+        "lx_Number_Surviving": "90,901",
+        "dx_Number_Dying": "547",
+        "Lx_Person_Years_Lived": "90,627",
+        "Tx_Total_Person_Years_Above_Age": "2,496,581",
+        "ex_Life_Expectancy": "27.5"
+      },
+      {
+        "Age": "56-57",
+        "Age_Start": "56",
+        "qx_Probability_of_Dying": "0.006524",
+        "lx_Number_Surviving": "90,354",
+        "dx_Number_Dying": "589",
+        "Lx_Person_Years_Lived": "90,059",
+        "Tx_Total_Person_Years_Above_Age": "2,405,954",
+        "ex_Life_Expectancy": "26.6"
+      },
+      {
+        "Age": "57-58",
+        "Age_Start": "57",
+        "qx_Probability_of_Dying": "0.007106",
+        "lx_Number_Surviving": "89,764",
+        "dx_Number_Dying": "638",
+        "Lx_Person_Years_Lived": "89,445",
+        "Tx_Total_Person_Years_Above_Age": "2,315,895",
+        "ex_Life_Expectancy": "25.8"
+      },
+      {
+        "Age": "58-59",
+        "Age_Start": "58",
+        "qx_Probability_of_Dying": "0.007769",
+        "lx_Number_Surviving": "89,126",
+        "dx_Number_Dying": "692",
+        "Lx_Person_Years_Lived": "88,780",
+        "Tx_Total_Person_Years_Above_Age": "2,226,450",
+        "ex_Life_Expectancy": "25.0"
+      },
+      {
+        "Age": "59-60",
+        "Age_Start": "59",
+        "qx_Probability_of_Dying": "0.008476",
+        "lx_Number_Surviving": "88,434",
+        "dx_Number_Dying": "750",
+        "Lx_Person_Years_Lived": "88,059",
+        "Tx_Total_Person_Years_Above_Age": "2,137,670",
+        "ex_Life_Expectancy": "24.2"
+      },
+      {
+        "Age": "60-61",
+        "Age_Start": "60",
+        "qx_Probability_of_Dying": "0.009202",
+        "lx_Number_Surviving": "87,684",
+        "dx_Number_Dying": "807",
+        "Lx_Person_Years_Lived": "87,281",
+        "Tx_Total_Person_Years_Above_Age": "2,049,611",
+        "ex_Life_Expectancy": "23.4"
+      },
+      {
+        "Age": "61-62",
+        "Age_Start": "61",
+        "qx_Probability_of_Dying": "0.009926",
+        "lx_Number_Surviving": "86,877",
+        "dx_Number_Dying": "862",
+        "Lx_Person_Years_Lived": "86,446",
+        "Tx_Total_Person_Years_Above_Age": "1,962,330",
+        "ex_Life_Expectancy": "22.6"
+      },
+      {
+        "Age": "62-63",
+        "Age_Start": "62",
+        "qx_Probability_of_Dying": "0.010656",
+        "lx_Number_Surviving": "86,015",
+        "dx_Number_Dying": "917",
+        "Lx_Person_Years_Lived": "85,557",
+        "Tx_Total_Person_Years_Above_Age": "1,875,884",
+        "ex_Life_Expectancy": "21.8"
+      },
+      {
+        "Age": "63-64",
+        "Age_Start": "63",
+        "qx_Probability_of_Dying": "0.011405",
+        "lx_Number_Surviving": "85,098",
+        "dx_Number_Dying": "971",
+        "Lx_Person_Years_Lived": "84,613",
+        "Tx_Total_Person_Years_Above_Age": "1,790,327",
+        "ex_Life_Expectancy": "21.0"
+      },
+      {
+        "Age": "64-65",
+        "Age_Start": "64",
+        "qx_Probability_of_Dying": "0.012197",
+        "lx_Number_Surviving": "84,128",
+        "dx_Number_Dying": "1,026",
+        "Lx_Person_Years_Lived": "83,615",
+        "Tx_Total_Person_Years_Above_Age": "1,705,714",
+        "ex_Life_Expectancy": "20.3"
+      },
+      {
+        "Age": "65-66",
+        "Age_Start": "65",
+        "qx_Probability_of_Dying": "0.013054",
+        "lx_Number_Surviving": "83,102",
+        "dx_Number_Dying": "1,085",
+        "Lx_Person_Years_Lived": "82,559",
+        "Tx_Total_Person_Years_Above_Age": "1,622,099",
+        "ex_Life_Expectancy": "19.5"
+      },
+      {
+        "Age": "66-67",
+        "Age_Start": "66",
+        "qx_Probability_of_Dying": "0.014088",
+        "lx_Number_Surviving": "82,017",
+        "dx_Number_Dying": "1,155",
+        "Lx_Person_Years_Lived": "81,439",
+        "Tx_Total_Person_Years_Above_Age": "1,539,540",
+        "ex_Life_Expectancy": "18.8"
+      },
+      {
+        "Age": "67-68",
+        "Age_Start": "67",
+        "qx_Probability_of_Dying": "0.015075",
+        "lx_Number_Surviving": "80,861",
+        "dx_Number_Dying": "1,219",
+        "Lx_Person_Years_Lived": "80,252",
+        "Tx_Total_Person_Years_Above_Age": "1,458,101",
+        "ex_Life_Expectancy": "18.0"
+      },
+      {
+        "Age": "68-69",
+        "Age_Start": "68",
+        "qx_Probability_of_Dying": "0.016150",
+        "lx_Number_Surviving": "79,642",
+        "dx_Number_Dying": "1,286",
+        "Lx_Person_Years_Lived": "78,999",
+        "Tx_Total_Person_Years_Above_Age": "1,377,849",
+        "ex_Life_Expectancy": "17.3"
+      },
+      {
+        "Age": "69-70",
+        "Age_Start": "69",
+        "qx_Probability_of_Dying": "0.017324",
+        "lx_Number_Surviving": "78,356",
+        "dx_Number_Dying": "1,357",
+        "Lx_Person_Years_Lived": "77,678",
+        "Tx_Total_Person_Years_Above_Age": "1,298,849",
+        "ex_Life_Expectancy": "16.6"
+      },
+      {
+        "Age": "70-71",
+        "Age_Start": "70",
+        "qx_Probability_of_Dying": "0.018460",
+        "lx_Number_Surviving": "76,999",
+        "dx_Number_Dying": "1,421",
+        "Lx_Person_Years_Lived": "76,288",
+        "Tx_Total_Person_Years_Above_Age": "1,221,172",
+        "ex_Life_Expectancy": "15.9"
+      },
+      {
+        "Age": "71-72",
+        "Age_Start": "71",
+        "qx_Probability_of_Dying": "0.019921",
+        "lx_Number_Surviving": "75,577",
+        "dx_Number_Dying": "1,506",
+        "Lx_Person_Years_Lived": "74,825",
+        "Tx_Total_Person_Years_Above_Age": "1,144,884",
+        "ex_Life_Expectancy": "15.1"
+      },
+      {
+        "Age": "72-73",
+        "Age_Start": "72",
+        "qx_Probability_of_Dying": "0.021541",
+        "lx_Number_Surviving": "74,072",
+        "dx_Number_Dying": "1,596",
+        "Lx_Person_Years_Lived": "73,274",
+        "Tx_Total_Person_Years_Above_Age": "1,070,059",
+        "ex_Life_Expectancy": "14.4"
+      },
+      {
+        "Age": "73-74",
+        "Age_Start": "73",
+        "qx_Probability_of_Dying": "0.023476",
+        "lx_Number_Surviving": "72,476",
+        "dx_Number_Dying": "1,701",
+        "Lx_Person_Years_Lived": "71,626",
+        "Tx_Total_Person_Years_Above_Age": "996,785",
+        "ex_Life_Expectancy": "13.8"
+      },
+      {
+        "Age": "74-75",
+        "Age_Start": "74",
+        "qx_Probability_of_Dying": "0.025685",
+        "lx_Number_Surviving": "70,775",
+        "dx_Number_Dying": "1,818",
+        "Lx_Person_Years_Lived": "69,866",
+        "Tx_Total_Person_Years_Above_Age": "925,160",
+        "ex_Life_Expectancy": "13.1"
+      },
+      {
+        "Age": "75-76",
+        "Age_Start": "75",
+        "qx_Probability_of_Dying": "0.028219",
+        "lx_Number_Surviving": "68,957",
+        "dx_Number_Dying": "1,946",
+        "Lx_Person_Years_Lived": "67,984",
+        "Tx_Total_Person_Years_Above_Age": "855,294",
+        "ex_Life_Expectancy": "12.4"
+      },
+      {
+        "Age": "76-77",
+        "Age_Start": "76",
+        "qx_Probability_of_Dying": "0.030546",
+        "lx_Number_Surviving": "67,011",
+        "dx_Number_Dying": "2,047",
+        "Lx_Person_Years_Lived": "65,988",
+        "Tx_Total_Person_Years_Above_Age": "787,310",
+        "ex_Life_Expectancy": "11.7"
+      },
+      {
+        "Age": "77-78",
+        "Age_Start": "77",
+        "qx_Probability_of_Dying": "0.034523",
+        "lx_Number_Surviving": "64,964",
+        "dx_Number_Dying": "2,243",
+        "Lx_Person_Years_Lived": "63,843",
+        "Tx_Total_Person_Years_Above_Age": "721,322",
+        "ex_Life_Expectancy": "11.1"
+      },
+      {
+        "Age": "78-79",
+        "Age_Start": "78",
+        "qx_Probability_of_Dying": "0.037655",
+        "lx_Number_Surviving": "62,721",
+        "dx_Number_Dying": "2,362",
+        "Lx_Person_Years_Lived": "61,540",
+        "Tx_Total_Person_Years_Above_Age": "657,479",
+        "ex_Life_Expectancy": "10.5"
+      },
+      {
+        "Age": "79-80",
+        "Age_Start": "79",
+        "qx_Probability_of_Dying": "0.042211",
+        "lx_Number_Surviving": "60,360",
+        "dx_Number_Dying": "2,548",
+        "Lx_Person_Years_Lived": "59,086",
+        "Tx_Total_Person_Years_Above_Age": "595,939",
+        "ex_Life_Expectancy": "9.9"
+      },
+      {
+        "Age": "80-81",
+        "Age_Start": "80",
+        "qx_Probability_of_Dying": "0.046538",
+        "lx_Number_Surviving": "57,812",
+        "dx_Number_Dying": "2,690",
+        "Lx_Person_Years_Lived": "56,466",
+        "Tx_Total_Person_Years_Above_Age": "536,853",
+        "ex_Life_Expectancy": "9.3"
+      },
+      {
+        "Age": "81-82",
+        "Age_Start": "81",
+        "qx_Probability_of_Dying": "0.052311",
+        "lx_Number_Surviving": "55,121",
+        "dx_Number_Dying": "2,883",
+        "Lx_Person_Years_Lived": "53,680",
+        "Tx_Total_Person_Years_Above_Age": "480,387",
+        "ex_Life_Expectancy": "8.7"
+      },
+      {
+        "Age": "82-83",
+        "Age_Start": "82",
+        "qx_Probability_of_Dying": "0.058338",
+        "lx_Number_Surviving": "52,238",
+        "dx_Number_Dying": "3,047",
+        "Lx_Person_Years_Lived": "50,714",
+        "Tx_Total_Person_Years_Above_Age": "426,707",
+        "ex_Life_Expectancy": "8.2"
+      },
+      {
+        "Age": "83-84",
+        "Age_Start": "83",
+        "qx_Probability_of_Dying": "0.064645",
+        "lx_Number_Surviving": "49,190",
+        "dx_Number_Dying": "3,180",
+        "Lx_Person_Years_Lived": "47,600",
+        "Tx_Total_Person_Years_Above_Age": "375,993",
+        "ex_Life_Expectancy": "7.6"
+      },
+      {
+        "Age": "84-85",
+        "Age_Start": "84",
+        "qx_Probability_of_Dying": "0.071961",
+        "lx_Number_Surviving": "46,010",
+        "dx_Number_Dying": "3,311",
+        "Lx_Person_Years_Lived": "44,355",
+        "Tx_Total_Person_Years_Above_Age": "328,393",
+        "ex_Life_Expectancy": "7.1"
+      },
+      {
+        "Age": "85-86",
+        "Age_Start": "85",
+        "qx_Probability_of_Dying": "0.079677",
+        "lx_Number_Surviving": "42,699",
+        "dx_Number_Dying": "3,402",
+        "Lx_Person_Years_Lived": "40,998",
+        "Tx_Total_Person_Years_Above_Age": "284,038",
+        "ex_Life_Expectancy": "6.7"
+      },
+      {
+        "Age": "86-87",
+        "Age_Start": "86",
+        "qx_Probability_of_Dying": "0.089580",
+        "lx_Number_Surviving": "39,297",
+        "dx_Number_Dying": "3,520",
+        "Lx_Person_Years_Lived": "37,537",
+        "Tx_Total_Person_Years_Above_Age": "243,040",
+        "ex_Life_Expectancy": "6.2"
+      },
+      {
+        "Age": "87-88",
+        "Age_Start": "87",
+        "qx_Probability_of_Dying": "0.100503",
+        "lx_Number_Surviving": "35,777",
+        "dx_Number_Dying": "3,596",
+        "Lx_Person_Years_Lived": "33,979",
+        "Tx_Total_Person_Years_Above_Age": "205,502",
+        "ex_Life_Expectancy": "5.7"
+      },
+      {
+        "Age": "88-89",
+        "Age_Start": "88",
+        "qx_Probability_of_Dying": "0.112498",
+        "lx_Number_Surviving": "32,181",
+        "dx_Number_Dying": "3,620",
+        "Lx_Person_Years_Lived": "30,371",
+        "Tx_Total_Person_Years_Above_Age": "171,523",
+        "ex_Life_Expectancy": "5.3"
+      },
+      {
+        "Age": "89-90",
+        "Age_Start": "89",
+        "qx_Probability_of_Dying": "0.125607",
+        "lx_Number_Surviving": "28,561",
+        "dx_Number_Dying": "3,587",
+        "Lx_Person_Years_Lived": "26,767",
+        "Tx_Total_Person_Years_Above_Age": "141,152",
+        "ex_Life_Expectancy": "4.9"
+      },
+      {
+        "Age": "90-91",
+        "Age_Start": "90",
+        "qx_Probability_of_Dying": "0.139858",
+        "lx_Number_Surviving": "24,974",
+        "dx_Number_Dying": "3,493",
+        "Lx_Person_Years_Lived": "23,227",
+        "Tx_Total_Person_Years_Above_Age": "114,385",
+        "ex_Life_Expectancy": "4.6"
+      },
+      {
+        "Age": "91-92",
+        "Age_Start": "91",
+        "qx_Probability_of_Dying": "0.155262",
+        "lx_Number_Surviving": "21,481",
+        "dx_Number_Dying": "3,335",
+        "Lx_Person_Years_Lived": "19,813",
+        "Tx_Total_Person_Years_Above_Age": "91,158",
+        "ex_Life_Expectancy": "4.2"
+      },
+      {
+        "Age": "92-93",
+        "Age_Start": "92",
+        "qx_Probability_of_Dying": "0.171809",
+        "lx_Number_Surviving": "18,146",
+        "dx_Number_Dying": "3,118",
+        "Lx_Person_Years_Lived": "16,587",
+        "Tx_Total_Person_Years_Above_Age": "71,344",
+        "ex_Life_Expectancy": "3.9"
+      },
+      {
+        "Age": "93-94",
+        "Age_Start": "93",
+        "qx_Probability_of_Dying": "0.189467",
+        "lx_Number_Surviving": "15,028",
+        "dx_Number_Dying": "2,847",
+        "Lx_Person_Years_Lived": "13,604",
+        "Tx_Total_Person_Years_Above_Age": "54,757",
+        "ex_Life_Expectancy": "3.6"
+      },
+      {
+        "Age": "94-95",
+        "Age_Start": "94",
+        "qx_Probability_of_Dying": "0.208176",
+        "lx_Number_Surviving": "12,181",
+        "dx_Number_Dying": "2,536",
+        "Lx_Person_Years_Lived": "10,913",
+        "Tx_Total_Person_Years_Above_Age": "41,153",
+        "ex_Life_Expectancy": "3.4"
+      },
+      {
+        "Age": "95-96",
+        "Age_Start": "95",
+        "qx_Probability_of_Dying": "0.227850",
+        "lx_Number_Surviving": "9,645",
+        "dx_Number_Dying": "2,198",
+        "Lx_Person_Years_Lived": "8,546",
+        "Tx_Total_Person_Years_Above_Age": "30,240",
+        "ex_Life_Expectancy": "3.1"
+      },
+      {
+        "Age": "96-97",
+        "Age_Start": "96",
+        "qx_Probability_of_Dying": "0.248376",
+        "lx_Number_Surviving": "7,447",
+        "dx_Number_Dying": "1,850",
+        "Lx_Person_Years_Lived": "6,523",
+        "Tx_Total_Person_Years_Above_Age": "21,694",
+        "ex_Life_Expectancy": "2.9"
+      },
+      {
+        "Age": "97-98",
+        "Age_Start": "97",
+        "qx_Probability_of_Dying": "0.269615",
+        "lx_Number_Surviving": "5,598",
+        "dx_Number_Dying": "1,509",
+        "Lx_Person_Years_Lived": "4,843",
+        "Tx_Total_Person_Years_Above_Age": "15,172",
+        "ex_Life_Expectancy": "2.7"
+      },
+      {
+        "Age": "98-99",
+        "Age_Start": "98",
+        "qx_Probability_of_Dying": "0.291405",
+        "lx_Number_Surviving": "4,088",
+        "dx_Number_Dying": "1,191",
+        "Lx_Person_Years_Lived": "3,493",
+        "Tx_Total_Person_Years_Above_Age": "10,328",
+        "ex_Life_Expectancy": "2.5"
+      },
+      {
+        "Age": "99-100",
+        "Age_Start": "99",
+        "qx_Probability_of_Dying": "0.313565",
+        "lx_Number_Surviving": "2,897",
+        "dx_Number_Dying": "908",
+        "Lx_Person_Years_Lived": "2,443",
+        "Tx_Total_Person_Years_Above_Age": "6,836",
+        "ex_Life_Expectancy": "2.4"
+      },
+      {
+        "Age": "100+",
+        "Age_Start": "100",
+        "qx_Probability_of_Dying": "1.000000",
+        "lx_Number_Surviving": "1,989",
+        "dx_Number_Dying": "1,989",
+        "Lx_Person_Years_Lived": "4,393",
+        "Tx_Total_Person_Years_Above_Age": "4,393",
+        "ex_Life_Expectancy": "2.2"
+      }
+    ]
   }
 }

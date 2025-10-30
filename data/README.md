@@ -6,10 +6,15 @@ This directory contains static data files used by the Forensic Economics Calcula
 
 All data sources have been selected to meet forensic economics standards and are commonly accepted in legal proceedings. The data includes:
 
+### Static Data Files (Included in Repository)
 1. **Skoog Tables** - Worklife expectancy based on Markov models
 2. **CDC Life Tables** - Life expectancy from National Vital Statistics
 3. **California Counties** - Reference data for California jurisdictions
 4. **SOC Occupation Codes** - Standard Occupational Classification system
+
+### Live API Data Sources (Fetched in Real-Time)
+5. **Federal Reserve H.15** - Current Treasury interest rates via FRED API
+6. **California Labor Market Info** - Wage growth data by occupation via EDD Open Data Portal
 
 ---
 
@@ -168,6 +173,135 @@ Public domain as a work of the U.S. Federal Government.
 
 ---
 
+## 5. Federal Reserve H.15 Selected Interest Rates (Live API)
+
+### Full Citation
+Board of Governors of the Federal Reserve System. (2025). H.15 Selected Interest Rates [Data file]. Retrieved via FRED API, Federal Reserve Bank of St. Louis. https://fred.stlouisfed.org/series/DGS1
+
+### Description
+The Federal Reserve H.15 release provides daily interest rates including Treasury constant maturity rates. This calculator fetches the 1-Year Treasury Constant Maturity Rate in real-time to use as the discount rate for present value calculations.
+
+### API Information
+- **Provider**: Federal Reserve Bank of St. Louis (FRED API)
+- **Series Code**: DGS1 (1-Year Treasury Constant Maturity Rate)
+- **API Endpoint**: `https://api.stlouisfed.org/fred/series/observations`
+- **Update Frequency**: Daily (business days)
+- **Historical Data**: Available from 1962 to present
+- **Format**: JSON via REST API
+
+### Authentication
+- **API Key Required**: Yes (free)
+- **Registration**: https://fredaccount.stlouisfed.org/apikeys
+- **Rate Limits**: No official limit, reasonable use expected
+
+### Source Information
+- **Primary Source**: https://www.federalreserve.gov/releases/h15/current/
+- **FRED Documentation**: https://fred.stlouisfed.org/docs/api/fred/
+- **Series Information**: https://fred.stlouisfed.org/series/DGS1
+
+### Data Structure
+- **Value**: Interest rate as percentage (e.g., 4.25 for 4.25%)
+- **Date**: Observation date (YYYY-MM-DD format)
+- **Missing Data**: Represented as '.' in FRED responses
+
+### Usage in Calculator
+- Used by `FedRateAgent` to fetch current Treasury rate
+- Used by `DiscountRateAgent` to calculate time value discount factors
+- Ensures present value calculations reflect current economic conditions
+
+### Fallback Mechanism
+When the API is unavailable, the system uses a cached fallback rate:
+- **Default Fallback**: 4.25% (based on 2025 market conditions)
+- **Provenance**: System logs indicate when fallback rates are used
+- **Configuration**: Fallback rate can be adjusted in `.env` file
+
+### Implementation
+- **File**: `src/utils/external_apis.py` → `FedClient` class
+- **Method**: `get_treasury_rates()`
+- **Timeout**: 30 seconds (configurable)
+- **Retry Logic**: 3 attempts with 2-second delays
+
+### Terms of Use
+- FRED data is free for non-commercial and commercial use
+- Attribution required: "Source: U.S. Federal Reserve via FRED, Federal Reserve Bank of St. Louis"
+- Full terms: https://fred.stlouisfed.org/docs/api/terms_of_use.html
+
+### License
+Public domain as a work of the U.S. Federal Government (Federal Reserve data).
+
+---
+
+## 6. California Labor Market Information (Live API)
+
+### Full Citation
+California Employment Development Department. (2025). Occupational Employment Statistics and Wages (OES) - California [Data file]. Retrieved via EDD Open Data Portal. https://data.edd.ca.gov/resource/dcfs-wgss.json
+
+### Description
+The California EDD provides wage data by occupation and geographic area through their Open Data Portal. This calculator fetches real-time wage growth rates by occupation and county to project future earnings in forensic economics calculations.
+
+### API Information
+- **Provider**: California Employment Development Department (EDD)
+- **Dataset**: Occupational Employment and Wages (OES)
+- **API Endpoint**: `https://data.edd.ca.gov/resource/dcfs-wgss.json`
+- **Query Language**: SoQL (Socrata Query Language)
+- **Update Frequency**: Quarterly
+- **Format**: JSON via REST API
+
+### Authentication
+- **API Key Required**: No (public access)
+- **Rate Limits**: Standard Socrata platform limits apply
+- **Technical Support**: opendata@edd.ca.gov
+
+### Source Information
+- **Primary Source**: https://labormarketinfo.edd.ca.gov/
+- **Wage Data**: https://labormarketinfo.edd.ca.gov/data/wages.html
+- **API Documentation**: https://edd.ca.gov/en/about_edd/edd_open_data_portal
+- **Data Portal**: https://data.edd.ca.gov/
+
+### Data Structure
+- **Occupation Code**: SOC code (e.g., "15-1252")
+- **Occupation Title**: Job title (e.g., "Software Developers")
+- **Area Name**: Geographic area (county or state)
+- **Mean Wage**: Average annual wage
+- **Year**: Data year
+
+### Wage Growth Calculation
+- System fetches multiple years of data for the occupation/county
+- Calculates year-over-year wage growth rate
+- Formula: `(current_year_wage - previous_year_wage) / previous_year_wage`
+
+### Usage in Calculator
+- Used by `CALaborMarketClient` to fetch wage growth rates
+- Used by `WageGrowthAgent` to project future earnings
+- Provides occupation-specific and county-specific wage trends
+
+### Fallback Mechanism
+When the API is unavailable or data is not found, the system uses a fallback rate:
+- **Default Fallback**: 2.8% (California average wage growth)
+- **Provenance**: System logs indicate when fallback rates are used
+- **Configuration**: Fallback rate can be adjusted in `.env` file
+
+### Implementation
+- **File**: `src/utils/external_apis.py` → `CALaborMarketClient` class
+- **Method**: `get_wage_growth_by_occupation(occupation, county)`
+- **Timeout**: 30 seconds (configurable)
+- **Retry Logic**: 3 attempts with 2-second delays
+
+### Data Vintage
+- Wage data updated to Q1 2025 using Employment Cost Index
+- Occupational employment estimates for May 2024
+- Source: Bureau of Labor Statistics and CA EDD
+
+### Terms of Use
+- EDD Open Data Portal data is freely available for public use
+- No registration required for public datasets
+- Attribution recommended but not required
+
+### License
+Public domain as data from California State Government.
+
+---
+
 ## Data Validation
 
 All data files can be validated using the data loader utility:
@@ -202,12 +336,16 @@ This will verify that:
 
 ### Recommended Update Frequency
 
-| Data Source | Update Frequency | Last Official Release |
-|-------------|------------------|----------------------|
-| Skoog Tables | Every 5-7 years | 2019 |
-| CDC Life Tables | Annually | 2023 |
-| California Counties | As needed (rarely changes) | 2024 |
-| SOC Codes | Every 10 years | 2018 (next: 2028) |
+| Data Source | Update Frequency | Last Official Release | Type |
+|-------------|------------------|----------------------|------|
+| Skoog Tables | Every 5-7 years | 2019 | Static |
+| CDC Life Tables | Annually | 2023 | Static |
+| California Counties | As needed (rarely changes) | 2024 | Static |
+| SOC Codes | Every 10 years | 2018 (next: 2028) | Static |
+| Federal Reserve H.15 (FRED) | Daily (business days) | Real-time | Live API |
+| CA Labor Market Info (EDD) | Quarterly | Real-time | Live API |
+
+**Note**: Live API sources are fetched in real-time during each analysis, ensuring the most current data is always used.
 
 ---
 
