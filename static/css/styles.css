@@ -26,7 +26,7 @@ body {
 }
 
 .container {
-    max-width: 900px;
+    max-width: 1400px;
     margin: 0 auto;
     padding: 20px;
 }
@@ -347,33 +347,72 @@ footer {
     margin: 0;
 }
 
-.analysis-overview {
+/* Dashboard Two-Column Layout */
+.dashboard-columns {
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 15px;
-    margin-bottom: 25px;
+    grid-template-columns: 380px 1fr;
+    gap: 25px;
+    margin-top: 20px;
+}
+
+.left-column {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.right-column {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.section-icon-title {
+    font-size: 1.1em;
+    margin-bottom: 15px;
+    color: var(--primary-color);
+    font-weight: 600;
+}
+
+/* Analysis Overview Section - Vertical Layout */
+.analysis-overview-section {
     padding: 20px;
     background: #f8f9fa;
     border-radius: 8px;
     border: 1px solid var(--border-color);
 }
 
-.overview-item {
-    text-align: center;
+.overview-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-bottom: 20px;
+}
+
+.overview-row {
+    display: grid;
+    grid-template-columns: 100px 1fr;
+    gap: 10px;
+    align-items: center;
+    padding: 8px 0;
+    border-bottom: 1px solid #e0e0e0;
+}
+
+.overview-row:last-child {
+    border-bottom: none;
 }
 
 .overview-label {
     font-size: 0.85em;
     color: #666;
-    margin-bottom: 5px;
     font-weight: 500;
 }
 
 .overview-value {
-    font-size: 1.1em;
+    font-size: 0.95em;
     color: var(--primary-color);
     font-weight: 600;
-    font-family: monospace;
+    word-break: break-all;
 }
 
 .current-step-section {
@@ -530,13 +569,99 @@ footer {
 }
 
 .agent-output {
+    font-size: 0.9em;
+    color: #333;
+    max-width: 400px;
+    line-height: 1.4;
+    cursor: pointer;
+    position: relative;
+    transition: all 0.2s ease;
+    padding: 8px;
+    border-radius: 4px;
+}
+
+.agent-output:hover {
+    background-color: #f0f8ff;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.agent-output.clickable::after {
+    content: ' 📋';
+    opacity: 0;
+    transition: opacity 0.2s ease;
+    font-size: 0.9em;
+}
+
+.agent-output.clickable:hover::after {
+    opacity: 0.5;
+}
+
+.agent-output.clickable {
+    cursor: pointer;
+}
+
+.agent-output-text {
+    display: block;
+}
+
+.agent-output-tooltip {
+    position: fixed;
+    background: rgba(0, 0, 0, 0.95);
+    color: white;
+    padding: 15px;
+    border-radius: 8px;
     font-family: monospace;
-    font-size: 0.85em;
-    color: #666;
-    max-width: 300px;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
+    font-size: 0.8em;
+    white-space: pre-wrap;
+    max-width: 500px;
+    max-height: 400px;
+    overflow-y: auto;
+    overflow-x: hidden;
+    z-index: 10000;
+    display: none;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.4);
+    pointer-events: none;
+}
+
+.agent-output.show-tooltip .agent-output-tooltip {
+    display: block;
+    pointer-events: auto;
+}
+
+.agent-output-tooltip:hover {
+    display: block;
+}
+
+/* Custom scrollbar for tooltip */
+.agent-output-tooltip::-webkit-scrollbar {
+    width: 8px;
+}
+
+.agent-output-tooltip::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 4px;
+}
+
+.agent-output-tooltip::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.3);
+    border-radius: 4px;
+}
+
+.agent-output-tooltip::-webkit-scrollbar-thumb:hover {
+    background: rgba(255, 255, 255, 0.5);
+}
+
+.copy-notification {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background: var(--success-color);
+    color: white;
+    padding: 12px 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+    z-index: 2000;
+    animation: slideIn 0.3s ease-out;
 }
 
 .download-section,
@@ -578,10 +703,17 @@ footer {
         font-size: 1em;
     }
 
-    .analysis-overview {
-        grid-template-columns: repeat(2, 1fr);
-        gap: 10px;
-        padding: 15px;
+    .dashboard-columns {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+
+    .left-column {
+        order: 1;
+    }
+
+    .right-column {
+        order: 2;
     }
 
     .agent-table {
@@ -594,7 +726,11 @@ footer {
     }
 
     .agent-output {
-        max-width: 150px;
+        max-width: 200px;
+    }
+
+    .agent-output-tooltip {
+        max-width: 280px;
     }
 }
 

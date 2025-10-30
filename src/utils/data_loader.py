@@ -75,6 +75,12 @@ def load_skoog_tables(force_reload: bool = False) -> Dict:
     except json.JSONDecodeError as e:
         raise ValueError(f"Invalid JSON in Skoog tables file: {e}")
 
+    # Check if data is already in transformed format
+    if 'worklife_expectancy' in raw_data and 'metadata' in raw_data:
+        # Data is already transformed, use it directly
+        _SKOOG_CACHE = raw_data
+        return raw_data
+
     # Helper function to extract first number from string like "21.04 20.99 0.25"
     def extract_wle(value):
         if value is None or (isinstance(value, float) and str(value) == 'nan'):
@@ -167,18 +173,13 @@ def load_skoog_tables(force_reload: bool = False) -> Dict:
         if wle is not None:
             women_data['bachelors_plus'][age_int] = wle
 
-    # WORKAROUND: If women's data is incomplete (PDF parsing issue), use men's data as fallback
-    # Note: This is not ideal for accuracy as worklife expectancies differ by gender
-    if not women_data['less_than_hs']:  # Check if any data was loaded
-        import warnings
-        warnings.warn(
-            "Women's worklife table (Table 37) is incomplete in JSON. "
-            "Using men's data as temporary fallback. This may affect accuracy. "
-            "Please update skoog_2019_markov_model.json with complete women's data.",
-            UserWarning
+    # Validate women's data is present
+    if not women_data['less_than_hs']:
+        raise ValueError(
+            "Women's worklife table is missing or incomplete in JSON. "
+            "For litigation accuracy, gender-specific data must be present. "
+            "Run data/skoog_tables/create_proper_women_data.py to generate proper data."
         )
-        print("[WARNING] Using men's worklife data for women due to incomplete Table 37")
-        women_data = men_data.copy()
 
     # Create metadata
     metadata = {

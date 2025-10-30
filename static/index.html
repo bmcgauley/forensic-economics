@@ -131,64 +131,76 @@
                     <p class="session-info-text">Real-time updates every 3 seconds | Session <span id="session-id">-</span></p>
                 </div>
 
-                <div class="analysis-overview">
-                    <div class="overview-item">
-                        <div class="overview-label">Session ID</div>
-                        <div id="session-id-full" class="overview-value">-</div>
-                    </div>
-                    <div class="overview-item">
-                        <div class="overview-label">Person</div>
-                        <div id="person-name" class="overview-value">-</div>
-                    </div>
-                    <div class="overview-item">
-                        <div class="overview-label">Status</div>
-                        <div id="analysis-status" class="overview-value">RUNNING</div>
-                    </div>
-                    <div class="overview-item">
-                        <div class="overview-label">Progress</div>
-                        <div id="agent-count" class="overview-value">0/8 agents</div>
-                    </div>
-                </div>
+                <div class="dashboard-columns">
+                    <!-- Left Column: Analysis Overview + Generated Files -->
+                    <div class="left-column">
+                        <div class="analysis-overview-section">
+                            <h4 class="section-icon-title">📊 Analysis Overview</h4>
 
-                <div class="current-step-section">
-                    <div class="step-label">Current Step:</div>
-                    <div id="current-step" class="current-step">Initializing...</div>
-                </div>
+                            <div class="overview-grid">
+                                <div class="overview-row">
+                                    <div class="overview-label">Session ID</div>
+                                    <div id="session-id-full" class="overview-value">-</div>
+                                </div>
+                                <div class="overview-row">
+                                    <div class="overview-label">Person</div>
+                                    <div id="person-name" class="overview-value">-</div>
+                                </div>
+                                <div class="overview-row">
+                                    <div class="overview-label">Status</div>
+                                    <div id="analysis-status" class="overview-value">RUNNING</div>
+                                </div>
+                                <div class="overview-row">
+                                    <div class="overview-label">Progress</div>
+                                    <div id="agent-count" class="overview-value">0/8 agents</div>
+                                </div>
+                            </div>
 
-                <div class="progress-section">
-                    <div id="progress-bar" class="progress-bar">
-                        <div id="progress-fill" class="progress-fill"></div>
-                        <span id="progress-text" class="progress-text">0%</span>
+                            <div class="current-step-section">
+                                <div class="step-label">Current Step:</div>
+                                <div id="current-step" class="current-step">Initializing...</div>
+                            </div>
+
+                            <div class="progress-section">
+                                <div id="progress-bar" class="progress-bar">
+                                    <div id="progress-fill" class="progress-fill"></div>
+                                    <span id="progress-text" class="progress-text">0%</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div id="download-section" class="download-section hidden">
+                            <h4 class="section-icon-title">📁 Generated Files</h4>
+                            <div id="download-link" class="download-link"></div>
+                        </div>
                     </div>
-                </div>
 
-                <div class="agent-flow-section">
-                    <h4>Agent Flow</h4>
-                    <div class="agent-table-container">
-                        <table id="agent-table" class="agent-table">
-                            <thead>
-                                <tr>
-                                    <th>Agent</th>
-                                    <th>Status</th>
-                                    <th>Message</th>
-                                    <th>Output</th>
-                                </tr>
-                            </thead>
-                            <tbody id="agent-table-body">
-                                <!-- Agent rows will be populated here -->
-                            </tbody>
-                        </table>
+                    <!-- Right Column: Agent Flow + Errors -->
+                    <div class="right-column">
+                        <div class="agent-flow-section">
+                            <h4 class="section-icon-title">🔄 Agent Flow</h4>
+                            <div class="agent-table-container">
+                                <table id="agent-table" class="agent-table">
+                                    <thead>
+                                        <tr>
+                                            <th>Agent</th>
+                                            <th>Status</th>
+                                            <th>Message</th>
+                                            <th>Output</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="agent-table-body">
+                                        <!-- Agent rows will be populated here -->
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                        <div id="errors-section" class="errors-section hidden">
+                            <h4 class="section-icon-title">⚠️ Errors & Issues</h4>
+                            <div id="error-list" class="error-list"></div>
+                        </div>
                     </div>
-                </div>
-
-                <div id="download-section" class="download-section hidden">
-                    <h4>Generated Files</h4>
-                    <div id="download-link" class="download-link"></div>
-                </div>
-
-                <div id="errors-section" class="errors-section hidden">
-                    <h4>Errors & Issues</h4>
-                    <div id="error-list" class="error-list"></div>
                 </div>
             </div>
 

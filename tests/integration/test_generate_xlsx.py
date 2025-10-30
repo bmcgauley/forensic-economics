@@ -25,7 +25,7 @@ def test_complete_workflow(sample_intake, temp_dir):
 
     # 1. Validate intake
     intake = Intake(sample_intake)
-    assert intake.victim_age == 35
+    assert intake.victim_age == 36  # Calculated from date_of_birth and present_date
     assert intake.salary == 85000.00
 
     # 2. Run agents
@@ -87,7 +87,7 @@ def test_complete_workflow(sample_intake, temp_dir):
     # Verify summary contains expected data
     summary = final_workbook['summary']
     assert 'victim_info' in summary
-    assert summary['victim_info']['age'] == 35
+    assert summary['victim_info']['age'] == 36  # Calculated from dates
     assert 'economic_summary' in summary
     assert summary['economic_summary']['total_present_value'] > 0
 

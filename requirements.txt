@@ -11,8 +11,14 @@ python-dotenv==1.0.0
 # Excel generation
 openpyxl==3.1.2
 
+# Date utilities
+python-dateutil==2.8.2
+
 # HTTP client for external APIs
 requests==2.31.0
+
+# PDF parsing
+pdfplumber==0.11.0
 
 # LLM Integration
 ollama==0.3.3

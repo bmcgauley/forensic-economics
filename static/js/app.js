@@ -329,6 +329,165 @@ function startStatusPolling(statusUrl) {
 }
 
 /**
+ * Format agent output as human-readable text
+ */
+function formatAgentOutput(output, agentName) {
+    if (!output || Object.keys(output).length === 0) {
+        return '-';
+    }
+
+    // Custom formatting for different agent types
+    const formatters = {
+        'PersonInvestigation': (data) => {
+            if (data.full_name && data.age && data.occupation && data.salary) {
+                return `Validated: ${data.full_name}, Age ${data.age}, ${data.occupation}, Salary $${data.salary.toLocaleString()}`;
+            }
+            if (data.person_name && data.validated_age) {
+                return `Validated: ${data.person_name}, Age ${data.validated_age}, ${data.occupation || 'N/A'}, Salary $${(data.annual_salary || 0).toLocaleString()}`;
+            }
+            return extractKeyInfo(data);
+        },
+        'Person Investigation': (data) => formatters['PersonInvestigation'](data),
+        'FedRateAgent': (data) => {
+            if (data.discount_rate !== undefined || data.rate !== undefined) {
+                const rate = data.discount_rate || data.rate;
+                const vintage = data.data_vintage ? ` (${data.data_vintage})` : '';
+                const maturity = data.maturity ? `, ${data.maturity}` : '';
+                return `Treasury Rate: ${rate}%${maturity}${vintage}`;
+            }
+            return extractKeyInfo(data);
+        },
+        'Federal Reserve': (data) => formatters['FedRateAgent'](data),
+        'LifeExpectancyAgent': (data) => {
+            if (data.life_expectancy !== undefined) {
+                const age = data.age ? ` (${data.age}-year-old` : '';
+                const gender = data.gender ? ` ${data.gender.toLowerCase()}` : '';
+                const source = data.source ? `, ${data.source}` : '';
+                return `Life Expectancy: ${data.life_expectancy} years${age}${gender}${source})`;
+            }
+            return extractKeyInfo(data);
+        },
+        'Life Expectancy': (data) => formatters['LifeExpectancyAgent'](data),
+        'SkoogTableAgent': (data) => {
+            if (data.worklife_expectancy !== undefined || data.median_years !== undefined) {
+                const years = data.worklife_expectancy || data.median_years;
+                const age = data.age ? ` for age ${data.age}` : '';
+                const occupation = data.occupation ? `, ${data.occupation}` : '';
+                return `Worklife Expectancy: ${years} years (median${age}${occupation})`;
+            }
+            return extractKeyInfo(data);
+        },
+        'Skoog Table': (data) => formatters['SkoogTableAgent'](data),
+        'WorklifeExpectancyAgent': (data) => formatters['SkoogTableAgent'](data),
+        'WageGrowthAgent': (data) => {
+            if (data.growth_rate !== undefined || data.annual_growth_rate !== undefined) {
+                const rate = data.growth_rate || data.annual_growth_rate;
+                const location = data.location || data.county ? ` in ${data.location || data.county}` : '';
+                const occupation = data.occupation ? ` for ${data.occupation}` : '';
+                return `Annual Growth Rate: ${rate}% applied${occupation}${location}`;
+            }
+            return extractKeyInfo(data);
+        },
+        'Annual Growth': (data) => formatters['WageGrowthAgent'](data),
+        'DiscountRateAgent': (data) => {
+            if (data.discount_rate !== undefined || data.rate !== undefined) {
+                const rate = data.discount_rate || data.rate;
+                return `Discount Rate: ${rate}% applied for present value calculations`;
+            }
+            return extractKeyInfo(data);
+        },
+        'PresentValueAgent': (data) => {
+            if (data.present_value !== undefined) {
+                const years = data.years_projected || data.projection_years ? ` for ${data.years_projected || data.projection_years}-year projection` : '';
+                const rate = data.discount_rate ? ` with ${data.discount_rate}% discount rate` : '';
+                return `Present Value: Calculated${years}${rate}`;
+            }
+            return extractKeyInfo(data);
+        },
+        'Present Value': (data) => formatters['PresentValueAgent'](data),
+        'ExcelReportAgent': (data) => {
+            if (data.filename) {
+                return `Excel Report:\n${data.filename}`;
+            }
+            return 'Excel Report Generated';
+        },
+        'Excel Report': (data) => formatters['ExcelReportAgent'](data),
+        'SummaryReportAgent': (data) => {
+            if (data.filename) {
+                return `Summary Report:\n${data.filename}`;
+            }
+            return 'Summary Report Created';
+        },
+        'Summary Report': (data) => formatters['SummaryReportAgent'](data)
+    };
+
+    // Helper to extract key info from any data structure
+    function extractKeyInfo(data) {
+        // Try to find and display the most important fields
+        const importantFields = ['name', 'full_name', 'rate', 'discount_rate', 'life_expectancy',
+                                'worklife_expectancy', 'growth_rate', 'present_value', 'filename',
+                                'age', 'occupation', 'salary', 'data_vintage'];
+
+        const info = [];
+        for (const field of importantFields) {
+            if (data[field] !== undefined && data[field] !== null) {
+                const value = typeof data[field] === 'number' ?
+                    (data[field] % 1 === 0 ? data[field].toLocaleString() : data[field].toFixed(2)) :
+                    data[field];
+                info.push(`${field.replace(/_/g, ' ')}: ${value}`);
+            }
+        }
+
+        if (info.length > 0) {
+            return info.join(', ');
+        }
+
+        // Last resort: show first few keys
+        const keys = Object.keys(data).slice(0, 3);
+        return keys.map(k => `${k}: ${String(data[k]).substring(0, 20)}`).join(', ');
+    }
+
+    // Try to use custom formatter
+    const formatter = formatters[agentName];
+    if (formatter) {
+        try {
+            return formatter(output);
+        } catch (e) {
+            console.warn(`Formatter error for ${agentName}:`, e);
+        }
+    }
+
+    // Fallback: Use extractKeyInfo
+    return extractKeyInfo(output);
+}
+
+/**
+ * Copy text to clipboard and show notification
+ */
+function copyToClipboard(text) {
+    navigator.clipboard.writeText(text).then(() => {
+        showCopyNotification();
+    }).catch(err => {
+        console.error('Failed to copy:', err);
+    });
+}
+
+/**
+ * Show copy notification
+ */
+function showCopyNotification() {
+    const notification = document.createElement('div');
+    notification.className = 'copy-notification';
+    notification.textContent = 'Copied to clipboard!';
+    document.body.appendChild(notification);
+
+    setTimeout(() => {
+        notification.style.animation = 'slideOut 0.3s ease-out';
+        setTimeout(() => notification.remove(), 300);
+    }, 2000);
+}
+
+/**
  * Update agent table with real-time progress
  */
 function updateAgentTable(agents) {
@@ -338,6 +497,13 @@ function updateAgentTable(agents) {
         console.error('[Dashboard] agent-table-body element not found');
         return;
     }
+
+    // Clean up old tooltips
+    document.querySelectorAll('.agent-output-tooltip').forEach(tooltip => {
+        if (!tooltip.matches(':hover')) {
+            tooltip.remove();
+        }
+    });
 
     // Clear existing rows
     tbody.innerHTML = '';
@@ -368,20 +534,80 @@ function updateAgentTable(agents) {
         messageCell.textContent = agent.message || '-';
         row.appendChild(messageCell);
 
-        // Output (condensed)
+        // Output (human-readable with click-to-copy and tooltip)
         const outputCell = document.createElement('td');
         outputCell.className = 'agent-output';
+
         if (agent.output && Object.keys(agent.output).length > 0) {
-            const outputText = JSON.stringify(agent.output, null, 2);
-            if (outputText.length > 100) {
-                outputCell.textContent = outputText.substring(0, 100) + '...';
-                outputCell.title = outputText; // Full output on hover
-            } else {
-                outputCell.textContent = outputText;
-            }
+            const rawJSON = JSON.stringify(agent.output, null, 2);
+            const humanReadable = formatAgentOutput(agent.output, agent.name);
+
+            // Create text element
+            const textSpan = document.createElement('span');
+            textSpan.className = 'agent-output-text';
+            textSpan.textContent = humanReadable;
+            outputCell.appendChild(textSpan);
+
+            // Create tooltip for raw JSON
+            const tooltip = document.createElement('div');
+            tooltip.className = 'agent-output-tooltip';
+            tooltip.textContent = rawJSON;
+            document.body.appendChild(tooltip); // Append to body for fixed positioning
+
+            let hideTimeout;
+
+            // Show tooltip on hover
+            outputCell.addEventListener('mouseenter', (e) => {
+                clearTimeout(hideTimeout);
+                const rect = outputCell.getBoundingClientRect();
+
+                // Position tooltip near the cell
+                tooltip.style.left = `${rect.left + 10}px`;
+                tooltip.style.top = `${rect.bottom + 5}px`;
+
+                // Adjust if tooltip goes off screen
+                setTimeout(() => {
+                    const tooltipRect = tooltip.getBoundingClientRect();
+                    if (tooltipRect.right > window.innerWidth) {
+                        tooltip.style.left = `${window.innerWidth - tooltipRect.width - 10}px`;
+                    }
+                    if (tooltipRect.bottom > window.innerHeight) {
+                        tooltip.style.top = `${rect.top - tooltipRect.height - 5}px`;
+                    }
+                }, 10);
+
+                outputCell.classList.add('show-tooltip');
+            });
+
+            // Hide tooltip when mouse leaves both cell and tooltip
+            outputCell.addEventListener('mouseleave', (e) => {
+                hideTimeout = setTimeout(() => {
+                    if (!tooltip.matches(':hover')) {
+                        outputCell.classList.remove('show-tooltip');
+                    }
+                }, 100);
+            });
+
+            // Keep tooltip visible when hovering over it
+            tooltip.addEventListener('mouseenter', () => {
+                clearTimeout(hideTimeout);
+                outputCell.classList.add('show-tooltip');
+            });
+
+            tooltip.addEventListener('mouseleave', () => {
+                outputCell.classList.remove('show-tooltip');
+            });
+
+            // Add click-to-copy functionality on cell
+            outputCell.classList.add('clickable');
+            outputCell.addEventListener('click', (e) => {
+                e.stopPropagation();
+                copyToClipboard(rawJSON);
+            });
         } else {
             outputCell.textContent = '-';
         }
+
         row.appendChild(outputCell);
 
         tbody.appendChild(row);

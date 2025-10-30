@@ -21,13 +21,23 @@ def sample_intake():
     """Sample intake data for testing."""
     return {
         'id': 'test-123',
+        'full_name': 'John Doe',
+        'date_of_birth': '1988-03-15',
+        'date_of_death': '2023-10-01',
+        'present_date': '2025-01-10',
+        'gender': 'Male',
+        'level_of_schooling': 'bachelors',
+        'occupation': 'Software Engineer',
+        'employment_status': 'employed_full_time',
+        'annual_salary': 85000.00,
+        'california_county': 'Los Angeles',
+        # Legacy fields for backward compatibility
         'victim_age': 35,
         'victim_sex': 'M',
-        'occupation': 'Software Engineer',
         'education': 'bachelors',
         'salary': 85000.00,
         'salary_type': 'current',
-        'location': 'US',
+        'location': 'Los Angeles, CA',
         'dependents': 2,
         'benefits': {
             'retirement_contribution': 5000.00,

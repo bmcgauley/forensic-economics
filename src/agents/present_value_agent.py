@@ -8,8 +8,9 @@ Outputs: {yearly_cashflows, pv_table, total_pv, ai_analysis, provenance_log}
 Single-file agent (target <=300 lines)
 """
 
-from datetime import datetime
+from datetime import datetime, timedelta
 from typing import Dict, Any
+from dateutil.relativedelta import relativedelta
 
 from ..utils.ollama_client import get_ollama_client
 
@@ -28,6 +29,9 @@ class PresentValueAgent:
         Args:
             input_json: Dictionary containing:
                 - victim_age (int): Current age
+                - date_of_birth (str): Date of birth (ISO format)
+                - date_of_death (str): Date of death (ISO format)
+                - present_date (str): Present value calculation date (ISO format)
                 - worklife_years (float): Years of remaining worklife
                 - projected_wages (dict): Wage projections by year
                 - discount_curve (list): Discount rates by year
@@ -49,14 +53,38 @@ class PresentValueAgent:
 
         # Extract inputs
         victim_age = input_json.get('victim_age')
+        date_of_birth_str = input_json.get('date_of_birth')
+        date_of_death_str = input_json.get('date_of_death')
+        present_date_str = input_json.get('present_date')
         worklife_years = input_json.get('worklife_years')
         projected_wages = input_json.get('projected_wages', {})
         discount_curve = input_json.get('discount_curve', [])
         benefits = input_json.get('benefits', {})
 
+        # Parse dates
+        try:
+            date_of_birth = datetime.fromisoformat(date_of_birth_str).date() if date_of_birth_str else None
+            date_of_death = datetime.fromisoformat(date_of_death_str).date() if date_of_death_str else None
+            present_date = datetime.fromisoformat(present_date_str).date() if present_date_str else datetime.now().date()
+        except (ValueError, AttributeError) as e:
+            print(f"[PRESENT_VALUE_AGENT] Error parsing dates: {e}")
+            date_of_birth = None
+            date_of_death = None
+            present_date = datetime.now().date()
+
+        # Calculate exact age at death (with decimals)
+        if date_of_birth and date_of_death:
+            age_at_death = (date_of_death - date_of_birth).days / 365.25
+        else:
+            age_at_death = float(victim_age) if victim_age else 0.0
+
         # DEBUG: Log received inputs
         print(f"[PRESENT_VALUE_AGENT] Input validation:")
         print(f"  - victim_age: {victim_age}")
+        print(f"  - age_at_death (decimal): {age_at_death:.2f}")
+        print(f"  - date_of_birth: {date_of_birth}")
+        print(f"  - date_of_death: {date_of_death}")
+        print(f"  - present_date: {present_date}")
         print(f"  - worklife_years: {worklife_years}")
         print(f"  - projected_wages keys: {list(projected_wages.keys())[:5] if projected_wages else 'EMPTY'}")
         print(f"  - discount_curve length: {len(discount_curve)}")
@@ -76,44 +104,105 @@ class PresentValueAgent:
             }
         })
 
-        # Calculate yearly cashflows
+        # Calculate yearly cashflows with legal format fields
         yearly_cashflows = []
         pv_table = []
         total_future_earnings = 0
         total_pv = 0
+        cumulative_value = 0
+        cumulative_pv = 0
 
         retirement_contribution = benefits.get('retirement_contribution', 0)
         health_benefits = benefits.get('health_benefits', 0)
 
         worklife_years_int = int(worklife_years)
 
-        for year in range(worklife_years_int):
+        # Determine start date for calculations
+        if date_of_death:
+            calculation_start_date = date_of_death
+            calculation_start_year = date_of_death.year
+        elif date_of_birth:
+            calculation_start_date = date_of_birth
+            calculation_start_year = date_of_birth.year
+        else:
+            calculation_start_date = present_date
+            calculation_start_year = present_date.year
+
+        for year in range(worklife_years_int + 1):  # Include partial final year
+            # Calculate age at this point (with decimals)
+            current_age = age_at_death + year
+
+            # Determine the start date for this year's earnings
+            if date_of_death:
+                year_start_date = date_of_death + relativedelta(years=year)
+                year_end_date = date_of_death + relativedelta(years=year+1)
+            else:
+                year_start_date = calculation_start_date + relativedelta(years=year)
+                year_end_date = calculation_start_date + relativedelta(years=year+1)
+
+            # Calculate portion of year
+            # For first year, calculate from death date to end of that calendar year
+            # For subsequent years, it's typically 1.0 (full year)
+            # For final year, calculate partial year based on retirement age
+            if year == 0 and date_of_death:
+                # First year: calculate days from death to end of first year period
+                days_in_first_year = (year_end_date - date_of_death).days
+                portion_of_year = days_in_first_year / 365.25
+            elif year == worklife_years_int and worklife_years != worklife_years_int:
+                # Final partial year
+                portion_of_year = worklife_years - worklife_years_int
+            else:
+                portion_of_year = 1.0
+
+            # Skip if portion is too small
+            if portion_of_year <= 0:
+                continue
+
             # Get projected wage for this year
             base_wage = projected_wages.get(str(year), projected_wages.get(year, 0))
 
-            # Add benefits
-            total_compensation = base_wage + retirement_contribution + health_benefits
+            # Full year value (without proration)
+            full_year_value = base_wage + retirement_contribution + health_benefits
+
+            # Actual value for this period (prorated)
+            actual_value = full_year_value * portion_of_year
+
+            # Update cumulative value
+            cumulative_value += actual_value
 
             # Get discount rate for this year
             discount_rate = discount_curve[year] if year < len(discount_curve) else discount_curve[-1]
 
             # Calculate present value factor: 1 / (1 + r)^t
+            # Use continuous compounding based on the year number
             pv_factor = 1 / ((1 + discount_rate) ** (year + 1))
 
-            # Calculate present value
-            pv = total_compensation * pv_factor
+            # Calculate present value for this period
+            pv = actual_value * pv_factor
+
+            # Update cumulative present value
+            cumulative_pv += pv
 
             yearly_cashflows.append({
+                'age': round(current_age, 1),
+                'start_date': year_start_date.year,
+                'year_number': float(year + 1),
+                'portion_of_year': round(portion_of_year, 2),
+                'full_year_value': round(full_year_value, 2),
+                'actual_value': round(actual_value, 2),
+                'cumulative_value': round(cumulative_value, 2),
+                'discount_factor': round(pv_factor, 5),
+                'present_value': round(pv, 2),
+                'cumulative_present_value': round(cumulative_pv, 2),
+                # Legacy fields for backward compatibility
                 'year': year,
-                'age': victim_age + year,
                 'base_wage': round(base_wage, 2),
-                'total_compensation': round(total_compensation, 2),
+                'total_compensation': round(full_year_value, 2),
                 'discount_rate': round(discount_rate, 4),
                 'pv_factor': round(pv_factor, 6),
-                'present_value': round(pv, 2)
             })
 
-            total_future_earnings += total_compensation
+            total_future_earnings += actual_value
             total_pv += pv
 
         provenance_log.append({

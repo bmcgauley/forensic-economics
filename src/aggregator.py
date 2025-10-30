@@ -50,7 +50,8 @@ class Aggregator:
                 'sex': intake.get('victim_sex'),
                 'occupation': intake.get('occupation'),
                 'education': intake.get('education'),
-                'location': intake.get('location')
+                'location': intake.get('location'),
+                'full_name': intake.get('full_name', '[CONFIDENTIAL]')
             },
             'life_expectancy': {
                 'expected_remaining_years': life_expectancy.get('expected_remaining_years', 0),

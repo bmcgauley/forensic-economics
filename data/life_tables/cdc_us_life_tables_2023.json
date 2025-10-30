@@ -13,7 +13,7 @@
       "Tx_Total_Person_Years_Above_Age": "Total number of person-years lived above age x",
       "ex_Life_Expectancy": "Expectation of life at age x (years)"
     },
-    "rows": 101,
+    "rows": 100,
     "data": [
       {
         "Age": "0-1",
@@ -1014,16 +1014,6 @@
         "Lx_Person_Years_Lived": "2,443",
         "Tx_Total_Person_Years_Above_Age": "6,836",
         "ex_Life_Expectancy": "2.4"
-      },
-      {
-        "Age": "100+",
-        "Age_Start": "100",
-        "qx_Probability_of_Dying": "1.000000",
-        "lx_Number_Surviving": "1,989",
-        "dx_Number_Dying": "1,989",
-        "Lx_Person_Years_Lived": "4,393",
-        "Tx_Total_Person_Years_Above_Age": "4,393",
-        "ex_Life_Expectancy": "2.2"
       }
     ]
   }

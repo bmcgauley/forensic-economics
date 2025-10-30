@@ -58,9 +58,15 @@ class XLSXGenerator:
         return output_path
 
     def _create_summary_sheet(self, wb: Workbook, data: Dict[str, Any]):
-        """Create Summary worksheet with key calculations."""
+        """Create Summary worksheet with legal standard format."""
         ws = wb.create_sheet("Summary", 0)
         summary = data.get('summary', {})
+        yearly = data.get('yearly', [])
+        victim_info = summary.get('victim_info', {})
+        econ = summary.get('economic_summary', {})
+
+        # Get cumulative present value from last row of yearly data
+        cumulative_pv = yearly[-1].get('cumulative_present_value', 0) if yearly else 0
 
         row = 1
 
@@ -69,80 +75,122 @@ class XLSXGenerator:
         ws[f'A{row}'].font = self.title_font
         row += 2
 
-        # Victim Information
-        ws[f'A{row}'] = "VICTIM INFORMATION"
-        ws[f'A{row}'].font = self.header_font
+        # Header section - victim information and key values
+        ws[f'A{row}'] = "Name:"
+        ws[f'B{row}'] = victim_info.get('full_name', '[CONFIDENTIAL]')
         row += 1
 
-        victim_info = summary.get('victim_info', {})
-        ws[f'A{row}'] = "Age:"
-        ws[f'B{row}'] = victim_info.get('age', '')
-        row += 1
-        ws[f'A{row}'] = "Sex:"
-        ws[f'B{row}'] = victim_info.get('sex', '')
-        row += 1
-        ws[f'A{row}'] = "Occupation:"
-        ws[f'B{row}'] = victim_info.get('occupation', '')
-        row += 1
-        ws[f'A{row}'] = "Education:"
-        ws[f'B{row}'] = victim_info.get('education', '')
-        row += 1
-        ws[f'A{row}'] = "Jurisdiction:"
-        ws[f'B{row}'] = victim_info.get('location', '')
+        ws[f'A{row}'] = "Item:"
+        ws[f'B{row}'] = "Earnings Loss (More Conservative)"
+        ws[f'B{row}'].font = Font(color="C65D57")  # Reddish color like in image
         row += 2
 
-        # Life & Work Expectancy
-        ws[f'A{row}'] = "LIFE & WORK EXPECTANCY"
-        ws[f'A{row}'].font = self.header_font
+        # Key values in right-aligned format
+        ws[f'F{row}'] = econ.get('current_salary', 0)
+        ws[f'F{row}'].number_format = '$#,##0.00'
+        ws[f'F{row}'].font = Font(color="C65D57")
+        ws[f'G{row}'] = "<-- Base Value"
         row += 1
 
-        life_exp = summary.get('life_expectancy', {})
-        ws[f'A{row}'] = "Expected Remaining Years:"
-        ws[f'B{row}'] = life_exp.get('expected_remaining_years', 0)
+        ws[f'F{row}'] = econ.get('discount_rate', 0)
+        ws[f'F{row}'].number_format = '0.00%'
+        ws[f'F{row}'].font = Font(color="C65D57")
+        ws[f'G{row}'] = "<-- Discount rate"
         row += 1
 
-        worklife = summary.get('worklife', {})
-        ws[f'A{row}'] = "Worklife Years Remaining:"
-        ws[f'B{row}'] = worklife.get('worklife_years', 0)
-        row += 1
-        ws[f'A{row}'] = "Retirement Age:"
-        ws[f'B{row}'] = worklife.get('retirement_age', 0)
+        ws[f'F{row}'] = econ.get('wage_growth_rate', 0)
+        ws[f'F{row}'].number_format = '0.00%'
+        ws[f'F{row}'].font = Font(color="C65D57")
+        ws[f'G{row}'] = "<-- Annual growth rate"
         row += 2
 
-        # Economic Summary
-        ws[f'A{row}'] = "ECONOMIC CALCULATIONS"
-        ws[f'A{row}'].font = self.header_font
-        row += 1
-
-        econ = summary.get('economic_summary', {})
-        ws[f'A{row}'] = "Current Salary:"
-        ws[f'B{row}'] = econ.get('current_salary', 0)
-        ws[f'B{row}'].number_format = '$#,##0.00'
-        row += 1
-        ws[f'A{row}'] = "Wage Growth Rate:"
-        ws[f'B{row}'] = econ.get('wage_growth_rate', 0)
-        ws[f'B{row}'].number_format = '0.00%'
-        row += 1
-        ws[f'A{row}'] = "Discount Rate:"
-        ws[f'B{row}'] = econ.get('discount_rate', 0)
-        ws[f'B{row}'].number_format = '0.00%'
+        ws[f'F{row}'] = cumulative_pv
+        ws[f'F{row}'].number_format = '$#,##0'
+        ws[f'F{row}'].font = Font(color="C65D57")
+        ws[f'G{row}'] = "<-- Cumulative Present Value"
         row += 2
 
-        ws[f'A{row}'] = "Total Future Earnings (Nominal):"
-        ws[f'B{row}'] = econ.get('total_future_earnings', 0)
-        ws[f'B{row}'].number_format = '$#,##0.00'
-        ws[f'B{row}'].font = Font(bold=True)
+        # Present Value Date
+        ws[f'E{row}'] = "Present Value Date:"
+        ws[f'E{row}'].font = self.header_font
         row += 1
 
-        ws[f'A{row}'] = "TOTAL PRESENT VALUE:"
-        ws[f'B{row}'] = econ.get('total_present_value', 0)
-        ws[f'B{row}'].number_format = '$#,##0.00'
-        ws[f'A{row}'].font = self.title_font
-        ws[f'B{row}'].font = self.title_font
+        # Get present date from version metadata or use current date
+        from datetime import datetime
+        present_date_str = data.get('version_metadata', {}).get('created_at', datetime.utcnow().isoformat())
+        try:
+            present_date = datetime.fromisoformat(present_date_str.replace('Z', '+00:00'))
+        except:
+            present_date = datetime.utcnow()
 
-        # Adjust column widths
-        ws.column_dimensions['A'].width = 30
-        ws.column_dimensions['B'].width = 20
+        ws[f'E{row}'] = "Month -->"
+        ws[f'F{row}'] = present_date.strftime('%b')
+        row += 1
+        ws[f'E{row}'] = "Day -->"
+        ws[f'F{row}'] = present_date.day
+        row += 1
+        ws[f'E{row}'] = "Year -->"
+        ws[f'F{row}'] = present_date.year
+        row += 3
+
+        # Table headers - legal standard format
+        headers = [
+            'Age',
+            'Start\nDate',
+            'Year\nNumber',
+            'Portion\nof Year',
+            'Full Year\nValue',
+            'Actual\nValue',
+            'Cumulative\nValue',
+            'Discount\nFactor',
+            'Present\nValue',
+            'Cumulative\nPresent Value'
+        ]
+
+        header_row = row
+        for col, header in enumerate(headers, 1):
+            cell = ws.cell(row=header_row, column=col, value=header)
+            cell.font = self.header_font
+            cell.fill = PatternFill(start_color="000000", end_color="000000", fill_type="solid")
+            cell.font = Font(bold=True, color="FFFFFF")
+            cell.alignment = Alignment(horizontal='center', vertical='center', wrap_text=True)
+            cell.border = self.border
+
+        row += 1
+
+        # Data rows - populate from yearly cashflows
+        for year_data in yearly:
+            age = year_data.get('age', 0)
+
+            ws.cell(row=row, column=1, value=age).number_format = '0.0'
+            ws.cell(row=row, column=1).fill = PatternFill(start_color="FFFF00", end_color="FFFF00", fill_type="solid")  # Yellow highlight
+            ws.cell(row=row, column=2, value=year_data.get('start_date', '')).alignment = Alignment(horizontal='center')
+            ws.cell(row=row, column=3, value=year_data.get('year_number', 0)).number_format = '0.0'
+            ws.cell(row=row, column=4, value=year_data.get('portion_of_year', 0)).number_format = '0.00'
+            ws.cell(row=row, column=5, value=year_data.get('full_year_value', 0)).number_format = '$#,##0'
+            ws.cell(row=row, column=6, value=year_data.get('actual_value', 0)).number_format = '$#,##0'
+            ws.cell(row=row, column=7, value=year_data.get('cumulative_value', 0)).number_format = '$#,##0'
+            ws.cell(row=row, column=8, value=year_data.get('discount_factor', 0)).number_format = '0.00000'
+            ws.cell(row=row, column=9, value=year_data.get('present_value', 0)).number_format = '$#,##0'
+            ws.cell(row=row, column=10, value=year_data.get('cumulative_present_value', 0)).number_format = '$#,##0'
+
+            # Add borders to all cells in this row
+            for col in range(1, 11):
+                ws.cell(row=row, column=col).border = self.border
+
+            row += 1
+
+        # Adjust column widths for readability
+        ws.column_dimensions['A'].width = 8   # Age
+        ws.column_dimensions['B'].width = 10  # Start Date
+        ws.column_dimensions['C'].width = 8   # Year Number
+        ws.column_dimensions['D'].width = 10  # Portion of Year
+        ws.column_dimensions['E'].width = 12  # Full Year Value
+        ws.column_dimensions['F'].width = 12  # Actual Value
+        ws.column_dimensions['G'].width = 15  # Cumulative Value
+        ws.column_dimensions['H'].width = 12  # Discount Factor
+        ws.column_dimensions['I'].width = 12  # Present Value
+        ws.column_dimensions['J'].width = 18  # Cumulative Present Value
 
     def _create_yearly_detail_sheet(self, wb: Workbook, data: Dict[str, Any]):
         """Create Yearly Detail worksheet with year-by-year calculations."""
