@@ -52,3 +52,5 @@ Thumbs.db
 
 # Application specific
 job_storage/
+data/life_tables/nvsr74-06.pdf
+data/skoog_tables/skoog2.pdf

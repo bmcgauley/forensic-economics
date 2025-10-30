@@ -12,15 +12,16 @@
 | Metric | Status |
 |--------|--------|
 | **Total Tasks** | 107 |
-| **Completed** | ✅ 25 tasks (23.4%) |
-| **Remaining** | ⏳ 82 tasks (76.6%) |
-| **Critical Path** | ⚠️ 31 tasks (P0 + P1) |
-| **MVP Status** | ✅ **WORKING** (Phases 1-3 complete) |
-| **Assignment Compliance** | ❌ **NOT READY** (82 tasks remain) |
+| **Completed** | ✅ 35 tasks (32.7%) |
+| **Remaining** | ⏳ 72 tasks (67.3%) |
+| **Critical Path** | ⚠️ 21 tasks (P0 + P1) |
+| **MVP Status** | ✅ **WORKING** (Phases 1-4 complete) |
+| **Assignment Compliance** | ⚠️ **IN PROGRESS** (Phase 5 complete, 72 tasks remain) |
 
-## What's Working (MVP - Phases 1-3) ✅
+## What's Working (MVP - Phases 1-4) ✅
 
-- ✅ Dashboard form with basic input fields
+- ✅ Dashboard form with assignment-compliant fields (Phase 4 complete)
+- ✅ Date pickers, JSON upload, California counties, SOC codes
 - ✅ REST API (generate, status, download endpoints)
 - ✅ 5 core agents (life, worklife, wage, discount, present value)
 - ✅ Excel generation (4 worksheets)
@@ -30,10 +31,10 @@
 
 ## What's Missing (Assignment Compliance) ❌
 
-### P0 BLOCKING (18 tasks - MUST DO)
-- ❌ Dashboard fields don't match assignment (Phase 4)
-- ❌ Skoog Tables not included (Phase 5)
-- ❌ CDC Life Tables not included (Phase 5)
+### P0 BLOCKING (8 tasks - MUST DO)
+- ✅ Dashboard fields don't match assignment (Phase 4 - COMPLETE)
+- ✅ Skoog Tables not included (Phase 5 - COMPLETE)
+- ✅ CDC Life Tables not included (Phase 5 - COMPLETE)
 - ❌ Federal Reserve H.15 live API (Phase 6)
 - ❌ CA Labor Market Info live API (Phase 6)
 - ❌ Federal Reserve Rate Agent (Phase 7)
@@ -46,11 +47,11 @@
 
 ## 🚀 Next Steps
 
-**START HERE:** Phase 4 - Dashboard Fixes (T039..T044)
+**START HERE:** Phase 6 - Live API Integrations (T049..T052)
 
-1. Update form fields to match assignment exactly
-2. Add Skoog Tables and CDC Life Tables data
-3. Implement live API clients
+1. ✅ Update form fields to match assignment exactly (Phase 4 complete)
+2. ✅ Add Skoog Tables and CDC Life Tables data (Phase 5 complete)
+3. Implement live API clients (Federal Reserve H.15, CA Labor Market)
 4. Create supporting agents
 5. Build supervisor agent
 6. Add real-time progress UI
@@ -90,15 +91,17 @@
 ### 2. Data Sources NOT Implemented Per Assignment
 
 **LEFT SIDE - Static Data Files (MUST be included in project):**
-- ❌ **Skoog Tables** - "Markov Model of Labor Force Activity 2012-17" by Skoog, Ciecka, and Krueger, Journal of Forensic Economics 28(1-2), 2019, pp. 15-108
-  - Status: NOT in project
-  - Location needed: `data/skoog_tables_2019.json` or `.csv`
+- ✅ **Skoog Tables** - "Markov Model of Labor Force Activity 2012-17" by Skoog, Ciecka, and Krueger, Journal of Forensic Economics 28(1-2), 2019, pp. 15-108
+  - Status: ✅ **COMPLETE** - Added to project
+  - Location: `data/skoog_tables/skoog_2019_markov_model.json`
   - Used by: WorklifeExpectancyAgent
+  - Includes: Worklife expectancy by age, gender, and education level
 
-- ❌ **CDC Life Tables** - National Vital Statistics Reports, U.S. Life Tables, https://www.cdc.gov
-  - Status: Using hardcoded placeholders (Male=78.5, Female=82.3)
-  - Location needed: `data/cdc_life_tables_2023.json` or `.csv`
+- ✅ **CDC Life Tables** - National Vital Statistics Reports, U.S. Life Tables, https://www.cdc.gov
+  - Status: ✅ **COMPLETE** - Added to project
+  - Location: `data/life_tables/cdc_us_life_tables_2023.json`
   - Used by: LifeExpectancyAgent
+  - Includes: Life expectancy by age and gender
 
 **RIGHT SIDE - Live API Fetches (MUST fetch in real-time):**
 - ❌ **Federal Reserve H.15 Selected Interest Rates** - 1-Year Treasury Constant Maturity Rate
@@ -183,37 +186,43 @@
 ## Quick Start Guide for Assignment Compliance
 
 **Status**:
-- ✅ **MVP COMPLETE** (25/107 tasks done - Phases 1-3)
-- ⏳ **82 tasks remaining** for assignment compliance
-- ⚠️ **31 critical tasks** (P0 + P1) must be done before submission
+- ✅ **MVP + DASHBOARD + STATIC DATA COMPLETE** (35/107 tasks done - Phases 1-5)
+- ⏳ **72 tasks remaining** for assignment compliance
+- ⚠️ **21 critical tasks** (P0 + P1) must be done before submission
 
 **To start working on assignment compliance:**
 
 1. Read the gap analysis above carefully
-2. **BEGIN HERE** → Phase 4 (Dashboard Fixes) - Tasks T039..T044
+2. **BEGIN HERE** → Phase 6 (Live API Integrations) - Tasks T049..T052
 3. Follow the recommended execution order in the Summary section
-4. All P0 (BLOCKING) tasks MUST be completed before submission - 18 tasks
+4. All P0 (BLOCKING) tasks MUST be completed before submission - 8 tasks
 5. P1 (HIGH) tasks are strongly recommended for full compliance - 13 tasks
 
 **Key Files to Update:**
-- `static/index.html` - Dashboard form fields
-- `src/models/intake.py` - Input validation
-- `src/utils/external_apis.py` - Live API clients
-- `src/agents/fed_rate_agent.py` - NEW supporting agent
-- `src/agents/skoog_table_agent.py` - NEW supporting agent
-- `src/agents/supervisor_agent.py` - NEW coordination agent
-- `data/` - Add Skoog Tables and CDC Life Tables
+- ✅ `static/index.html` - Dashboard form fields (Phase 4 complete)
+- ✅ `src/models/intake.py` - Input validation (Phase 4 complete)
+- ✅ `data/skoog_tables/` - Skoog worklife tables (Phase 5 complete)
+- ✅ `data/life_tables/` - CDC life expectancy tables (Phase 5 complete)
+- ✅ `src/utils/data_loader.py` - Data loading utility (Phase 5 complete)
+- ❌ `src/utils/external_apis.py` - Live API clients
+- ❌ `src/agents/fed_rate_agent.py` - NEW supporting agent
+- ❌ `src/agents/skoog_table_agent.py` - NEW supporting agent
+- ❌ `src/agents/supervisor_agent.py` - NEW coordination agent
 
 **What Works Now:**
-- ✓ Basic dashboard and intake form
+- ✓ Assignment-compliant dashboard form with all required fields
+- ✓ Date pickers, JSON upload, California counties, SOC occupation codes
 - ✓ 5 core agents (life expectancy, worklife, wage, discount, present value)
 - ✓ Excel generation (4 sheets)
 - ✓ Job management and status polling
 - ✓ Basic provenance tracking
+- ✓ Skoog Tables data (worklife expectancy by age, gender, education)
+- ✓ CDC Life Tables data (life expectancy by age and gender)
+- ✓ Data loading utility with caching and validation
 
 **What's Missing (Per Assignment):**
-- ❌ Dashboard fields don't match
-- ❌ Static data files (Skoog, CDC) not included
+- ✅ Dashboard fields don't match (Phase 4 complete)
+- ✅ Static data files (Skoog, CDC) not included (Phase 5 complete)
 - ❌ Live APIs (Fed H.15, CA Labor Market) not implemented
 - ❌ Supporting agents (Fed Rate, Skoog Table) don't exist
 - ❌ Supervisor agent doesn't exist
@@ -270,7 +279,7 @@
 
 ### Dashboard Field Updates (T039-T044)
 
-- [ ] T039 [P0] Update `static/index.html` dashboard form to match assignment requirements:
+- [x] T039 [P0] Update `static/index.html` dashboard form to match assignment requirements:
   - Remove: victim_age (replace with date_of_birth)
   - Remove: salary_type, dependents, retirement_contribution, health_benefits
   - Add: full_name (text input, required)
@@ -284,7 +293,7 @@
   - Keep: salary, education (as level_of_schooling)
   - Add: JSON file upload zone with drag-and-drop
 
-- [ ] T040 [P0] Update `src/models/intake.py` validation to match new field requirements:
+- [x] T040 [P0] Update `src/models/intake.py` validation to match new field requirements:
   - Add full_name validation (non-empty string)
   - Add date_of_birth validation (valid date, must be in past)
   - Add date_of_death validation (optional, if present must be after DOB)
@@ -294,52 +303,59 @@
   - Remove: salary_type, dependents, benefits fields
   - Update: Calculate age from date_of_birth and present_date
 
-- [ ] T041 [P0] Add California counties data file `data/california_counties.json` with all 58 county names
+- [x] T041 [P0] Add California counties data file `data/california_counties.json` with all 58 county names
 
-- [ ] T042 [P0] Add SOC occupation codes data file `data/soc_occupations.json` with standard occupation codes and titles
+- [x] T042 [P0] Add SOC occupation codes data file `data/soc_occupations.json` with standard occupation codes and titles
 
-- [ ] T043 [P0] Update `static/js/app.js` to handle:
+- [x] T043 [P0] Update `static/js/app.js` to handle:
   - Date picker interactions for DOB, DOD, Present Date
   - JSON file upload (drag-and-drop and file browse)
   - Pre-populate form from uploaded JSON
   - Calculate age from dates automatically
 
-- [ ] T044 [P0] Update `static/css/styles.css` to match assignment UI styling (green header, clean form layout)
+- [x] T044 [P0] Update `static/css/styles.css` to match assignment UI styling (green header, clean form layout)
 
-## Phase 5: Assignment Compliance - Static Data Sources (Priority: P0 - BLOCKING)
+## Phase 5: Assignment Compliance - Static Data Sources (Priority: P0 - BLOCKING) ✅ COMPLETE
 
 **Goal**: Add required static data files (Skoog Tables, CDC Life Tables) to project.
 
-**Critical**: These data sources MUST be included per assignment requirements (left side of sources slide).
+**Critical**: These data sources MUST be included per assignment
+requirements (left side of sources slide).
+Reference:
+==================================================================
+(for life expectancy) National Vital Statistics Reports, U.S. Life Tables, U.S. Dept of Health and Human Services, https://www.cdc.gov
 
-### Static Data Files (T045-T048)
+(for work-life expectancy) the Markov Model of Labor Force Activity 2012-17: Extended, tables of Central Tendency, Shape, Percentile Points, and Bootstrap Standard Errors by Gary R. Skoog, James E. Ciecka, and Kurt V. Krueger, Journal of Forensic Economics 28(1-2), 2019, pp. 15-108
+==================================================================
 
-- [ ] T045 [P0] Download/obtain Skoog Tables data from "Markov Model of Labor Force Activity 2012-17" (Journal of Forensic Economics 28(1-2), 2019):
-  - Create `data/skoog_tables/` directory
-  - Add worklife expectancy tables by age, gender, education
-  - Format as JSON or CSV for easy parsing
-  - Include metadata: source citation, publication year, table version
-  - Path: `data/skoog_tables/skoog_2019_markov_model.json`
+### Static Data Files (T045-T048) ✅ ALL COMPLETE
 
-- [ ] T046 [P0] Download/obtain CDC Life Tables from National Vital Statistics Reports:
-  - Create `data/life_tables/` directory
-  - Add U.S. Life Tables (latest available, recommend 2021-2023)
-  - Include tables by age and gender
-  - Format as JSON or CSV
-  - Include metadata: source URL, table year, publication date
-  - Path: `data/life_tables/cdc_us_life_tables_2023.json`
+- [x] T045 [P0] Download/obtain Skoog Tables data from "Markov Model of Labor Force Activity 2012-17" (Journal of Forensic Economics 28(1-2), 2019):
+  - Create `data/skoog_tables/` directory ✅
+  - Add worklife expectancy tables by age, gender, education ✅
+  - Format as JSON or CSV for easy parsing ✅
+  - Include metadata: source citation, publication year, table version ✅
+  - Path: `data/skoog_tables/skoog_2019_markov_model.json` ✅
 
-- [ ] T047 [P0] Create data loading utility `src/utils/data_loader.py`:
-  - Function: load_skoog_tables() → returns parsed Skoog data
-  - Function: load_life_tables() → returns parsed CDC life table data
-  - Include caching to avoid repeated file I/O
-  - Add validation to ensure data files exist and are valid
+- [x] T046 [P0] Download/obtain CDC Life Tables from National Vital Statistics Reports:
+  - Create `data/life_tables/` directory ✅
+  - Add U.S. Life Tables (latest available, recommend 2021-2023) ✅
+  - Include tables by age and gender ✅
+  - Format as JSON or CSV ✅
+  - Include metadata: source URL, table year, publication date ✅
+  - Path: `data/life_tables/cdc_us_life_tables_2023.json` ✅
 
-- [ ] T048 [P0] Add data source documentation `data/README.md`:
-  - Document each data file with full citation
-  - Include download URLs and retrieval dates
-  - Note any preprocessing or formatting applied
-  - Include license information for each source
+- [x] T047 [P0] Create data loading utility `src/utils/data_loader.py`:
+  - Function: load_skoog_tables() → returns parsed Skoog data ✅
+  - Function: load_life_tables() → returns parsed CDC life table data ✅
+  - Include caching to avoid repeated file I/O ✅
+  - Add validation to ensure data files exist and are valid ✅
+
+- [x] T048 [P0] Add data source documentation `data/README.md`:
+  - Document each data file with full citation ✅
+  - Include download URLs and retrieval dates ✅
+  - Note any preprocessing or formatting applied ✅
+  - Include license information for each source ✅
 
 ## Phase 6: Assignment Compliance - Live API Integrations (Priority: P0 - BLOCKING)
 
@@ -597,15 +613,15 @@
 ## Summary
 
 - **Total task count: 107**
-  - **Completed: 25** ✅ (Phases 1-3: MVP complete)
-  - **Remaining: 82** ⏳ (Assignment compliance work)
+  - **Completed: 35** ✅ (Phases 1-5: MVP + Dashboard + Static Data complete)
+  - **Remaining: 72** ⏳ (Assignment compliance work)
 
 - Task count by phase:
   - **Phase 1 - Setup**: 5 tasks (T001..T005) ✅ COMPLETE
   - **Phase 2 - Foundational**: 8 tasks (T006..T013) ✅ COMPLETE
   - **Phase 3 - US1 MVP**: 12 tasks (T014..T025) ✅ COMPLETE
-  - **Phase 4 - Dashboard Fixes (P0 BLOCKING)**: 6 tasks (T039..T044) ⏳ TODO
-  - **Phase 5 - Static Data Sources (P0 BLOCKING)**: 4 tasks (T045..T048) ⏳ TODO
+  - **Phase 4 - Dashboard Fixes (P0 BLOCKING)**: 6 tasks (T039..T044) ✅ COMPLETE
+  - **Phase 5 - Static Data Sources (P0 BLOCKING)**: 4 tasks (T045..T048) ✅ COMPLETE
   - **Phase 6 - Live API Integrations (P0 BLOCKING)**: 4 tasks (T049..T052) ⏳ TODO
   - **Phase 7 - Supporting Agents (P0 BLOCKING)**: 4 tasks (T053..T056) ⏳ TODO
   - **Phase 8 - Supervisor Agent (P1)**: 4 tasks (T057..T060) ⏳ TODO
@@ -615,39 +631,36 @@
   - **Phase 12 - US3 Parameter Overrides**: 4 tasks (T030..T033) ⏳ TODO
   - **Phase N - Polish**: 5 tasks (T034..T038) ⏳ TODO
 
-- **CRITICAL PATH for Assignment Compliance (82 tasks remaining):**
-  1. ⏳ Complete Phases 4-7 (P0 BLOCKING tasks: T039..T056) - 18 tasks
+- **CRITICAL PATH for Assignment Compliance (72 tasks remaining):**
+  1. ⏳ Complete Phases 6-7 (P0 BLOCKING tasks: T049..T056) - 8 tasks
   2. ⏳ Complete Phases 8-10 (P1 tasks: T057..T069) - 13 tasks
-  3. These 31 tasks (T039..T069) are essential for matching assignment requirements
+  3. These 21 tasks (T049..T069) are essential for matching assignment requirements
   4. Remaining 51 tasks (T026..T038) are nice-to-have enhancements
 
 - **Priority Breakdown (Remaining Work):**
-  - P0 (BLOCKING): 18 tasks ⚠️ - Dashboard, data sources, APIs, supporting agents
+  - P0 (BLOCKING): 8 tasks ⚠️ - APIs, supporting agents
   - P1 (HIGH): 13 tasks 🔥 - Supervisor, real-time dashboard, Excel verification
   - P2 (MEDIUM): 4 tasks - Provenance
   - P3 (LOW): 4 tasks - Parameter overrides
   - Polish: 5 tasks - Code quality and documentation
 
 - Parallel opportunities:
-  - Static data files (T045..T046) can be prepared in parallel
+  - Live API clients (T049..T050) can be developed in parallel
   - Supporting agents (T053..T054) are parallelizable
-  - Dashboard updates (T039, T043, T044) can be done concurrently
-  - Agent implementations (T017..T021) from original plan
+  - Dashboard updates and Excel verification can run concurrently
 
 - **Recommended Execution Order:**
-  1. ✅ **DONE** - Phases 1-3 (MVP working - 25 tasks complete)
-  2. ⏳ **START HERE → Phase 4**: Dashboard fixes (T039..T044) - 6 tasks
-  3. ⏳ **Phase 5**: Add static data files (T045..T048) - 4 tasks
-  4. ⏳ **Phase 6**: Implement live APIs (T049..T052) - 4 tasks
-  5. ⏳ **Phase 7**: Create supporting agents (T053..T056) - 4 tasks
-  6. ⏳ **Phase 8**: Build supervisor agent (T057..T060) - 4 tasks
-  7. ⏳ **Phase 9**: Add real-time dashboard (T061..T065) - 5 tasks
-  8. ⏳ **Phase 10**: Verify Excel output (T066..T069) - 4 tasks
-  9. ⏳ Phases 11-12: Provenance and parameter overrides (if time permits) - 8 tasks
-  10. ⏳ Phase N: Polish and documentation - 5 tasks
+  1. ✅ **DONE** - Phases 1-5 (MVP + Dashboard + Static Data - 35 tasks complete)
+  2. ⏳ **START HERE → Phase 6**: Implement live APIs (T049..T052) - 4 tasks
+  3. ⏳ **Phase 7**: Create supporting agents (T053..T056) - 4 tasks
+  4. ⏳ **Phase 8**: Build supervisor agent (T057..T060) - 4 tasks
+  5. ⏳ **Phase 9**: Add real-time dashboard (T061..T065) - 5 tasks
+  6. ⏳ **Phase 10**: Verify Excel output (T066..T069) - 4 tasks
+  7. ⏳ Phases 11-12: Provenance and parameter overrides (if time permits) - 8 tasks
+  8. ⏳ Phase N: Polish and documentation - 5 tasks
 
-**Progress: 25/107 tasks complete (23.4%)**
-**Critical path remaining: 31/82 tasks (37.8% of remaining work)**
+**Progress: 35/107 tasks complete (32.7%)**
+**Critical path remaining: 21/72 tasks (29.2% of remaining work)**
 
 ## Files created by this task generator
 - `specs/1-wrongful-death-econ/tasks.md` (this file)
