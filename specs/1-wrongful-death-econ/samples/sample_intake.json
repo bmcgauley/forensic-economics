@@ -1,0 +1,19 @@
+{
+  "id": "sample-001",
+  "victim_age": 42,
+  "victim_sex": "M",
+  "occupation": "Construction Manager",
+  "education": "bachelors",
+  "salary": 95000.00,
+  "salary_type": "current",
+  "location": "CA",
+  "dependents": 3,
+  "benefits": {
+    "retirement_contribution": 9500.00,
+    "health_benefits": 12000.00
+  },
+  "metadata": {
+    "submission_timestamp": "2025-10-29T12:00:00Z",
+    "notes": "Sample intake for testing and demonstration"
+  }
+}

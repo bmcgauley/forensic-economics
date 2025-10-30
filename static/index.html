@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Forensic Economics - Wrongful Death Calculator</title>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Wrongful Death Economic Loss Calculator</h1>
+            <p class="subtitle">Generate auditable economic loss reports with full provenance tracking</p>
+        </header>
+
+        <main>
+            <form id="intake-form">
+                <section class="form-section">
+                    <h2>Victim Information</h2>
+
+                    <div class="form-group">
+                        <label for="victim_age">Age *</label>
+                        <input type="number" id="victim_age" name="victim_age" min="0" max="120" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="victim_sex">Sex *</label>
+                        <select id="victim_sex" name="victim_sex" required>
+                            <option value="">Select...</option>
+                            <option value="M">Male</option>
+                            <option value="F">Female</option>
+                            <option value="Other">Other</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="occupation">Occupation *</label>
+                        <input type="text" id="occupation" name="occupation" placeholder="e.g., Software Engineer or SOC code" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="education">Education Level *</label>
+                        <select id="education" name="education" required>
+                            <option value="">Select...</option>
+                            <option value="less_than_high_school">Less than High School</option>
+                            <option value="high_school">High School Diploma</option>
+                            <option value="some_college">Some College</option>
+                            <option value="bachelors">Bachelor's Degree</option>
+                            <option value="masters">Master's Degree</option>
+                            <option value="doctorate">Doctorate</option>
+                        </select>
+                    </div>
+                </section>
+
+                <section class="form-section">
+                    <h2>Financial Information</h2>
+
+                    <div class="form-group">
+                        <label for="salary">Annual Salary ($) *</label>
+                        <input type="number" id="salary" name="salary" min="0" step="0.01" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="salary_type">Salary Type *</label>
+                        <select id="salary_type" name="salary_type" required>
+                            <option value="current">Current/Actual</option>
+                            <option value="median_jurisdiction">Median (Jurisdiction)</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="location">Jurisdiction *</label>
+                        <input type="text" id="location" name="location" placeholder="e.g., CA, NY, US" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="dependents">Number of Dependents</label>
+                        <input type="number" id="dependents" name="dependents" min="0" value="0">
+                    </div>
+                </section>
+
+                <section class="form-section">
+                    <h2>Additional Benefits (Optional)</h2>
+
+                    <div class="form-group">
+                        <label for="retirement_contribution">Annual Retirement Contribution ($)</label>
+                        <input type="number" id="retirement_contribution" name="retirement_contribution" min="0" step="0.01" value="0">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="health_benefits">Annual Health Benefits Value ($)</label>
+                        <input type="number" id="health_benefits" name="health_benefits" min="0" step="0.01" value="0">
+                    </div>
+                </section>
+
+                <div class="form-actions">
+                    <button type="submit" id="generate-btn" class="btn btn-primary">Generate Report</button>
+                    <button type="reset" class="btn btn-secondary">Clear Form</button>
+                </div>
+            </form>
+
+            <div id="status-panel" class="status-panel hidden">
+                <h3>Generation Status</h3>
+                <div id="status-message" class="status-message"></div>
+                <div id="progress-bar" class="progress-bar">
+                    <div id="progress-fill" class="progress-fill"></div>
+                </div>
+                <div id="download-link" class="download-link hidden"></div>
+            </div>
+
+            <div id="error-panel" class="error-panel hidden">
+                <h3>Error</h3>
+                <div id="error-message"></div>
+            </div>
+        </main>
+
+        <footer>
+            <p>&copy; 2025 Forensic Economics. All calculations include full provenance tracking.</p>
+        </footer>
+    </div>
+
+    <script src="js/app.js"></script>
+</body>
+</html>
