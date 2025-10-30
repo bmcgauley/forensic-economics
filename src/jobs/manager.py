@@ -14,11 +14,7 @@ from pathlib import Path
 import traceback
 
 from src.utils.temp_storage import TempStorage
-from src.agents.life_expectancy_agent import LifeExpectancyAgent
-from src.agents.worklife_expectancy_agent import WorklifeExpectancyAgent
-from src.agents.wage_growth_agent import WageGrowthAgent
-from src.agents.discount_rate_agent import DiscountRateAgent
-from src.agents.present_value_agent import PresentValueAgent
+from src.agents.supervisor_agent import SupervisorAgent
 from src.aggregator import Aggregator
 from src.xlsx.xlsx_generator import XLSXGenerator
 
@@ -52,6 +48,9 @@ class Job:
         self.completed_at = None
         self.result_file = None
         self.agent_results = []
+        self.agent_progress = []
+        self.current_step = ''
+        self.progress_pct = 0
 
     def to_dict(self) -> Dict[str, Any]:
         """Convert job to dictionary."""
@@ -63,7 +62,10 @@ class Job:
             'created_at': self.created_at.isoformat(),
             'started_at': self.started_at.isoformat() if self.started_at else None,
             'completed_at': self.completed_at.isoformat() if self.completed_at else None,
-            'result_file': self.result_file
+            'result_file': self.result_file,
+            'current_step': self.current_step,
+            'progress_pct': self.progress_pct,
+            'agent_progress': self.agent_progress
         }
 
 
@@ -155,57 +157,59 @@ class JobManager:
             # Update status
             job.status = JobStatus.RUNNING
             job.started_at = datetime.utcnow()
-            job.message = 'Running agents...'
+            job.message = 'Initializing supervisor agent...'
+            job.current_step = 'Starting analysis...'
 
             # Create job directory
             job_dir = self.temp_storage.create_job_directory(job_id)
 
-            # Run agents in sequence (could be parallelized in future)
-            intake = job.intake
+            # Define progress callback to update job progress in real-time
+            def progress_callback(agent_progress):
+                """Update job progress when agent status changes."""
+                job.current_step = agent_progress.message
+                job.message = f'{agent_progress.name}: {agent_progress.message}'
 
-            # 1. Life Expectancy Agent
-            job.message = 'Calculating life expectancy...'
-            life_agent = LifeExpectancyAgent()
-            life_result = life_agent.run(intake)
-            job.agent_results.append(life_result)
+                # Update agent progress list
+                # Find existing progress entry or add new one
+                found = False
+                for i, existing in enumerate(job.agent_progress):
+                    if existing.get('name') == agent_progress.name:
+                        job.agent_progress[i] = agent_progress.to_dict()
+                        found = True
+                        break
+                if not found:
+                    job.agent_progress.append(agent_progress.to_dict())
 
-            # 2. Worklife Expectancy Agent
-            job.message = 'Calculating worklife expectancy...'
-            worklife_agent = WorklifeExpectancyAgent()
-            worklife_result = worklife_agent.run(intake)
-            job.agent_results.append(worklife_result)
+                # Calculate overall progress percentage
+                total_agents = 7
+                completed = sum(1 for p in job.agent_progress if p.get('status') == 'COMPLETED')
+                job.progress_pct = int((completed / total_agents) * 100)
 
-            # 3. Wage Growth Agent
-            job.message = 'Projecting wage growth...'
-            wage_agent = WageGrowthAgent()
-            wage_result = wage_agent.run(intake)
-            job.agent_results.append(wage_result)
+            # Initialize Supervisor Agent with progress callback
+            supervisor = SupervisorAgent(progress_callback=progress_callback)
 
-            # 4. Discount Rate Agent
-            job.message = 'Determining discount rate...'
-            discount_agent = DiscountRateAgent()
-            discount_result = discount_agent.run(intake)
-            job.agent_results.append(discount_result)
+            # Run all agents via Supervisor
+            job.message = 'Running agents via Supervisor...'
+            supervisor_result = supervisor.run(job.intake)
 
-            # 5. Present Value Agent
-            job.message = 'Calculating present value...'
-            pv_input = {
-                **intake,
-                'worklife_years': worklife_result['outputs']['worklife_years'],
-                'projected_wages': wage_result['outputs']['projected_wages_by_year'],
-                'discount_curve': discount_result['outputs']['discount_curve']
-            }
-            pv_agent = PresentValueAgent()
-            pv_result = pv_agent.run(pv_input)
-            job.agent_results.append(pv_result)
+            # Extract agent results from supervisor output
+            job.agent_results = supervisor_result['outputs']['agent_results']
 
-            # 6. Aggregate results
+            # Update progress from supervisor
+            progress_data = supervisor.get_progress()
+            job.current_step = progress_data['current_step']
+            job.progress_pct = progress_data['progress_pct']
+            job.agent_progress = progress_data['agents']
+
+            # Aggregate results
             job.message = 'Aggregating results...'
+            job.current_step = 'Aggregating agent outputs...'
             aggregator = Aggregator()
-            final_workbook = aggregator.aggregate(job.agent_results, intake)
+            final_workbook = aggregator.aggregate(job.agent_results, job.intake)
 
-            # 7. Generate XLSX
+            # Generate XLSX
             job.message = 'Generating Excel workbook...'
+            job.current_step = 'Creating Excel report...'
             xlsx_generator = XLSXGenerator()
             output_filename = f"wrongful_death_report_{job_id[:8]}.xlsx"
             output_path = str(job_dir / output_filename)
@@ -214,6 +218,8 @@ class JobManager:
             # Mark as completed
             job.status = JobStatus.COMPLETED
             job.message = 'Report generated successfully'
+            job.current_step = 'Completed'
+            job.progress_pct = 100
             job.completed_at = datetime.utcnow()
             job.result_file = output_path
 
@@ -222,6 +228,7 @@ class JobManager:
             job.status = JobStatus.FAILED
             job.error = str(e)
             job.message = f'Job failed: {str(e)}'
+            job.current_step = 'Failed'
             job.completed_at = datetime.utcnow()
 
             # Log full traceback for debugging
