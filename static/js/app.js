@@ -216,9 +216,17 @@ form.addEventListener('submit', async (e) => {
 });
 
 /**
- * Start polling for job status
+ * Start polling for job status (every 3 seconds)
  */
 function startStatusPolling(statusUrl) {
+    // Update session info (with null checks)
+    const sessionIdEl = document.getElementById('session-id');
+    const personNameEl = document.getElementById('person-name');
+    const fullNameInput = document.getElementById('full_name');
+
+    if (sessionIdEl) sessionIdEl.textContent = currentJobId ? currentJobId.substring(0, 8) : 'N/A';
+    if (personNameEl && fullNameInput) personNameEl.textContent = fullNameInput.value || 'N/A';
+
     statusPollInterval = setInterval(async () => {
         try {
             const response = await fetch(statusUrl);
@@ -228,19 +236,53 @@ function startStatusPolling(statusUrl) {
             }
 
             const status = await response.json();
+            console.log('[Dashboard] Status update:', status);
+
+            // Update current step (with null check)
+            const currentStepEl = document.getElementById('current-step');
+            if (status.current_step && currentStepEl) {
+                currentStepEl.textContent = status.current_step;
+            }
+
+            // Update progress percentage (with null checks)
+            if (status.progress_pct !== undefined) {
+                updateProgress(status.progress_pct);
+                const progressTextEl = document.getElementById('progress-text');
+                if (progressTextEl) {
+                    progressTextEl.textContent = status.progress_pct + '%';
+                }
+            }
+
+            // Update agent progress table
+            if (status.agent_progress && Array.isArray(status.agent_progress)) {
+                console.log('[Dashboard] Updating agent table with', status.agent_progress.length, 'agents');
+                updateAgentTable(status.agent_progress);
+
+                // Update agent count (with null check)
+                const agentCountEl = document.getElementById('agent-count');
+                if (agentCountEl) {
+                    const completed = status.agent_progress.filter(a => a.status === 'COMPLETED').length;
+                    const total = status.agent_progress.length;
+                    agentCountEl.textContent = `${completed}/${total} agents`;
+                }
+            }
 
             switch (status.status) {
                 case 'queued':
-                    updateProgress(20);
-                    statusMessage.textContent = 'Job queued, waiting to start...';
+                    if (currentStepEl) currentStepEl.textContent = 'Job queued, waiting to start...';
                     break;
                 case 'running':
-                    updateProgress(50);
-                    statusMessage.textContent = status.message || 'Running calculations...';
+                    // Status is updated via current_step and agent_progress above
                     break;
                 case 'completed':
                     updateProgress(100);
-                    statusMessage.textContent = 'Report generated successfully!';
+                    const progressTextEl = document.getElementById('progress-text');
+                    if (progressTextEl) progressTextEl.textContent = '100%';
+                    if (currentStepEl) currentStepEl.textContent = 'Analysis completed successfully';
+
+                    const downloadSectionEl = document.getElementById('download-section');
+                    if (downloadSectionEl) downloadSectionEl.classList.remove('hidden');
+
                     showDownloadLink(status.download_url, status.filename);
                     stopStatusPolling();
                     resetButton();
@@ -253,11 +295,72 @@ function startStatusPolling(statusUrl) {
                     break;
             }
         } catch (error) {
+            console.error('[Dashboard] Polling error:', error);
             stopStatusPolling();
             showError('Failed to check job status');
             resetButton();
         }
-    }, 2000); // Poll every 2 seconds
+    }, 3000); // Poll every 3 seconds
+}
+
+/**
+ * Update agent table with real-time progress
+ */
+function updateAgentTable(agents) {
+    const tbody = document.getElementById('agent-table-body');
+
+    if (!tbody) {
+        console.error('[Dashboard] agent-table-body element not found');
+        return;
+    }
+
+    // Clear existing rows
+    tbody.innerHTML = '';
+
+    // Add row for each agent
+    agents.forEach(agent => {
+        const row = document.createElement('tr');
+        row.className = `agent-row agent-${agent.status.toLowerCase()}`;
+
+        // Agent name
+        const nameCell = document.createElement('td');
+        nameCell.className = 'agent-name';
+        nameCell.textContent = agent.name;
+        row.appendChild(nameCell);
+
+        // Status badge
+        const statusCell = document.createElement('td');
+        statusCell.className = 'agent-status';
+        const statusBadge = document.createElement('span');
+        statusBadge.className = `status-badge status-${agent.status.toLowerCase()}`;
+        statusBadge.textContent = agent.status;
+        statusCell.appendChild(statusBadge);
+        row.appendChild(statusCell);
+
+        // Message
+        const messageCell = document.createElement('td');
+        messageCell.className = 'agent-message';
+        messageCell.textContent = agent.message || '-';
+        row.appendChild(messageCell);
+
+        // Output (condensed)
+        const outputCell = document.createElement('td');
+        outputCell.className = 'agent-output';
+        if (agent.output && Object.keys(agent.output).length > 0) {
+            const outputText = JSON.stringify(agent.output, null, 2);
+            if (outputText.length > 100) {
+                outputCell.textContent = outputText.substring(0, 100) + '...';
+                outputCell.title = outputText; // Full output on hover
+            } else {
+                outputCell.textContent = outputText;
+            }
+        } else {
+            outputCell.textContent = '-';
+        }
+        row.appendChild(outputCell);
+
+        tbody.appendChild(row);
+    });
 }
 
 /**

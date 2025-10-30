@@ -125,12 +125,57 @@
             </form>
 
             <div id="status-panel" class="status-panel hidden">
-                <h3>Generation Status</h3>
-                <div id="status-message" class="status-message"></div>
-                <div id="progress-bar" class="progress-bar">
-                    <div id="progress-fill" class="progress-fill"></div>
+                <div class="status-header">
+                    <h3>Analysis Progress</h3>
+                    <div id="session-info">
+                        <div class="session-field">
+                            <span class="label">Session ID:</span>
+                            <span id="session-id" class="value">-</span>
+                        </div>
+                        <div class="session-field">
+                            <span class="label">Person:</span>
+                            <span id="person-name" class="value">-</span>
+                        </div>
+                    </div>
                 </div>
-                <div id="download-link" class="download-link hidden"></div>
+
+                <div class="progress-section">
+                    <div id="current-step" class="current-step">Initializing...</div>
+                    <div id="progress-bar" class="progress-bar">
+                        <div id="progress-fill" class="progress-fill"></div>
+                        <span id="progress-text" class="progress-text">0%</span>
+                    </div>
+                    <div id="agent-count" class="agent-count">0/7 agents</div>
+                </div>
+
+                <div class="agent-flow-section">
+                    <h4>Agent Flow</h4>
+                    <div class="agent-table-container">
+                        <table id="agent-table" class="agent-table">
+                            <thead>
+                                <tr>
+                                    <th>Agent</th>
+                                    <th>Status</th>
+                                    <th>Message</th>
+                                    <th>Output</th>
+                                </tr>
+                            </thead>
+                            <tbody id="agent-table-body">
+                                <!-- Agent rows will be populated here -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div id="download-section" class="download-section hidden">
+                    <h4>Generated Files</h4>
+                    <div id="download-link" class="download-link"></div>
+                </div>
+
+                <div id="errors-section" class="errors-section hidden">
+                    <h4>Errors & Issues</h4>
+                    <div id="error-list" class="error-list"></div>
+                </div>
             </div>
 
             <div id="error-panel" class="error-panel hidden">

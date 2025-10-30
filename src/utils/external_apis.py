@@ -221,6 +221,7 @@ class FedClient(ExternalAPIClient):
         try:
             # Check if API key is available
             if not self.api_key:
+                print("[FED_CLIENT] ERROR: No FRED API key provided!")
                 raise ValueError("FRED API key not provided. Set FRED_API_KEY environment variable.")
 
             # Fetch most recent observation (limit=1, sort descending)
@@ -232,7 +233,10 @@ class FedClient(ExternalAPIClient):
                 'limit': 1
             }
 
+            print(f"[FED_CLIENT] Calling FRED API: {self.FRED_API_URL}")
+            print(f"[FED_CLIENT] Series: {self.DGS1_SERIES}")
             response = self.get(self.FRED_API_URL, params=params)
+            print(f"[FED_CLIENT] API Response received: {list(response.keys()) if isinstance(response, dict) else 'non-dict'}")
 
             # Parse FRED API response
             if 'observations' in response and len(response['observations']) > 0:

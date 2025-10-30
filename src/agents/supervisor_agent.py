@@ -221,6 +221,16 @@ class SupervisorAgent:
                 'projected_wages': wage_result['outputs']['projected_wages_by_year'],
                 'discount_curve': discount_result['outputs']['discount_curve']
             }
+
+            # DEBUG: Log what we're passing to PresentValueAgent
+            print(f"[SUPERVISOR] Passing to PresentValueAgent:")
+            print(f"  - worklife_years: {pv_input['worklife_years']}")
+            print(f"  - projected_wages entries: {len(pv_input['projected_wages'])}")
+            print(f"  - discount_curve entries: {len(pv_input['discount_curve'])}")
+            if pv_input['projected_wages']:
+                first_wage_key = list(pv_input['projected_wages'].keys())[0]
+                print(f"  - First wage entry: year {first_wage_key} = ${pv_input['projected_wages'][first_wage_key]:,.2f}")
+
             pv_result = self._run_agent(
                 agent=self.present_value_agent,
                 agent_index=6,
@@ -337,7 +347,9 @@ class SupervisorAgent:
 
         try:
             # Run the agent
+            print(f"[SUPERVISOR] Running {progress.name}...")
             result = agent.run(input_data)
+            print(f"[SUPERVISOR] {progress.name} completed successfully")
 
             # Mark as completed
             progress.status = AgentStatus.COMPLETED
@@ -352,6 +364,7 @@ class SupervisorAgent:
 
         except Exception as e:
             # Mark as failed
+            print(f"[SUPERVISOR] {progress.name} FAILED: {str(e)}")
             progress.status = AgentStatus.FAILED
             progress.error = str(e)
             progress.message = f'Failed: {str(e)}'

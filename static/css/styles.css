@@ -321,3 +321,236 @@ footer {
         padding: 30px 15px;
     }
 }
+
+/* Real-Time Progress Dashboard Styles */
+.status-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    padding-bottom: 15px;
+    border-bottom: 2px solid var(--success-color);
+}
+
+#session-info {
+    display: flex;
+    gap: 20px;
+    font-size: 0.9em;
+}
+
+.session-field {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.session-field .label {
+    font-weight: bold;
+    color: var(--text-color);
+}
+
+.session-field .value {
+    color: var(--success-color);
+    font-family: monospace;
+}
+
+.progress-section {
+    margin-bottom: 25px;
+}
+
+.current-step {
+    font-size: 1.1em;
+    font-weight: 500;
+    margin-bottom: 10px;
+    color: var(--primary-color);
+    min-height: 1.5em;
+}
+
+.progress-bar {
+    position: relative;
+    height: 30px;
+    background-color: #ecf0f1;
+    border-radius: 15px;
+    overflow: hidden;
+    margin-bottom: 8px;
+}
+
+.progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--primary-color), var(--success-color));
+    transition: width 0.5s ease;
+    border-radius: 15px;
+}
+
+.progress-text {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-weight: bold;
+    color: white;
+    text-shadow: 0 1px 2px rgba(0,0,0,0.3);
+    z-index: 1;
+}
+
+.agent-count {
+    text-align: center;
+    font-size: 0.95em;
+    color: var(--text-color);
+    font-weight: 500;
+}
+
+.agent-flow-section {
+    margin-bottom: 25px;
+}
+
+.agent-flow-section h4 {
+    color: var(--primary-color);
+    margin-bottom: 12px;
+    font-size: 1.1em;
+}
+
+.agent-table-container {
+    overflow-x: auto;
+    border-radius: 4px;
+    border: 1px solid var(--border-color);
+}
+
+.agent-table {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: white;
+}
+
+.agent-table thead {
+    background-color: var(--primary-color);
+    color: white;
+}
+
+.agent-table th {
+    padding: 12px;
+    text-align: left;
+    font-weight: 600;
+    border-bottom: 2px solid var(--border-color);
+}
+
+.agent-table td {
+    padding: 10px 12px;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.agent-table tbody tr:hover {
+    background-color: #f8f9fa;
+}
+
+.agent-row {
+    transition: background-color 0.3s ease;
+}
+
+.agent-name {
+    font-weight: 500;
+    color: var(--text-color);
+}
+
+.status-badge {
+    display: inline-block;
+    padding: 4px 10px;
+    border-radius: 12px;
+    font-size: 0.85em;
+    font-weight: 600;
+    text-transform: uppercase;
+}
+
+.status-badge.status-pending {
+    background-color: #f0f0f0;
+    color: #666;
+}
+
+.status-badge.status-in_progress {
+    background-color: #3498db;
+    color: white;
+    animation: pulse 2s infinite;
+}
+
+.status-badge.status-completed {
+    background-color: var(--success-color);
+    color: white;
+}
+
+.status-badge.status-failed {
+    background-color: var(--error-color);
+    color: white;
+}
+
+@keyframes pulse {
+    0%, 100% {
+        opacity: 1;
+    }
+    50% {
+        opacity: 0.7;
+    }
+}
+
+.agent-message {
+    color: #555;
+    font-size: 0.9em;
+}
+
+.agent-output {
+    font-family: monospace;
+    font-size: 0.85em;
+    color: #666;
+    max-width: 300px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.download-section,
+.errors-section {
+    margin-top: 25px;
+    padding: 15px;
+    background-color: #f8f9fa;
+    border-radius: 4px;
+    border: 1px solid var(--border-color);
+}
+
+.download-section h4,
+.errors-section h4 {
+    color: var(--primary-color);
+    margin-bottom: 10px;
+    font-size: 1em;
+}
+
+.errors-section h4 {
+    color: var(--error-color);
+}
+
+.error-list {
+    color: var(--error-color);
+}
+
+/* Responsive adjustments for progress dashboard */
+@media (max-width: 768px) {
+    .status-header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    #session-info {
+        margin-top: 10px;
+    }
+
+    .agent-table {
+        font-size: 0.85em;
+    }
+
+    .agent-table th,
+    .agent-table td {
+        padding: 8px;
+    }
+
+    .agent-output {
+        max-width: 150px;
+    }
+}

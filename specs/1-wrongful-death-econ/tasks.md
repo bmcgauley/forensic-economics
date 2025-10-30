@@ -12,11 +12,11 @@
 | Metric | Status |
 |--------|--------|
 | **Total Tasks** | 107 |
-| **Completed** | ✅ 46 tasks (43.0%) |
-| **Remaining** | ⏳ 61 tasks (57.0%) |
-| **Critical Path** | ⚠️ 10 tasks (P1) |
+| **Completed** | ✅ 50 tasks (46.7%) |
+| **Remaining** | ⏳ 57 tasks (53.3%) |
+| **Critical Path** | ⚠️ 6 tasks (P1) |
 | **MVP Status** | ✅ **WORKING** (Phases 1-4 complete) |
-| **Assignment Compliance** | ⚠️ **IN PROGRESS** (Phases 5-8 complete, 61 tasks remain) |
+| **Assignment Compliance** | ⚠️ **IN PROGRESS** (Phases 5-9 complete, 57 tasks remain) |
 
 ## What's Working (MVP - Phases 1-4) ✅
 
@@ -40,21 +40,21 @@
 - ✅ Federal Reserve Rate Agent (Phase 7 - COMPLETE)
 - ✅ Skoog Table Agent (Phase 7 - COMPLETE)
 
-### P1 HIGH (10 tasks remaining - STRONGLY RECOMMENDED)
+### P1 HIGH (6 tasks remaining - STRONGLY RECOMMENDED)
 - ✅ Supervisor Agent orchestration (Phase 8 - 3/4 tasks complete, 1 test TODO)
-- ❌ Real-time progress dashboard (Phase 9 - 5 tasks)
+- ✅ Real-time progress dashboard (Phase 9 - 4/5 tasks complete, 1 test TODO)
 - ❌ Excel output format verification (Phase 10 - 4 tasks)
 
 ## 🚀 Next Steps
 
-**START HERE:** Phase 9 - Real-Time Progress Dashboard (T061..T065)
+**START HERE:** Phase 10 - Excel Output Verification (T066..T069)
 
 1. ✅ Update form fields to match assignment exactly (Phase 4 complete)
 2. ✅ Add Skoog Tables and CDC Life Tables data (Phase 5 complete)
 3. ✅ Implement live API clients (Federal Reserve H.15, CA Labor Market) (Phase 6 complete)
 4. ✅ Create supporting agents (Phase 7 complete)
 5. ✅ Build supervisor agent (Phase 8 complete)
-6. Add real-time progress UI
+6. ✅ Add real-time progress UI (Phase 9 complete)
 7. Verify Excel output format
 
 ---
@@ -215,16 +215,19 @@
 **What Works Now:**
 - ✓ Assignment-compliant dashboard form with all required fields
 - ✓ Date pickers, JSON upload, California counties, SOC occupation codes
-- ✓ 5 core agents (life expectancy, worklife, wage, discount, present value)
+- ✓ 5 core AI agents using Ollama Gemma3 (life expectancy, worklife, wage, discount, present value)
 - ✓ 2 supporting agents (Federal Reserve Rate Agent, Skoog Table Agent)
 - ✓ Supervisor agent orchestrating all 7 agents with progress tracking
 - ✓ Live API integrations (Fed Reserve H.15, CA Labor Market Info)
+- ✓ Real-time progress dashboard with 3-second polling
+- ✓ Agent Flow table showing live status updates (COMPLETED/IN_PROGRESS/PENDING)
 - ✓ Excel generation (4 sheets)
 - ✓ Job management with real-time progress updates
 - ✓ Basic provenance tracking from all agents
-- ✓ Skoog Tables data (worklife expectancy by age, gender, education)
-- ✓ CDC Life Tables data (life expectancy by age and gender)
+- ✓ Skoog Tables data (worklife expectancy by age, gender, education) with proper parser
+- ✓ CDC Life Tables data (life expectancy by age and gender) with proper parser
 - ✓ Data loading utility with caching and validation
+- ✓ AI-powered analysis for each agent with professional forensic economics reasoning
 
 **What's Missing (Per Assignment):**
 - ✅ Dashboard fields don't match (Phase 4 complete)
@@ -232,8 +235,9 @@
 - ✅ Live APIs (Fed H.15, CA Labor Market) not implemented (Phase 6 complete)
 - ✅ Supporting agents (Fed Rate, Skoog Table) don't exist (Phase 7 complete)
 - ✅ Supervisor agent doesn't exist (Phase 8 complete)
-- ❌ Real-time progress dashboard UI not implemented
+- ✅ Real-time progress dashboard UI not implemented (Phase 9 complete)
 - ❌ Excel format may not match template exactly
+- ❌ Integration tests for progress dashboard and supervisor (2 tests TODO)
 
 ---
 
@@ -487,43 +491,44 @@ Reference:
   - Test: Error handling when agent fails
   - Test: Output aggregation produces valid FinalWorkbook
 
-## Phase 9: Assignment Compliance - Real-Time Progress Dashboard (Priority: P1)
+## Phase 9: Assignment Compliance - Real-Time Progress Dashboard (Priority: P1) ✅ COMPLETE
 
 **Goal**: Update frontend to show live agent progress with 3-second updates.
 
 **Critical**: Assignment demo shows detailed real-time progress dashboard during analysis.
 
-### Real-Time Progress UI (T061-T065)
+### Real-Time Progress UI (T061-T065) ✅ 4/5 COMPLETE
 
-- [ ] T061 [P1] Update API endpoint `src/api/status.py` to return detailed agent progress:
-  - Current response: { job_id, status, progress_pct }
-  - New response: { job_id, status, progress_pct, person_name, session_id, current_step, agents: [ { name, status, message, output } ], generated_files: [], errors: [] }
-  - Include all agent statuses from Supervisor tracking
-  - Include person name from intake data
+- [x] T061 [P1] Update API endpoint `src/api/status.py` to return detailed agent progress: ✅
+  - Returns: { job_id, status, progress_pct, message, current_step, agent_progress: [ { name, status, message, output } ] }
+  - Includes all agent statuses from Supervisor tracking via progress_callback
+  - Supervisor Agent tracks progress in real-time and stores in job.agent_progress
+  - Status endpoint exposes this data for frontend polling
 
-- [ ] T062 [P1] Update `static/index.html` with new progress dashboard UI:
-  - Add "Analysis Overview" panel with Session ID and Person name
-  - Add "Agent Flow" table with columns: Agent | Status | Message | Output
-  - Add "Generated Files" section (links to download Excel/PDF)
-  - Add "Errors & Issues" section (show any errors with timestamps)
-  - Style to match assignment screenshot (purple header, clean table)
+- [x] T062 [P1] Update `static/index.html` with new progress dashboard UI: ✅
+  - Added "Analysis Overview" panel with Session ID and Person name
+  - Added "Agent Flow" table with columns: Agent | Status | Message | Output
+  - Added "Generated Files" section (download links)
+  - Added "Errors & Issues" section
+  - Styled with purple header, clean table layout matching assignment
 
-- [ ] T063 [P1] Update `static/js/app.js` for 3-second polling with detailed updates:
-  - Change polling interval from current to 3000ms (3 seconds)
-  - Parse new detailed status response
-  - Update Agent Flow table with status badges (COMPLETED=green, IN_PROGRESS=blue, PENDING=gray)
-  - Show agent messages and outputs in real-time
-  - Animate progress bar based on completed agents (e.g., "5/8 agents")
-  - Show "Current Step" text above progress bar
+- [x] T063 [P1] Update `static/js/app.js` for 3-second polling with detailed updates: ✅
+  - Polling interval set to 3000ms (3 seconds)
+  - Parses detailed status response with agent_progress array
+  - Updates Agent Flow table with status badges (COMPLETED=green, IN_PROGRESS=blue, PENDING=gray)
+  - Shows agent messages and outputs in real-time via updateAgentTable()
+  - Animates progress bar based on completed agents (e.g., "5/8 agents")
+  - Shows "Current Step" text above progress bar
+  - Added comprehensive null checks to prevent DOM errors
 
-- [ ] T064 [P1] Update `static/css/styles.css` for progress dashboard styling:
-  - Add purple header style for live dashboard (CA Wage Data Agent theme)
-  - Add status badges (green/blue/gray) for agent status indicators
-  - Add agent flow table styling (alternating rows, hover effects)
-  - Add fade-in animations for new agent status updates
-  - Match assignment screenshot aesthetics
+- [x] T064 [P1] Update `static/css/styles.css` for progress dashboard styling: ✅
+  - Added purple header style for live dashboard
+  - Added status badges (green/blue/gray) with animations for agent status
+  - Added agent flow table styling (alternating rows, hover effects)
+  - Added pulse animation for in-progress agents
+  - Matches assignment screenshot aesthetics
 
-- [ ] T065 [P1] Add progress dashboard integration test `tests/integration/test_progress_dashboard.py`:
+- [ ] T065 [P1] Add progress dashboard integration test `tests/integration/test_progress_dashboard.py`: ⏳ TODO
   - Test: Status endpoint returns detailed agent progress
   - Test: Frontend polls every 3 seconds
   - Test: Agent status updates appear in correct order
@@ -619,8 +624,8 @@ Reference:
 ## Summary
 
 - **Total task count: 107**
-  - **Completed: 46** ✅ (Phases 1-8: MVP + Dashboard + Static Data + Live APIs + Supporting Agents + Supervisor complete)
-  - **Remaining: 61** ⏳ (Assignment compliance work)
+  - **Completed: 50** ✅ (Phases 1-9: MVP + Dashboard + Static Data + Live APIs + Supporting Agents + Supervisor + Real-Time Dashboard complete)
+  - **Remaining: 57** ⏳ (Assignment compliance work)
 
 - Task count by phase:
   - **Phase 1 - Setup**: 5 tasks (T001..T005) ✅ COMPLETE
@@ -631,40 +636,40 @@ Reference:
   - **Phase 6 - Live API Integrations (P0 BLOCKING)**: 4 tasks (T049..T052) ✅ COMPLETE
   - **Phase 7 - Supporting Agents (P0 BLOCKING)**: 4 tasks (T053..T056) ✅ COMPLETE
   - **Phase 8 - Supervisor Agent (P1)**: 4 tasks (T057..T060) ✅ 3/4 COMPLETE (1 test TODO)
-  - **Phase 9 - Real-Time Progress Dashboard (P1)**: 5 tasks (T061..T065) ⏳ TODO
+  - **Phase 9 - Real-Time Progress Dashboard (P1)**: 5 tasks (T061..T065) ✅ 4/5 COMPLETE (1 test TODO)
   - **Phase 10 - Excel Output Verification (P1)**: 4 tasks (T066..T069) ⏳ TODO
   - **Phase 11 - US2 Provenance**: 4 tasks (T026..T029) ⏳ TODO
   - **Phase 12 - US3 Parameter Overrides**: 4 tasks (T030..T033) ⏳ TODO
   - **Phase N - Polish**: 5 tasks (T034..T038) ⏳ TODO
 
-- **CRITICAL PATH for Assignment Compliance (61 tasks remaining):**
+- **CRITICAL PATH for Assignment Compliance (57 tasks remaining):**
   1. ✅ Complete Phase 7 (P0 BLOCKING tasks: T053..T056) - 4 tasks COMPLETE
   2. ✅ Complete Phase 8 (P1 tasks: T057..T059) - 3 tasks COMPLETE, 1 test TODO
-  3. ⏳ Complete Phases 9-10 (P1 tasks: T061..T069) - 9 tasks remaining
-  4. These 10 tasks (T060..T069) are essential for matching assignment requirements
-  5. Remaining 51 tasks (T026..T038) are nice-to-have enhancements
+  3. ✅ Complete Phase 9 (P1 tasks: T061..T064) - 4 tasks COMPLETE, 1 test TODO
+  4. ⏳ Complete Phase 10 (P1 tasks: T066..T069) - 4 tasks remaining
+  5. These 6 tasks (T060, T065, T066..T069) are essential for matching assignment requirements
+  6. Remaining 51 tasks (T026..T038) are nice-to-have enhancements
 
 - **Priority Breakdown (Remaining Work):**
   - P0 (BLOCKING): 0 tasks ✅ - ALL COMPLETE!
-  - P1 (HIGH): 10 tasks 🔥 - 1 test + real-time dashboard + Excel verification
+  - P1 (HIGH): 6 tasks 🔥 - 2 tests + Excel verification
   - P2 (MEDIUM): 4 tasks - Provenance
   - P3 (LOW): 4 tasks - Parameter overrides
   - Polish: 5 tasks - Code quality and documentation
 
 - Parallel opportunities:
-  - Live API clients (T049..T050) can be developed in parallel
-  - Supporting agents (T053..T054) are parallelizable
-  - Dashboard updates and Excel verification can run concurrently
+  - Excel verification (T066..T069) can start immediately
+  - Tests (T060, T065) can be done in parallel
 
 - **Recommended Execution Order:**
-  1. ✅ **DONE** - Phases 1-8 (MVP + Dashboard + Static Data + Live APIs + Supporting Agents + Supervisor - 46 tasks complete)
-  2. ⏳ **START HERE → Phase 9**: Add real-time dashboard (T061..T065) - 5 tasks
-  3. ⏳ **Phase 10**: Verify Excel output (T066..T069) - 4 tasks
+  1. ✅ **DONE** - Phases 1-9 (MVP + Dashboard + Static Data + Live APIs + Supporting Agents + Supervisor + Real-Time Dashboard - 50 tasks complete)
+  2. ⏳ **START HERE → Phase 10**: Verify Excel output (T066..T069) - 4 tasks
+  3. ⏳ Add missing tests (T060, T065) - 2 tasks
   4. ⏳ Phases 11-12: Provenance and parameter overrides (if time permits) - 8 tasks
   5. ⏳ Phase N: Polish and documentation - 5 tasks
 
-**Progress: 46/107 tasks complete (43.0%)**
-**Critical path remaining: 10/61 tasks (16.4% of remaining work)**
+**Progress: 50/107 tasks complete (46.7%)**
+**Critical path remaining: 6/57 tasks (10.5% of remaining work)**
 
 ## Files created by this task generator
 - `specs/1-wrongful-death-econ/tasks.md` (this file)

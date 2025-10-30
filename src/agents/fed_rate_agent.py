@@ -64,7 +64,9 @@ class FedRateAgent:
 
         # Fetch current Treasury rates from Federal Reserve H.15 via FRED API
         try:
+            print(f"[FED_RATE_AGENT] Fetching Treasury rates from FRED API...")
             rate_data = self.fed_client.get_treasury_rates(use_fallback_on_error=True)
+            print(f"[FED_RATE_AGENT] Received rate data: {rate_data.get('treasury_1yr_rate')}")
 
             treasury_1yr_rate = rate_data.get('treasury_1yr_rate')
             retrieval_timestamp = rate_data.get('retrieved_at')
