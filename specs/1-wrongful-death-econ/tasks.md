@@ -12,11 +12,11 @@
 | Metric | Status |
 |--------|--------|
 | **Total Tasks** | 107 |
-| **Completed** | ✅ 39 tasks (36.4%) |
-| **Remaining** | ⏳ 68 tasks (63.6%) |
-| **Critical Path** | ⚠️ 17 tasks (P0 + P1) |
+| **Completed** | ✅ 43 tasks (40.2%) |
+| **Remaining** | ⏳ 64 tasks (59.8%) |
+| **Critical Path** | ⚠️ 13 tasks (P0 + P1) |
 | **MVP Status** | ✅ **WORKING** (Phases 1-4 complete) |
-| **Assignment Compliance** | ⚠️ **IN PROGRESS** (Phases 5-6 complete, 68 tasks remain) |
+| **Assignment Compliance** | ⚠️ **IN PROGRESS** (Phases 5-7 complete, 64 tasks remain) |
 
 ## What's Working (MVP - Phases 1-4) ✅
 
@@ -31,14 +31,14 @@
 
 ## What's Missing (Assignment Compliance) ❌
 
-### P0 BLOCKING (4 tasks remaining - MUST DO)
+### P0 BLOCKING (0 tasks remaining - ALL COMPLETE) ✅
 - ✅ Dashboard fields don't match assignment (Phase 4 - COMPLETE)
 - ✅ Skoog Tables not included (Phase 5 - COMPLETE)
 - ✅ CDC Life Tables not included (Phase 5 - COMPLETE)
 - ✅ Federal Reserve H.15 live API (Phase 6 - COMPLETE)
 - ✅ CA Labor Market Info live API (Phase 6 - COMPLETE)
-- ❌ Federal Reserve Rate Agent (Phase 7)
-- ❌ Skoog Table Agent (Phase 7)
+- ✅ Federal Reserve Rate Agent (Phase 7 - COMPLETE)
+- ✅ Skoog Table Agent (Phase 7 - COMPLETE)
 
 ### P1 HIGH (13 tasks - STRONGLY RECOMMENDED)
 - ❌ Supervisor Agent orchestration (Phase 8)
@@ -47,12 +47,12 @@
 
 ## 🚀 Next Steps
 
-**START HERE:** Phase 7 - Supporting Agents (T053..T056)
+**START HERE:** Phase 8 - Supervisor Agent (T057..T060)
 
 1. ✅ Update form fields to match assignment exactly (Phase 4 complete)
 2. ✅ Add Skoog Tables and CDC Life Tables data (Phase 5 complete)
 3. ✅ Implement live API clients (Federal Reserve H.15, CA Labor Market) (Phase 6 complete)
-4. Create supporting agents
+4. ✅ Create supporting agents (Phase 7 complete)
 5. Build supervisor agent
 6. Add real-time progress UI
 7. Verify Excel output format
@@ -205,14 +205,18 @@
 - ✅ `data/life_tables/` - CDC life expectancy tables (Phase 5 complete)
 - ✅ `src/utils/data_loader.py` - Data loading utility (Phase 5 complete)
 - ✅ `src/utils/external_apis.py` - Live API clients (Phase 6 complete)
-- ❌ `src/agents/fed_rate_agent.py` - NEW supporting agent
-- ❌ `src/agents/skoog_table_agent.py` - NEW supporting agent
+- ✅ `src/agents/fed_rate_agent.py` - Federal Reserve Rate Agent (Phase 7 complete)
+- ✅ `src/agents/skoog_table_agent.py` - Skoog Table Agent (Phase 7 complete)
+- ✅ `src/agents/discount_rate_agent.py` - Updated to use Fed Rate Agent (Phase 7 complete)
+- ✅ `src/agents/worklife_expectancy_agent.py` - Updated to use Skoog Agent (Phase 7 complete)
 - ❌ `src/agents/supervisor_agent.py` - NEW coordination agent
 
 **What Works Now:**
 - ✓ Assignment-compliant dashboard form with all required fields
 - ✓ Date pickers, JSON upload, California counties, SOC occupation codes
 - ✓ 5 core agents (life expectancy, worklife, wage, discount, present value)
+- ✓ 2 supporting agents (Federal Reserve Rate Agent, Skoog Table Agent)
+- ✓ Live API integrations (Fed Reserve H.15, CA Labor Market Info)
 - ✓ Excel generation (4 sheets)
 - ✓ Job management and status polling
 - ✓ Basic provenance tracking
@@ -224,7 +228,7 @@
 - ✅ Dashboard fields don't match (Phase 4 complete)
 - ✅ Static data files (Skoog, CDC) not included (Phase 5 complete)
 - ✅ Live APIs (Fed H.15, CA Labor Market) not implemented (Phase 6 complete)
-- ❌ Supporting agents (Fed Rate, Skoog Table) don't exist
+- ✅ Supporting agents (Fed Rate, Skoog Table) don't exist (Phase 7 complete)
 - ❌ Supervisor agent doesn't exist
 - ❌ Real-time progress dashboard not implemented
 - ❌ Excel format may not match template exactly
@@ -397,40 +401,40 @@ Reference:
   - Add: API_CACHE_TTL=3600 (cache for 1 hour)
   - Document API endpoints and expected behavior
 
-## Phase 7: Assignment Compliance - Supporting Agents (Priority: P0 - BLOCKING)
+## Phase 7: Assignment Compliance - Supporting Agents (Priority: P0 - BLOCKING) ✅ COMPLETE
 
 **Goal**: Implement Federal Reserve Rate Agent and Skoog Table Agent as supporting functions.
 
 **Critical**: Assignment architecture diagram shows these as separate agents.
 
-### Supporting Agent Implementation (T053-T056)
+### Supporting Agent Implementation (T053-T056) ✅ ALL COMPLETE
 
-- [ ] T053 [P0] Implement Federal Reserve Rate Agent `src/agents/fed_rate_agent.py`:
+- [x] T053 [P0] Implement Federal Reserve Rate Agent `src/agents/fed_rate_agent.py`: ✅
   - Role: Provides current treasury/discount rates to DiscountRateAgent
   - Input: { present_date }
   - Output: { treasury_1yr_rate, retrieval_timestamp, provenance_log }
   - Function: Calls FedClient.get_treasury_rates() from external_apis.py
   - Ensures discount factors reflect current economic conditions
-  - Single-file, <=300 lines
+  - Single-file, <=300 lines (actual: 193 lines)
   - Implements standard agent contract: run(input_json: dict) → dict
 
-- [ ] T054 [P0] Implement Skoog Table Agent `src/agents/skoog_table_agent.py`:
+- [x] T054 [P0] Implement Skoog Table Agent `src/agents/skoog_table_agent.py`: ✅
   - Role: Provides actuarial worklife data to WorklifeExpectancyAgent
   - Input: { age, gender, education }
   - Output: { worklife_expectancy_years, table_source, provenance_log }
   - Function: Queries Skoog tables from data_loader.py
   - Returns statistical worklife expectancy by age/gender/education
-  - Single-file, <=300 lines
+  - Single-file, <=300 lines (actual: 259 lines)
   - Implements standard agent contract: run(input_json: dict) → dict
 
-- [ ] T055 [P0] Update `src/agents/discount_rate_agent.py` to call Federal Reserve Rate Agent:
+- [x] T055 [P0] Update `src/agents/discount_rate_agent.py` to call Federal Reserve Rate Agent: ✅
   - Import and instantiate FedRateAgent
   - Call fed_rate_agent.run() to get current Treasury rate
   - Use returned rate for discount calculations
   - Merge provenance logs
   - Ensure backward compatibility if Fed agent fails (use fallback rate)
 
-- [ ] T056 [P0] Update `src/agents/worklife_expectancy_agent.py` to call Skoog Table Agent:
+- [x] T056 [P0] Update `src/agents/worklife_expectancy_agent.py` to call Skoog Table Agent: ✅
   - Import and instantiate SkoogTableAgent
   - Call skoog_agent.run() to get worklife expectancy
   - Use returned expectancy for remaining work years calculation
@@ -613,8 +617,8 @@ Reference:
 ## Summary
 
 - **Total task count: 107**
-  - **Completed: 39** ✅ (Phases 1-6: MVP + Dashboard + Static Data + Live APIs complete)
-  - **Remaining: 68** ⏳ (Assignment compliance work)
+  - **Completed: 43** ✅ (Phases 1-7: MVP + Dashboard + Static Data + Live APIs + Supporting Agents complete)
+  - **Remaining: 64** ⏳ (Assignment compliance work)
 
 - Task count by phase:
   - **Phase 1 - Setup**: 5 tasks (T001..T005) ✅ COMPLETE
@@ -623,7 +627,7 @@ Reference:
   - **Phase 4 - Dashboard Fixes (P0 BLOCKING)**: 6 tasks (T039..T044) ✅ COMPLETE
   - **Phase 5 - Static Data Sources (P0 BLOCKING)**: 4 tasks (T045..T048) ✅ COMPLETE
   - **Phase 6 - Live API Integrations (P0 BLOCKING)**: 4 tasks (T049..T052) ✅ COMPLETE
-  - **Phase 7 - Supporting Agents (P0 BLOCKING)**: 4 tasks (T053..T056) ⏳ TODO
+  - **Phase 7 - Supporting Agents (P0 BLOCKING)**: 4 tasks (T053..T056) ✅ COMPLETE
   - **Phase 8 - Supervisor Agent (P1)**: 4 tasks (T057..T060) ⏳ TODO
   - **Phase 9 - Real-Time Progress Dashboard (P1)**: 5 tasks (T061..T065) ⏳ TODO
   - **Phase 10 - Excel Output Verification (P1)**: 4 tasks (T066..T069) ⏳ TODO
@@ -631,14 +635,14 @@ Reference:
   - **Phase 12 - US3 Parameter Overrides**: 4 tasks (T030..T033) ⏳ TODO
   - **Phase N - Polish**: 5 tasks (T034..T038) ⏳ TODO
 
-- **CRITICAL PATH for Assignment Compliance (68 tasks remaining):**
-  1. ⏳ Complete Phase 7 (P0 BLOCKING tasks: T053..T056) - 4 tasks
+- **CRITICAL PATH for Assignment Compliance (64 tasks remaining):**
+  1. ✅ Complete Phase 7 (P0 BLOCKING tasks: T053..T056) - 4 tasks COMPLETE
   2. ⏳ Complete Phases 8-10 (P1 tasks: T057..T069) - 13 tasks
-  3. These 17 tasks (T053..T069) are essential for matching assignment requirements
+  3. These 13 tasks (T057..T069) are essential for matching assignment requirements
   4. Remaining 51 tasks (T026..T038) are nice-to-have enhancements
 
 - **Priority Breakdown (Remaining Work):**
-  - P0 (BLOCKING): 4 tasks ⚠️ - Supporting agents (Fed Rate, Skoog Table)
+  - P0 (BLOCKING): 0 tasks ✅ - ALL COMPLETE!
   - P1 (HIGH): 13 tasks 🔥 - Supervisor, real-time dashboard, Excel verification
   - P2 (MEDIUM): 4 tasks - Provenance
   - P3 (LOW): 4 tasks - Parameter overrides
@@ -650,17 +654,15 @@ Reference:
   - Dashboard updates and Excel verification can run concurrently
 
 - **Recommended Execution Order:**
-  1. ✅ **DONE** - Phases 1-6 (MVP + Dashboard + Static Data + Live APIs - 39 tasks complete)
-  2. ⏳ **START HERE → Phase 7**: Create supporting agents (T053..T056) - 4 tasks
-  3. ⏳ **Phase 8**: Build supervisor agent (T057..T060) - 4 tasks
-  4. ⏳ **Phase 8**: Build supervisor agent (T057..T060) - 4 tasks
-  5. ⏳ **Phase 9**: Add real-time dashboard (T061..T065) - 5 tasks
-  6. ⏳ **Phase 10**: Verify Excel output (T066..T069) - 4 tasks
-  7. ⏳ Phases 11-12: Provenance and parameter overrides (if time permits) - 8 tasks
-  8. ⏳ Phase N: Polish and documentation - 5 tasks
+  1. ✅ **DONE** - Phases 1-7 (MVP + Dashboard + Static Data + Live APIs + Supporting Agents - 43 tasks complete)
+  2. ⏳ **START HERE → Phase 8**: Build supervisor agent (T057..T060) - 4 tasks
+  3. ⏳ **Phase 9**: Add real-time dashboard (T061..T065) - 5 tasks
+  4. ⏳ **Phase 10**: Verify Excel output (T066..T069) - 4 tasks
+  5. ⏳ Phases 11-12: Provenance and parameter overrides (if time permits) - 8 tasks
+  6. ⏳ Phase N: Polish and documentation - 5 tasks
 
-**Progress: 39/107 tasks complete (36.4%)**
-**Critical path remaining: 17/68 tasks (25.0% of remaining work)**
+**Progress: 43/107 tasks complete (40.2%)**
+**Critical path remaining: 13/64 tasks (20.3% of remaining work)**
 
 ## Files created by this task generator
 - `specs/1-wrongful-death-econ/tasks.md` (this file)

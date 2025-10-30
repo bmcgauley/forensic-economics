@@ -2,7 +2,7 @@
 Worklife Expectancy Agent
 
 Purpose: Compute expected worklife years based on occupation, age, education, and retirement norms.
-Inputs: {victim_age, occupation, education, location}
+Inputs: {victim_age, victim_sex, occupation, education, location}
 Outputs: {worklife_years, retirement_age, provenance_log}
 
 Single-file agent (target <=300 lines)
@@ -11,9 +11,15 @@ Single-file agent (target <=300 lines)
 from datetime import datetime
 from typing import Dict, Any, List
 
+from .skoog_table_agent import SkoogTableAgent
+
 
 class WorklifeExpectancyAgent:
     """Agent for calculating worklife expectancy."""
+
+    def __init__(self):
+        """Initialize the Worklife Expectancy Agent with Skoog Table Agent."""
+        self.skoog_agent = SkoogTableAgent()
 
     def run(self, input_json: Dict[str, Any]) -> Dict[str, Any]:
         """
@@ -22,6 +28,7 @@ class WorklifeExpectancyAgent:
         Args:
             input_json: Dictionary containing:
                 - victim_age (int): Current age
+                - victim_sex (str): Gender (M/F/Male/Female)
                 - occupation (str): Occupation or SOC code
                 - education (str): Education level
                 - location (str): Jurisdiction code
@@ -30,7 +37,7 @@ class WorklifeExpectancyAgent:
             Dictionary containing:
                 - outputs: {
                     worklife_years: float,
-                    retirement_age: int,
+                    retirement_age: int (estimated),
                     worklife_years_by_age: dict
                   }
                 - provenance_log: List of provenance entries
@@ -39,6 +46,7 @@ class WorklifeExpectancyAgent:
 
         # Extract inputs
         victim_age = input_json.get('victim_age')
+        victim_sex = input_json.get('victim_sex', 'male')
         occupation = input_json.get('occupation')
         education = input_json.get('education')
         location = input_json.get('location', 'US')
@@ -51,46 +59,56 @@ class WorklifeExpectancyAgent:
             'source_date': datetime.utcnow().isoformat(),
             'value': {
                 'victim_age': victim_age,
+                'victim_sex': victim_sex,
                 'occupation': occupation,
                 'education': education,
                 'location': location
             }
         })
 
-        # TODO: Fetch actual worklife expectancy data from BLS
-        # For now, using simplified retirement age assumptions
-
-        # Determine retirement age based on education and occupation
-        retirement_age_map = {
-            'less_than_high_school': 62,
-            'high_school': 65,
-            'some_college': 65,
-            'bachelors': 67,
-            'masters': 67,
-            'doctorate': 68
-        }
-
-        retirement_age = retirement_age_map.get(education, 65)
-
-        provenance_log.append({
-            'step': 'retirement_age_determination',
-            'description': f'Standard retirement age for {education} education level',
-            'formula': 'Based on BLS worklife expectancy tables',
-            'source_url': 'https://www.bls.gov/nls/nlsfaqs.htm#anch41',
-            'source_date': '2023-01-01',
-            'value': retirement_age
+        # Fetch worklife expectancy from Skoog Table Agent
+        skoog_result = self.skoog_agent.run({
+            'age': victim_age,
+            'gender': victim_sex,
+            'education': education
         })
 
-        # Calculate worklife years
-        worklife_years = max(0, retirement_age - victim_age)
+        # Extract worklife expectancy from Skoog agent output
+        worklife_years = skoog_result['outputs']['worklife_expectancy_years']
+        skoog_source = skoog_result['outputs'].get('table_source', 'Skoog Tables')
+
+        provenance_log.append({
+            'step': 'skoog_table_lookup',
+            'description': f'Worklife expectancy from {skoog_source}',
+            'formula': 'Markov Model of Labor Force Activity (Skoog, Ciecka, Krueger 2019)',
+            'source_url': skoog_result['outputs'].get('source_url'),
+            'source_date': skoog_result['outputs'].get('source_year'),
+            'value': {
+                'worklife_years': worklife_years,
+                'source': skoog_source
+            }
+        })
+
+        # Merge Skoog agent provenance
+        for prov_entry in skoog_result['provenance_log']:
+            provenance_log.append({
+                **prov_entry,
+                'step': f'skoog_agent_{prov_entry["step"]}'
+            })
+
+        # Estimate retirement age (current age + worklife years)
+        retirement_age = int(victim_age + worklife_years)
 
         provenance_log.append({
             'step': 'worklife_calculation',
-            'description': 'Calculate expected worklife years',
-            'formula': 'retirement_age - victim_age',
+            'description': 'Calculate expected worklife years from Skoog tables',
+            'formula': 'Direct lookup from Skoog Markov model',
             'source_url': None,
             'source_date': datetime.utcnow().isoformat(),
-            'value': worklife_years
+            'value': {
+                'worklife_years': worklife_years,
+                'estimated_retirement_age': retirement_age
+            }
         })
 
         # Generate year-by-year worklife expectancy
