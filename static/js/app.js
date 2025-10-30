@@ -10,7 +10,6 @@ const form = document.getElementById('intake-form');
 const generateBtn = document.getElementById('generate-btn');
 const statusPanel = document.getElementById('status-panel');
 const errorPanel = document.getElementById('error-panel');
-const statusMessage = document.getElementById('status-message');
 const errorMessage = document.getElementById('error-message');
 const progressFill = document.getElementById('progress-fill');
 const downloadLink = document.getElementById('download-link');
@@ -128,8 +127,9 @@ async function handleJSONFile(file) {
         const text = await file.text();
         const data = JSON.parse(text);
         populateFormFromJSON(data);
-        showStatus('Form populated from JSON file');
-        setTimeout(hideStatus, 3000);
+
+        // Show temporary success message
+        showTemporaryMessage('Form populated from JSON file', 'success');
     } catch (error) {
         showError('Invalid JSON file: ' + error.message);
     }
@@ -158,8 +158,7 @@ function populateFormFromJSON(data) {
 form.addEventListener('submit', async (e) => {
     e.preventDefault();
 
-    // Hide previous status/error messages
-    hideStatus();
+    // Hide previous error messages
     hideError();
 
     // Disable submit button
@@ -204,8 +203,13 @@ form.addEventListener('submit', async (e) => {
         const result = await response.json();
         currentJobId = result.job_id;
 
-        // Show status and start polling
-        showStatus('Report generation started...');
+        // Hide form sections and show dashboard
+        document.querySelector('.upload-section')?.classList.add('hidden');
+        form.classList.add('hidden');
+        hideError();
+
+        // Show status panel and start polling
+        statusPanel.classList.remove('hidden');
         updateProgress(10);
         startStatusPolling(result.status_url);
 
@@ -221,11 +225,15 @@ form.addEventListener('submit', async (e) => {
 function startStatusPolling(statusUrl) {
     // Update session info (with null checks)
     const sessionIdEl = document.getElementById('session-id');
+    const sessionIdFullEl = document.getElementById('session-id-full');
     const personNameEl = document.getElementById('person-name');
+    const analysisStatusEl = document.getElementById('analysis-status');
     const fullNameInput = document.getElementById('full_name');
 
-    if (sessionIdEl) sessionIdEl.textContent = currentJobId ? currentJobId.substring(0, 8) : 'N/A';
+    if (sessionIdEl) sessionIdEl.textContent = currentJobId ? currentJobId.substring(0, 15) : 'N/A';
+    if (sessionIdFullEl) sessionIdFullEl.textContent = currentJobId || 'N/A';
     if (personNameEl && fullNameInput) personNameEl.textContent = fullNameInput.value || 'N/A';
+    if (analysisStatusEl) analysisStatusEl.textContent = 'RUNNING';
 
     statusPollInterval = setInterval(async () => {
         try {
@@ -280,6 +288,12 @@ function startStatusPolling(statusUrl) {
                     if (progressTextEl) progressTextEl.textContent = '100%';
                     if (currentStepEl) currentStepEl.textContent = 'Analysis completed successfully';
 
+                    const analysisStatusCompletedEl = document.getElementById('analysis-status');
+                    if (analysisStatusCompletedEl) {
+                        analysisStatusCompletedEl.textContent = 'COMPLETED';
+                        analysisStatusCompletedEl.style.color = 'var(--success-color)';
+                    }
+
                     const downloadSectionEl = document.getElementById('download-section');
                     if (downloadSectionEl) downloadSectionEl.classList.remove('hidden');
 
@@ -289,7 +303,18 @@ function startStatusPolling(statusUrl) {
                     break;
                 case 'failed':
                     stopStatusPolling();
-                    hideStatus();
+                    const currentStepFailedEl = document.getElementById('current-step');
+                    if (currentStepFailedEl) {
+                        currentStepFailedEl.textContent = 'Analysis failed';
+                        currentStepFailedEl.style.color = '#ef4444';
+                    }
+
+                    const analysisStatusFailedEl = document.getElementById('analysis-status');
+                    if (analysisStatusFailedEl) {
+                        analysisStatusFailedEl.textContent = 'FAILED';
+                        analysisStatusFailedEl.style.color = 'var(--error-color)';
+                    }
+
                     showError(status.error || 'Report generation failed');
                     resetButton();
                     break;
@@ -374,19 +399,41 @@ function stopStatusPolling() {
 }
 
 /**
- * Show status panel
- */
-function showStatus(message) {
-    statusMessage.textContent = message;
-    statusPanel.classList.remove('hidden');
-}
-
-/**
  * Hide status panel
  */
 function hideStatus() {
     statusPanel.classList.add('hidden');
     downloadLink.classList.add('hidden');
+}
+
+/**
+ * Show temporary message (for JSON upload success, etc.)
+ */
+function showTemporaryMessage(message, type = 'info') {
+    // Create temporary message element
+    const msgDiv = document.createElement('div');
+    msgDiv.className = `temp-message temp-message-${type}`;
+    msgDiv.textContent = message;
+    msgDiv.style.cssText = `
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        padding: 15px 20px;
+        background: ${type === 'success' ? '#10b981' : '#3b82f6'};
+        color: white;
+        border-radius: 8px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        z-index: 1000;
+        animation: slideIn 0.3s ease-out;
+    `;
+
+    document.body.appendChild(msgDiv);
+
+    // Remove after 3 seconds
+    setTimeout(() => {
+        msgDiv.style.animation = 'slideOut 0.3s ease-out';
+        setTimeout(() => msgDiv.remove(), 300);
+    }, 3000);
 }
 
 /**

@@ -226,23 +226,19 @@ input::placeholder {
 .status-panel,
 .error-panel {
     margin-top: 30px;
-    padding: 20px;
-    border-radius: 4px;
+    padding: 30px;
+    border-radius: 8px;
 }
 
 .status-panel {
-    background-color: #e8f5e9;
-    border: 1px solid var(--success-color);
+    background-color: white;
+    border: 1px solid var(--border-color);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
 .error-panel {
     background-color: #ffebee;
     border: 1px solid var(--error-color);
-}
-
-.status-panel h3 {
-    color: var(--success-color);
-    margin-bottom: 10px;
 }
 
 .error-panel h3 {
@@ -323,35 +319,72 @@ footer {
 }
 
 /* Real-Time Progress Dashboard Styles */
-.status-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 20px;
-    padding-bottom: 15px;
-    border-bottom: 2px solid var(--success-color);
+.dashboard-header {
+    background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+    color: white;
+    padding: 25px 30px;
+    margin: -30px -30px 25px -30px;
+    border-radius: 8px 8px 0 0;
+    text-align: center;
 }
 
-#session-info {
-    display: flex;
-    gap: 20px;
+.dashboard-header h2 {
+    font-size: 1.8em;
+    margin-bottom: 5px;
+    font-weight: 600;
+}
+
+.dashboard-header h3 {
+    font-size: 1.2em;
+    font-weight: 500;
+    margin-bottom: 10px;
+    opacity: 0.95;
+}
+
+.session-info-text {
     font-size: 0.9em;
+    opacity: 0.85;
+    margin: 0;
 }
 
-.session-field {
-    display: flex;
-    align-items: center;
-    gap: 5px;
+.analysis-overview {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 15px;
+    margin-bottom: 25px;
+    padding: 20px;
+    background: #f8f9fa;
+    border-radius: 8px;
+    border: 1px solid var(--border-color);
 }
 
-.session-field .label {
-    font-weight: bold;
-    color: var(--text-color);
+.overview-item {
+    text-align: center;
 }
 
-.session-field .value {
-    color: var(--success-color);
+.overview-label {
+    font-size: 0.85em;
+    color: #666;
+    margin-bottom: 5px;
+    font-weight: 500;
+}
+
+.overview-value {
+    font-size: 1.1em;
+    color: var(--primary-color);
+    font-weight: 600;
     font-family: monospace;
+}
+
+.current-step-section {
+    margin-bottom: 15px;
+}
+
+.step-label {
+    font-size: 0.9em;
+    color: #666;
+    margin-bottom: 5px;
+    font-weight: 500;
 }
 
 .progress-section {
@@ -532,13 +565,23 @@ footer {
 
 /* Responsive adjustments for progress dashboard */
 @media (max-width: 768px) {
-    .status-header {
-        flex-direction: column;
-        align-items: flex-start;
+    .dashboard-header {
+        padding: 20px 15px;
+        margin: -20px -20px 20px -20px;
     }
 
-    #session-info {
-        margin-top: 10px;
+    .dashboard-header h2 {
+        font-size: 1.4em;
+    }
+
+    .dashboard-header h3 {
+        font-size: 1em;
+    }
+
+    .analysis-overview {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 10px;
+        padding: 15px;
     }
 
     .agent-table {
@@ -552,5 +595,28 @@ footer {
 
     .agent-output {
         max-width: 150px;
+    }
+}
+
+/* Temporary message animations */
+@keyframes slideIn {
+    from {
+        transform: translateX(400px);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+@keyframes slideOut {
+    from {
+        transform: translateX(0);
+        opacity: 1;
+    }
+    to {
+        transform: translateX(400px);
+        opacity: 0;
     }
 }

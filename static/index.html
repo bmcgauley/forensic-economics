@@ -125,27 +125,41 @@
             </form>
 
             <div id="status-panel" class="status-panel hidden">
-                <div class="status-header">
-                    <h3>Analysis Progress</h3>
-                    <div id="session-info">
-                        <div class="session-field">
-                            <span class="label">Session ID:</span>
-                            <span id="session-id" class="value">-</span>
-                        </div>
-                        <div class="session-field">
-                            <span class="label">Person:</span>
-                            <span id="person-name" class="value">-</span>
-                        </div>
+                <div class="dashboard-header">
+                    <h2>CA Wage Data Agent</h2>
+                    <h3>Live Progress Dashboard</h3>
+                    <p class="session-info-text">Real-time updates every 3 seconds | Session <span id="session-id">-</span></p>
+                </div>
+
+                <div class="analysis-overview">
+                    <div class="overview-item">
+                        <div class="overview-label">Session ID</div>
+                        <div id="session-id-full" class="overview-value">-</div>
+                    </div>
+                    <div class="overview-item">
+                        <div class="overview-label">Person</div>
+                        <div id="person-name" class="overview-value">-</div>
+                    </div>
+                    <div class="overview-item">
+                        <div class="overview-label">Status</div>
+                        <div id="analysis-status" class="overview-value">RUNNING</div>
+                    </div>
+                    <div class="overview-item">
+                        <div class="overview-label">Progress</div>
+                        <div id="agent-count" class="overview-value">0/8 agents</div>
                     </div>
                 </div>
 
-                <div class="progress-section">
+                <div class="current-step-section">
+                    <div class="step-label">Current Step:</div>
                     <div id="current-step" class="current-step">Initializing...</div>
+                </div>
+
+                <div class="progress-section">
                     <div id="progress-bar" class="progress-bar">
                         <div id="progress-fill" class="progress-fill"></div>
                         <span id="progress-text" class="progress-text">0%</span>
                     </div>
-                    <div id="agent-count" class="agent-count">0/7 agents</div>
                 </div>
 
                 <div class="agent-flow-section">

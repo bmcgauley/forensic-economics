@@ -167,6 +167,19 @@ def load_skoog_tables(force_reload: bool = False) -> Dict:
         if wle is not None:
             women_data['bachelors_plus'][age_int] = wle
 
+    # WORKAROUND: If women's data is incomplete (PDF parsing issue), use men's data as fallback
+    # Note: This is not ideal for accuracy as worklife expectancies differ by gender
+    if not women_data['less_than_hs']:  # Check if any data was loaded
+        import warnings
+        warnings.warn(
+            "Women's worklife table (Table 37) is incomplete in JSON. "
+            "Using men's data as temporary fallback. This may affect accuracy. "
+            "Please update skoog_2019_markov_model.json with complete women's data.",
+            UserWarning
+        )
+        print("[WARNING] Using men's worklife data for women due to incomplete Table 37")
+        women_data = men_data.copy()
+
     # Create metadata
     metadata = {
         'title': 'Skoog Worklife Expectancy Tables 2019',
@@ -313,18 +326,25 @@ def get_skoog_worklife(age: float, gender: str, education: str) -> float:
     # Map education level to Skoog table key
     education_mapping = {
         'less than high school': 'less_than_hs',
+        'less_than_high_school': 'less_than_hs',
         'high school graduate': 'hs_graduate',
         'high school': 'hs_graduate',
+        'hs_graduate': 'hs_graduate',
         'some college': 'some_college',
+        'some_college': 'some_college',
         "associate's degree": 'some_college',
         'associate degree': 'some_college',
+        'associates': 'some_college',
         "bachelor's degree": 'bachelors_plus',
         'bachelor degree': 'bachelors_plus',
         'bachelors degree': 'bachelors_plus',
+        'bachelors': 'bachelors_plus',
         "master's degree": 'bachelors_plus',
         'master degree': 'bachelors_plus',
         'masters degree': 'bachelors_plus',
+        'masters': 'bachelors_plus',
         'doctorate': 'bachelors_plus',
+        'phd': 'bachelors_plus',
         'professional degree': 'bachelors_plus'
     }
 
