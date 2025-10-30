@@ -35,20 +35,79 @@ header {
     text-align: center;
     margin-bottom: 40px;
     padding: 30px 0;
-    background: white;
+    background: linear-gradient(135deg, #27ae60 0%, #229954 100%);
     border-radius: 8px;
     box-shadow: var(--shadow);
 }
 
 h1 {
-    color: var(--primary-color);
+    color: white;
     font-size: 2em;
     margin-bottom: 10px;
 }
 
 .subtitle {
-    color: #7f8c8d;
+    color: rgba(255, 255, 255, 0.9);
     font-size: 0.95em;
+}
+
+/* Upload Section */
+.upload-section {
+    background: #f8f9fa;
+    padding: 20px;
+    border-radius: 8px;
+    margin-bottom: 30px;
+    border: 2px dashed var(--border-color);
+}
+
+.upload-section h2 {
+    color: var(--primary-color);
+    font-size: 1.2em;
+    margin-bottom: 15px;
+    text-align: center;
+}
+
+.upload-zone {
+    background: white;
+    border: 2px dashed var(--border-color);
+    border-radius: 8px;
+    padding: 40px 20px;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.upload-zone:hover {
+    border-color: var(--secondary-color);
+    background-color: #f0f8ff;
+}
+
+.upload-zone.drag-over {
+    border-color: var(--success-color);
+    background-color: #e8f5e9;
+}
+
+.upload-prompt {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    color: #7f8c8d;
+}
+
+.upload-prompt svg {
+    color: var(--secondary-color);
+}
+
+.upload-prompt p {
+    font-size: 1em;
+    font-weight: 500;
+    color: var(--text-color);
+}
+
+.upload-hint {
+    font-size: 0.85em;
+    color: #95a5a6;
 }
 
 main {
@@ -78,6 +137,12 @@ main {
     margin-bottom: 20px;
 }
 
+.form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+}
+
 label {
     display: block;
     margin-bottom: 5px;
@@ -85,8 +150,17 @@ label {
     color: var(--text-color);
 }
 
+.field-hint {
+    display: block;
+    margin-top: 5px;
+    font-size: 0.85em;
+    color: #7f8c8d;
+    font-style: italic;
+}
+
 input[type="text"],
 input[type="number"],
+input[type="date"],
 select {
     width: 100%;
     padding: 10px 12px;
@@ -231,11 +305,19 @@ footer {
         padding: 20px;
     }
 
+    .form-row {
+        grid-template-columns: 1fr;
+    }
+
     .form-actions {
         flex-direction: column;
     }
 
     .btn {
         width: 100%;
+    }
+
+    .upload-zone {
+        padding: 30px 15px;
     }
 }

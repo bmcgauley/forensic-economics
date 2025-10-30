@@ -14,82 +14,107 @@
         </header>
 
         <main>
+            <section class="upload-section">
+                <h2>Or Load Existing Data</h2>
+                <div id="json-upload-zone" class="upload-zone">
+                    <input type="file" id="json-file-input" accept="application/json,.json" hidden>
+                    <div class="upload-prompt">
+                        <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                            <polyline points="17 8 12 3 7 8"></polyline>
+                            <line x1="12" y1="3" x2="12" y2="15"></line>
+                        </svg>
+                        <p>Drag & drop JSON file here or click to browse</p>
+                        <span class="upload-hint">Upload a previously saved intake JSON file</span>
+                    </div>
+                </div>
+            </section>
+
             <form id="intake-form">
                 <section class="form-section">
-                    <h2>Victim Information</h2>
+                    <h2>Personal Information</h2>
 
                     <div class="form-group">
-                        <label for="victim_age">Age *</label>
-                        <input type="number" id="victim_age" name="victim_age" min="0" max="120" required>
+                        <label for="full_name">Full Name *</label>
+                        <input type="text" id="full_name" name="full_name" placeholder="e.g., Robert Johnson" required>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="date_of_birth">Date of Birth *</label>
+                            <input type="date" id="date_of_birth" name="date_of_birth" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="date_of_death">Date of Death</label>
+                            <input type="date" id="date_of_death" name="date_of_death">
+                        </div>
                     </div>
 
                     <div class="form-group">
-                        <label for="victim_sex">Sex *</label>
-                        <select id="victim_sex" name="victim_sex" required>
-                            <option value="">Select...</option>
-                            <option value="M">Male</option>
-                            <option value="F">Female</option>
-                            <option value="Other">Other</option>
-                        </select>
+                        <label for="present_date">Present Date *</label>
+                        <input type="date" id="present_date" name="present_date" required>
                     </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="gender">Gender *</label>
+                            <select id="gender" name="gender" required>
+                                <option value="">Select gender</option>
+                                <option value="Male">Male</option>
+                                <option value="Female">Female</option>
+                                <option value="Other">Other</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="level_of_schooling">Level of Schooling *</label>
+                            <select id="level_of_schooling" name="level_of_schooling" required>
+                                <option value="">Select level of schooling</option>
+                                <option value="less_than_high_school">Less than High School</option>
+                                <option value="high_school">High School Diploma</option>
+                                <option value="some_college">Some College</option>
+                                <option value="bachelors">Bachelor's Degree</option>
+                                <option value="masters">Master's Degree</option>
+                                <option value="doctorate">Doctorate</option>
+                            </select>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="form-section">
+                    <h2>Employment Information</h2>
 
                     <div class="form-group">
                         <label for="occupation">Occupation *</label>
-                        <input type="text" id="occupation" name="occupation" placeholder="e.g., Software Engineer or SOC code" required>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="education">Education Level *</label>
-                        <select id="education" name="education" required>
-                            <option value="">Select...</option>
-                            <option value="less_than_high_school">Less than High School</option>
-                            <option value="high_school">High School Diploma</option>
-                            <option value="some_college">Some College</option>
-                            <option value="bachelors">Bachelor's Degree</option>
-                            <option value="masters">Master's Degree</option>
-                            <option value="doctorate">Doctorate</option>
-                        </select>
-                    </div>
-                </section>
-
-                <section class="form-section">
-                    <h2>Financial Information</h2>
-
-                    <div class="form-group">
-                        <label for="salary">Annual Salary ($) *</label>
-                        <input type="number" id="salary" name="salary" min="0" step="0.01" required>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="salary_type">Salary Type *</label>
-                        <select id="salary_type" name="salary_type" required>
-                            <option value="current">Current/Actual</option>
-                            <option value="median_jurisdiction">Median (Jurisdiction)</option>
+                        <select id="occupation" name="occupation" required>
+                            <option value="">Select occupation from SOC</option>
                         </select>
                     </div>
 
                     <div class="form-group">
-                        <label for="location">Jurisdiction *</label>
-                        <input type="text" id="location" name="location" placeholder="e.g., CA, NY, US" required>
+                        <label for="employment_status">Employment Status *</label>
+                        <select id="employment_status" name="employment_status" required>
+                            <option value="">Select employment status</option>
+                            <option value="employed_full_time">Employed Full-Time</option>
+                            <option value="employed_part_time">Employed Part-Time</option>
+                            <option value="self_employed">Self-Employed</option>
+                            <option value="unemployed">Unemployed</option>
+                            <option value="retired">Retired</option>
+                        </select>
                     </div>
 
                     <div class="form-group">
-                        <label for="dependents">Number of Dependents</label>
-                        <input type="number" id="dependents" name="dependents" min="0" value="0">
-                    </div>
-                </section>
-
-                <section class="form-section">
-                    <h2>Additional Benefits (Optional)</h2>
-
-                    <div class="form-group">
-                        <label for="retirement_contribution">Annual Retirement Contribution ($)</label>
-                        <input type="number" id="retirement_contribution" name="retirement_contribution" min="0" step="0.01" value="0">
+                        <label for="annual_salary">Annual Salary *</label>
+                        <input type="number" id="annual_salary" name="annual_salary" min="0" step="1" placeholder="Enter amount without $ or commas" required>
+                        <span class="field-hint">Enter numbers only (e.g., 75000)</span>
                     </div>
 
                     <div class="form-group">
-                        <label for="health_benefits">Annual Health Benefits Value ($)</label>
-                        <input type="number" id="health_benefits" name="health_benefits" min="0" step="0.01" value="0">
+                        <label for="california_county">California County *</label>
+                        <select id="california_county" name="california_county" required>
+                            <option value="">Select CA county</option>
+                        </select>
                     </div>
                 </section>
 

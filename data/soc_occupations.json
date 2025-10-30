@@ -1,0 +1,1314 @@
+{
+  "occupations": [
+    {
+      "code": "11-1011",
+      "title": "Chief Executives",
+      "group": "Management"
+    },
+    {
+      "code": "11-1021",
+      "title": "General and Operations Managers",
+      "group": "Management"
+    },
+    {
+      "code": "11-2011",
+      "title": "Advertising and Promotions Managers",
+      "group": "Management"
+    },
+    {
+      "code": "11-2021",
+      "title": "Marketing Managers",
+      "group": "Management"
+    },
+    {
+      "code": "11-2022",
+      "title": "Sales Managers",
+      "group": "Management"
+    },
+    {
+      "code": "11-2031",
+      "title": "Public Relations and Fundraising Managers",
+      "group": "Management"
+    },
+    {
+      "code": "11-3011",
+      "title": "Administrative Services Managers",
+      "group": "Management"
+    },
+    {
+      "code": "11-3021",
+      "title": "Computer and Information Systems Managers",
+      "group": "Management"
+    },
+    {
+      "code": "11-3031",
+      "title": "Financial Managers",
+      "group": "Management"
+    },
+    {
+      "code": "11-3051",
+      "title": "Industrial Production Managers",
+      "group": "Management"
+    },
+    {
+      "code": "11-3061",
+      "title": "Purchasing Managers",
+      "group": "Management"
+    },
+    {
+      "code": "11-3071",
+      "title": "Transportation, Storage, and Distribution Managers",
+      "group": "Management"
+    },
+    {
+      "code": "11-9021",
+      "title": "Construction Managers",
+      "group": "Management"
+    },
+    {
+      "code": "11-9111",
+      "title": "Medical and Health Services Managers",
+      "group": "Management"
+    },
+    {
+      "code": "11-9151",
+      "title": "Social and Community Service Managers",
+      "group": "Management"
+    },
+    {
+      "code": "13-1011",
+      "title": "Agents and Business Managers of Artists, Performers, and Athletes",
+      "group": "Business and Financial Operations"
+    },
+    {
+      "code": "13-1020",
+      "title": "Buyers and Purchasing Agents",
+      "group": "Business and Financial Operations"
+    },
+    {
+      "code": "13-1031",
+      "title": "Claims Adjusters, Examiners, and Investigators",
+      "group": "Business and Financial Operations"
+    },
+    {
+      "code": "13-1041",
+      "title": "Compliance Officers",
+      "group": "Business and Financial Operations"
+    },
+    {
+      "code": "13-1051",
+      "title": "Cost Estimators",
+      "group": "Business and Financial Operations"
+    },
+    {
+      "code": "13-1071",
+      "title": "Human Resources Specialists",
+      "group": "Business and Financial Operations"
+    },
+    {
+      "code": "13-1081",
+      "title": "Logisticians",
+      "group": "Business and Financial Operations"
+    },
+    {
+      "code": "13-1111",
+      "title": "Management Analysts",
+      "group": "Business and Financial Operations"
+    },
+    {
+      "code": "13-1161",
+      "title": "Market Research Analysts and Marketing Specialists",
+      "group": "Business and Financial Operations"
+    },
+    {
+      "code": "13-2011",
+      "title": "Accountants and Auditors",
+      "group": "Business and Financial Operations"
+    },
+    {
+      "code": "13-2051",
+      "title": "Financial Analysts",
+      "group": "Business and Financial Operations"
+    },
+    {
+      "code": "13-2052",
+      "title": "Personal Financial Advisors",
+      "group": "Business and Financial Operations"
+    },
+    {
+      "code": "13-2053",
+      "title": "Insurance Underwriters",
+      "group": "Business and Financial Operations"
+    },
+    {
+      "code": "13-2072",
+      "title": "Loan Officers",
+      "group": "Business and Financial Operations"
+    },
+    {
+      "code": "15-1211",
+      "title": "Computer Systems Analysts",
+      "group": "Computer and Mathematical"
+    },
+    {
+      "code": "15-1212",
+      "title": "Information Security Analysts",
+      "group": "Computer and Mathematical"
+    },
+    {
+      "code": "15-1231",
+      "title": "Computer Network Support Specialists",
+      "group": "Computer and Mathematical"
+    },
+    {
+      "code": "15-1232",
+      "title": "Computer User Support Specialists",
+      "group": "Computer and Mathematical"
+    },
+    {
+      "code": "15-1241",
+      "title": "Computer Network Architects",
+      "group": "Computer and Mathematical"
+    },
+    {
+      "code": "15-1244",
+      "title": "Network and Computer Systems Administrators",
+      "group": "Computer and Mathematical"
+    },
+    {
+      "code": "15-1251",
+      "title": "Computer Programmers",
+      "group": "Computer and Mathematical"
+    },
+    {
+      "code": "15-1252",
+      "title": "Software Developers",
+      "group": "Computer and Mathematical"
+    },
+    {
+      "code": "15-1253",
+      "title": "Software Quality Assurance Analysts and Testers",
+      "group": "Computer and Mathematical"
+    },
+    {
+      "code": "15-1254",
+      "title": "Web Developers",
+      "group": "Computer and Mathematical"
+    },
+    {
+      "code": "15-1255",
+      "title": "Web and Digital Interface Designers",
+      "group": "Computer and Mathematical"
+    },
+    {
+      "code": "15-1256",
+      "title": "Database Administrators and Architects",
+      "group": "Computer and Mathematical"
+    },
+    {
+      "code": "15-2031",
+      "title": "Operations Research Analysts",
+      "group": "Computer and Mathematical"
+    },
+    {
+      "code": "15-2041",
+      "title": "Statisticians",
+      "group": "Computer and Mathematical"
+    },
+    {
+      "code": "15-2051",
+      "title": "Data Scientists",
+      "group": "Computer and Mathematical"
+    },
+    {
+      "code": "17-1011",
+      "title": "Architects, Except Landscape and Naval",
+      "group": "Architecture and Engineering"
+    },
+    {
+      "code": "17-1012",
+      "title": "Landscape Architects",
+      "group": "Architecture and Engineering"
+    },
+    {
+      "code": "17-2041",
+      "title": "Chemical Engineers",
+      "group": "Architecture and Engineering"
+    },
+    {
+      "code": "17-2051",
+      "title": "Civil Engineers",
+      "group": "Architecture and Engineering"
+    },
+    {
+      "code": "17-2061",
+      "title": "Computer Hardware Engineers",
+      "group": "Architecture and Engineering"
+    },
+    {
+      "code": "17-2071",
+      "title": "Electrical Engineers",
+      "group": "Architecture and Engineering"
+    },
+    {
+      "code": "17-2072",
+      "title": "Electronics Engineers, Except Computer",
+      "group": "Architecture and Engineering"
+    },
+    {
+      "code": "17-2081",
+      "title": "Environmental Engineers",
+      "group": "Architecture and Engineering"
+    },
+    {
+      "code": "17-2112",
+      "title": "Industrial Engineers",
+      "group": "Architecture and Engineering"
+    },
+    {
+      "code": "17-2141",
+      "title": "Mechanical Engineers",
+      "group": "Architecture and Engineering"
+    },
+    {
+      "code": "17-3011",
+      "title": "Architectural and Civil Drafters",
+      "group": "Architecture and Engineering"
+    },
+    {
+      "code": "17-3031",
+      "title": "Surveying and Mapping Technicians",
+      "group": "Architecture and Engineering"
+    },
+    {
+      "code": "19-1021",
+      "title": "Biochemists and Biophysicists",
+      "group": "Life, Physical, and Social Science"
+    },
+    {
+      "code": "19-1029",
+      "title": "Biological Scientists, All Other",
+      "group": "Life, Physical, and Social Science"
+    },
+    {
+      "code": "19-2012",
+      "title": "Physicists",
+      "group": "Life, Physical, and Social Science"
+    },
+    {
+      "code": "19-2031",
+      "title": "Chemists",
+      "group": "Life, Physical, and Social Science"
+    },
+    {
+      "code": "19-2042",
+      "title": "Geoscientists, Except Hydrologists and Geographers",
+      "group": "Life, Physical, and Social Science"
+    },
+    {
+      "code": "19-3011",
+      "title": "Economists",
+      "group": "Life, Physical, and Social Science"
+    },
+    {
+      "code": "19-3022",
+      "title": "Survey Researchers",
+      "group": "Life, Physical, and Social Science"
+    },
+    {
+      "code": "19-3031",
+      "title": "Clinical, Counseling, and School Psychologists",
+      "group": "Life, Physical, and Social Science"
+    },
+    {
+      "code": "19-3051",
+      "title": "Urban and Regional Planners",
+      "group": "Life, Physical, and Social Science"
+    },
+    {
+      "code": "19-4061",
+      "title": "Social Science Research Assistants",
+      "group": "Life, Physical, and Social Science"
+    },
+    {
+      "code": "21-1011",
+      "title": "Substance Abuse and Behavioral Disorder Counselors",
+      "group": "Community and Social Service"
+    },
+    {
+      "code": "21-1012",
+      "title": "Educational, Guidance, and Career Counselors and Advisors",
+      "group": "Community and Social Service"
+    },
+    {
+      "code": "21-1013",
+      "title": "Marriage and Family Therapists",
+      "group": "Community and Social Service"
+    },
+    {
+      "code": "21-1014",
+      "title": "Mental Health Counselors",
+      "group": "Community and Social Service"
+    },
+    {
+      "code": "21-1015",
+      "title": "Rehabilitation Counselors",
+      "group": "Community and Social Service"
+    },
+    {
+      "code": "21-1021",
+      "title": "Child, Family, and School Social Workers",
+      "group": "Community and Social Service"
+    },
+    {
+      "code": "21-1022",
+      "title": "Healthcare Social Workers",
+      "group": "Community and Social Service"
+    },
+    {
+      "code": "21-1023",
+      "title": "Mental Health and Substance Abuse Social Workers",
+      "group": "Community and Social Service"
+    },
+    {
+      "code": "23-1011",
+      "title": "Lawyers",
+      "group": "Legal"
+    },
+    {
+      "code": "23-1012",
+      "title": "Judicial Law Clerks",
+      "group": "Legal"
+    },
+    {
+      "code": "23-1022",
+      "title": "Arbitrators, Mediators, and Conciliators",
+      "group": "Legal"
+    },
+    {
+      "code": "23-1023",
+      "title": "Judges, Magistrate Judges, and Magistrates",
+      "group": "Legal"
+    },
+    {
+      "code": "23-2011",
+      "title": "Paralegals and Legal Assistants",
+      "group": "Legal"
+    },
+    {
+      "code": "25-1011",
+      "title": "Business Teachers, Postsecondary",
+      "group": "Education"
+    },
+    {
+      "code": "25-1021",
+      "title": "Computer Science Teachers, Postsecondary",
+      "group": "Education"
+    },
+    {
+      "code": "25-1066",
+      "title": "Psychology Teachers, Postsecondary",
+      "group": "Education"
+    },
+    {
+      "code": "25-1071",
+      "title": "Health Specialties Teachers, Postsecondary",
+      "group": "Education"
+    },
+    {
+      "code": "25-1081",
+      "title": "Education Teachers, Postsecondary",
+      "group": "Education"
+    },
+    {
+      "code": "25-2011",
+      "title": "Preschool Teachers, Except Special Education",
+      "group": "Education"
+    },
+    {
+      "code": "25-2012",
+      "title": "Kindergarten Teachers, Except Special Education",
+      "group": "Education"
+    },
+    {
+      "code": "25-2021",
+      "title": "Elementary School Teachers, Except Special Education",
+      "group": "Education"
+    },
+    {
+      "code": "25-2022",
+      "title": "Middle School Teachers, Except Special and Career/Technical Education",
+      "group": "Education"
+    },
+    {
+      "code": "25-2031",
+      "title": "Secondary School Teachers, Except Special and Career/Technical Education",
+      "group": "Education"
+    },
+    {
+      "code": "25-2051",
+      "title": "Special Education Teachers, Preschool",
+      "group": "Education"
+    },
+    {
+      "code": "25-2052",
+      "title": "Special Education Teachers, Kindergarten and Elementary School",
+      "group": "Education"
+    },
+    {
+      "code": "25-2054",
+      "title": "Special Education Teachers, Secondary School",
+      "group": "Education"
+    },
+    {
+      "code": "25-3011",
+      "title": "Adult Basic Education, Adult Secondary Education, and English as a Second Language Instructors",
+      "group": "Education"
+    },
+    {
+      "code": "25-3021",
+      "title": "Self-Enrichment Teachers",
+      "group": "Education"
+    },
+    {
+      "code": "25-4021",
+      "title": "Librarians and Media Collections Specialists",
+      "group": "Education"
+    },
+    {
+      "code": "25-9045",
+      "title": "Teaching Assistants, Postsecondary",
+      "group": "Education"
+    },
+    {
+      "code": "27-1011",
+      "title": "Art Directors",
+      "group": "Arts, Design, Entertainment, Sports, and Media"
+    },
+    {
+      "code": "27-1014",
+      "title": "Special Effects Artists and Animators",
+      "group": "Arts, Design, Entertainment, Sports, and Media"
+    },
+    {
+      "code": "27-1021",
+      "title": "Commercial and Industrial Designers",
+      "group": "Arts, Design, Entertainment, Sports, and Media"
+    },
+    {
+      "code": "27-1024",
+      "title": "Graphic Designers",
+      "group": "Arts, Design, Entertainment, Sports, and Media"
+    },
+    {
+      "code": "27-1025",
+      "title": "Interior Designers",
+      "group": "Arts, Design, Entertainment, Sports, and Media"
+    },
+    {
+      "code": "27-2012",
+      "title": "Producers and Directors",
+      "group": "Arts, Design, Entertainment, Sports, and Media"
+    },
+    {
+      "code": "27-2022",
+      "title": "Coaches and Scouts",
+      "group": "Arts, Design, Entertainment, Sports, and Media"
+    },
+    {
+      "code": "27-2023",
+      "title": "Umpires, Referees, and Other Sports Officials",
+      "group": "Arts, Design, Entertainment, Sports, and Media"
+    },
+    {
+      "code": "27-3011",
+      "title": "Broadcast Announcers and Radio Disc Jockeys",
+      "group": "Arts, Design, Entertainment, Sports, and Media"
+    },
+    {
+      "code": "27-3022",
+      "title": "Reporters and Correspondents",
+      "group": "Arts, Design, Entertainment, Sports, and Media"
+    },
+    {
+      "code": "27-3031",
+      "title": "Public Relations Specialists",
+      "group": "Arts, Design, Entertainment, Sports, and Media"
+    },
+    {
+      "code": "27-3041",
+      "title": "Editors",
+      "group": "Arts, Design, Entertainment, Sports, and Media"
+    },
+    {
+      "code": "27-3043",
+      "title": "Writers and Authors",
+      "group": "Arts, Design, Entertainment, Sports, and Media"
+    },
+    {
+      "code": "27-4011",
+      "title": "Audio and Video Technicians",
+      "group": "Arts, Design, Entertainment, Sports, and Media"
+    },
+    {
+      "code": "27-4021",
+      "title": "Photographers",
+      "group": "Arts, Design, Entertainment, Sports, and Media"
+    },
+    {
+      "code": "27-4032",
+      "title": "Film and Video Editors",
+      "group": "Arts, Design, Entertainment, Sports, and Media"
+    },
+    {
+      "code": "29-1011",
+      "title": "Chiropractors",
+      "group": "Healthcare Practitioners and Technical"
+    },
+    {
+      "code": "29-1021",
+      "title": "Dentists, General",
+      "group": "Healthcare Practitioners and Technical"
+    },
+    {
+      "code": "29-1031",
+      "title": "Dietitians and Nutritionists",
+      "group": "Healthcare Practitioners and Technical"
+    },
+    {
+      "code": "29-1041",
+      "title": "Optometrists",
+      "group": "Healthcare Practitioners and Technical"
+    },
+    {
+      "code": "29-1051",
+      "title": "Pharmacists",
+      "group": "Healthcare Practitioners and Technical"
+    },
+    {
+      "code": "29-1061",
+      "title": "Anesthesiologists",
+      "group": "Healthcare Practitioners and Technical"
+    },
+    {
+      "code": "29-1062",
+      "title": "Family Medicine Physicians",
+      "group": "Healthcare Practitioners and Technical"
+    },
+    {
+      "code": "29-1063",
+      "title": "Internists, General",
+      "group": "Healthcare Practitioners and Technical"
+    },
+    {
+      "code": "29-1065",
+      "title": "Pediatricians, General",
+      "group": "Healthcare Practitioners and Technical"
+    },
+    {
+      "code": "29-1066",
+      "title": "Psychiatrists",
+      "group": "Healthcare Practitioners and Technical"
+    },
+    {
+      "code": "29-1067",
+      "title": "Surgeons, Except Ophthalmologists",
+      "group": "Healthcare Practitioners and Technical"
+    },
+    {
+      "code": "29-1069",
+      "title": "Physicians, All Other",
+      "group": "Healthcare Practitioners and Technical"
+    },
+    {
+      "code": "29-1071",
+      "title": "Physician Assistants",
+      "group": "Healthcare Practitioners and Technical"
+    },
+    {
+      "code": "29-1122",
+      "title": "Occupational Therapists",
+      "group": "Healthcare Practitioners and Technical"
+    },
+    {
+      "code": "29-1123",
+      "title": "Physical Therapists",
+      "group": "Healthcare Practitioners and Technical"
+    },
+    {
+      "code": "29-1126",
+      "title": "Respiratory Therapists",
+      "group": "Healthcare Practitioners and Technical"
+    },
+    {
+      "code": "29-1127",
+      "title": "Speech-Language Pathologists",
+      "group": "Healthcare Practitioners and Technical"
+    },
+    {
+      "code": "29-1141",
+      "title": "Registered Nurses",
+      "group": "Healthcare Practitioners and Technical"
+    },
+    {
+      "code": "29-1151",
+      "title": "Nurse Anesthetists",
+      "group": "Healthcare Practitioners and Technical"
+    },
+    {
+      "code": "29-1161",
+      "title": "Nurse Midwives",
+      "group": "Healthcare Practitioners and Technical"
+    },
+    {
+      "code": "29-1171",
+      "title": "Nurse Practitioners",
+      "group": "Healthcare Practitioners and Technical"
+    },
+    {
+      "code": "29-2011",
+      "title": "Medical and Clinical Laboratory Technologists",
+      "group": "Healthcare Practitioners and Technical"
+    },
+    {
+      "code": "29-2012",
+      "title": "Medical and Clinical Laboratory Technicians",
+      "group": "Healthcare Practitioners and Technical"
+    },
+    {
+      "code": "29-2032",
+      "title": "Diagnostic Medical Sonographers",
+      "group": "Healthcare Practitioners and Technical"
+    },
+    {
+      "code": "29-2034",
+      "title": "Radiologic Technologists and Technicians",
+      "group": "Healthcare Practitioners and Technical"
+    },
+    {
+      "code": "29-2061",
+      "title": "Licensed Practical and Licensed Vocational Nurses",
+      "group": "Healthcare Practitioners and Technical"
+    },
+    {
+      "code": "31-1014",
+      "title": "Nursing Assistants",
+      "group": "Healthcare Support"
+    },
+    {
+      "code": "31-1131",
+      "title": "Home Health Aides",
+      "group": "Healthcare Support"
+    },
+    {
+      "code": "31-2011",
+      "title": "Occupational Therapy Assistants",
+      "group": "Healthcare Support"
+    },
+    {
+      "code": "31-2021",
+      "title": "Physical Therapist Assistants",
+      "group": "Healthcare Support"
+    },
+    {
+      "code": "31-9092",
+      "title": "Medical Assistants",
+      "group": "Healthcare Support"
+    },
+    {
+      "code": "31-9093",
+      "title": "Medical Equipment Preparers",
+      "group": "Healthcare Support"
+    },
+    {
+      "code": "31-9094",
+      "title": "Medical Transcriptionists",
+      "group": "Healthcare Support"
+    },
+    {
+      "code": "31-9096",
+      "title": "Veterinary Assistants and Laboratory Animal Caretakers",
+      "group": "Healthcare Support"
+    },
+    {
+      "code": "33-1012",
+      "title": "First-Line Supervisors of Police and Detectives",
+      "group": "Protective Service"
+    },
+    {
+      "code": "33-1021",
+      "title": "First-Line Supervisors of Firefighting and Prevention Workers",
+      "group": "Protective Service"
+    },
+    {
+      "code": "33-2011",
+      "title": "Firefighters",
+      "group": "Protective Service"
+    },
+    {
+      "code": "33-2021",
+      "title": "Fire Inspectors and Investigators",
+      "group": "Protective Service"
+    },
+    {
+      "code": "33-3012",
+      "title": "Correctional Officers and Jailers",
+      "group": "Protective Service"
+    },
+    {
+      "code": "33-3021",
+      "title": "Detectives and Criminal Investigators",
+      "group": "Protective Service"
+    },
+    {
+      "code": "33-3051",
+      "title": "Police and Sheriff's Patrol Officers",
+      "group": "Protective Service"
+    },
+    {
+      "code": "33-9021",
+      "title": "Private Detectives and Investigators",
+      "group": "Protective Service"
+    },
+    {
+      "code": "33-9032",
+      "title": "Security Guards",
+      "group": "Protective Service"
+    },
+    {
+      "code": "35-1011",
+      "title": "Chefs and Head Cooks",
+      "group": "Food Preparation and Serving"
+    },
+    {
+      "code": "35-1012",
+      "title": "First-Line Supervisors of Food Preparation and Serving Workers",
+      "group": "Food Preparation and Serving"
+    },
+    {
+      "code": "35-2011",
+      "title": "Cooks, Fast Food",
+      "group": "Food Preparation and Serving"
+    },
+    {
+      "code": "35-2012",
+      "title": "Cooks, Institution and Cafeteria",
+      "group": "Food Preparation and Serving"
+    },
+    {
+      "code": "35-2014",
+      "title": "Cooks, Restaurant",
+      "group": "Food Preparation and Serving"
+    },
+    {
+      "code": "35-2021",
+      "title": "Food Preparation Workers",
+      "group": "Food Preparation and Serving"
+    },
+    {
+      "code": "35-3023",
+      "title": "Fast Food and Counter Workers",
+      "group": "Food Preparation and Serving"
+    },
+    {
+      "code": "35-3031",
+      "title": "Waiters and Waitresses",
+      "group": "Food Preparation and Serving"
+    },
+    {
+      "code": "35-9011",
+      "title": "Dining Room and Cafeteria Attendants and Bartender Helpers",
+      "group": "Food Preparation and Serving"
+    },
+    {
+      "code": "35-9021",
+      "title": "Dishwashers",
+      "group": "Food Preparation and Serving"
+    },
+    {
+      "code": "35-9031",
+      "title": "Hosts and Hostesses, Restaurant, Lounge, and Coffee Shop",
+      "group": "Food Preparation and Serving"
+    },
+    {
+      "code": "37-1011",
+      "title": "First-Line Supervisors of Housekeeping and Janitorial Workers",
+      "group": "Building and Grounds Cleaning and Maintenance"
+    },
+    {
+      "code": "37-2011",
+      "title": "Janitors and Cleaners, Except Maids and Housekeeping Cleaners",
+      "group": "Building and Grounds Cleaning and Maintenance"
+    },
+    {
+      "code": "37-2012",
+      "title": "Maids and Housekeeping Cleaners",
+      "group": "Building and Grounds Cleaning and Maintenance"
+    },
+    {
+      "code": "37-3011",
+      "title": "Landscaping and Groundskeeping Workers",
+      "group": "Building and Grounds Cleaning and Maintenance"
+    },
+    {
+      "code": "39-1013",
+      "title": "First-Line Supervisors of Gambling Services Workers",
+      "group": "Personal Care and Service"
+    },
+    {
+      "code": "39-1022",
+      "title": "First-Line Supervisors of Personal Service Workers",
+      "group": "Personal Care and Service"
+    },
+    {
+      "code": "39-2011",
+      "title": "Animal Trainers",
+      "group": "Personal Care and Service"
+    },
+    {
+      "code": "39-2021",
+      "title": "Nonfarm Animal Caretakers",
+      "group": "Personal Care and Service"
+    },
+    {
+      "code": "39-3012",
+      "title": "Gambling and Sports Book Writers and Runners",
+      "group": "Personal Care and Service"
+    },
+    {
+      "code": "39-3031",
+      "title": "Ushers, Lobby Attendants, and Ticket Takers",
+      "group": "Personal Care and Service"
+    },
+    {
+      "code": "39-5012",
+      "title": "Hairdressers, Hairstylists, and Cosmetologists",
+      "group": "Personal Care and Service"
+    },
+    {
+      "code": "39-9011",
+      "title": "Childcare Workers",
+      "group": "Personal Care and Service"
+    },
+    {
+      "code": "39-9021",
+      "title": "Personal Care Aides",
+      "group": "Personal Care and Service"
+    },
+    {
+      "code": "39-9031",
+      "title": "Exercise Trainers and Group Fitness Instructors",
+      "group": "Personal Care and Service"
+    },
+    {
+      "code": "39-9032",
+      "title": "Recreation Workers",
+      "group": "Personal Care and Service"
+    },
+    {
+      "code": "41-1011",
+      "title": "First-Line Supervisors of Retail Sales Workers",
+      "group": "Sales and Related"
+    },
+    {
+      "code": "41-1012",
+      "title": "First-Line Supervisors of Non-Retail Sales Workers",
+      "group": "Sales and Related"
+    },
+    {
+      "code": "41-2011",
+      "title": "Cashiers",
+      "group": "Sales and Related"
+    },
+    {
+      "code": "41-2021",
+      "title": "Counter and Rental Clerks",
+      "group": "Sales and Related"
+    },
+    {
+      "code": "41-2022",
+      "title": "Parts Salespersons",
+      "group": "Sales and Related"
+    },
+    {
+      "code": "41-2031",
+      "title": "Retail Salespersons",
+      "group": "Sales and Related"
+    },
+    {
+      "code": "41-3011",
+      "title": "Advertising Sales Agents",
+      "group": "Sales and Related"
+    },
+    {
+      "code": "41-3021",
+      "title": "Insurance Sales Agents",
+      "group": "Sales and Related"
+    },
+    {
+      "code": "41-3031",
+      "title": "Securities, Commodities, and Financial Services Sales Agents",
+      "group": "Sales and Related"
+    },
+    {
+      "code": "41-3041",
+      "title": "Travel Agents",
+      "group": "Sales and Related"
+    },
+    {
+      "code": "41-3091",
+      "title": "Sales Representatives of Services, Except Advertising, Insurance, Financial Services, and Travel",
+      "group": "Sales and Related"
+    },
+    {
+      "code": "41-4011",
+      "title": "Sales Representatives, Wholesale and Manufacturing, Technical and Scientific Products",
+      "group": "Sales and Related"
+    },
+    {
+      "code": "41-4012",
+      "title": "Sales Representatives, Wholesale and Manufacturing, Except Technical and Scientific Products",
+      "group": "Sales and Related"
+    },
+    {
+      "code": "41-9022",
+      "title": "Real Estate Sales Agents",
+      "group": "Sales and Related"
+    },
+    {
+      "code": "41-9031",
+      "title": "Sales Engineers",
+      "group": "Sales and Related"
+    },
+    {
+      "code": "43-1011",
+      "title": "First-Line Supervisors of Office and Administrative Support Workers",
+      "group": "Office and Administrative Support"
+    },
+    {
+      "code": "43-3011",
+      "title": "Bill and Account Collectors",
+      "group": "Office and Administrative Support"
+    },
+    {
+      "code": "43-3021",
+      "title": "Billing and Posting Clerks",
+      "group": "Office and Administrative Support"
+    },
+    {
+      "code": "43-3031",
+      "title": "Bookkeeping, Accounting, and Auditing Clerks",
+      "group": "Office and Administrative Support"
+    },
+    {
+      "code": "43-3051",
+      "title": "Payroll and Timekeeping Clerks",
+      "group": "Office and Administrative Support"
+    },
+    {
+      "code": "43-4051",
+      "title": "Customer Service Representatives",
+      "group": "Office and Administrative Support"
+    },
+    {
+      "code": "43-4111",
+      "title": "Interviewers, Except Eligibility and Loan",
+      "group": "Office and Administrative Support"
+    },
+    {
+      "code": "43-4121",
+      "title": "Library Assistants, Clerical",
+      "group": "Office and Administrative Support"
+    },
+    {
+      "code": "43-4171",
+      "title": "Receptionists and Information Clerks",
+      "group": "Office and Administrative Support"
+    },
+    {
+      "code": "43-5061",
+      "title": "Production, Planning, and Expediting Clerks",
+      "group": "Office and Administrative Support"
+    },
+    {
+      "code": "43-5071",
+      "title": "Shipping, Receiving, and Inventory Clerks",
+      "group": "Office and Administrative Support"
+    },
+    {
+      "code": "43-6011",
+      "title": "Executive Secretaries and Executive Administrative Assistants",
+      "group": "Office and Administrative Support"
+    },
+    {
+      "code": "43-6013",
+      "title": "Medical Secretaries and Administrative Assistants",
+      "group": "Office and Administrative Support"
+    },
+    {
+      "code": "43-6014",
+      "title": "Secretaries and Administrative Assistants, Except Legal, Medical, and Executive",
+      "group": "Office and Administrative Support"
+    },
+    {
+      "code": "43-9061",
+      "title": "Office Clerks, General",
+      "group": "Office and Administrative Support"
+    },
+    {
+      "code": "47-1011",
+      "title": "First-Line Supervisors of Construction Trades and Extraction Workers",
+      "group": "Construction and Extraction"
+    },
+    {
+      "code": "47-2031",
+      "title": "Carpenters",
+      "group": "Construction and Extraction"
+    },
+    {
+      "code": "47-2061",
+      "title": "Construction Laborers",
+      "group": "Construction and Extraction"
+    },
+    {
+      "code": "47-2071",
+      "title": "Paving, Surfacing, and Tamping Equipment Operators",
+      "group": "Construction and Extraction"
+    },
+    {
+      "code": "47-2073",
+      "title": "Operating Engineers and Other Construction Equipment Operators",
+      "group": "Construction and Extraction"
+    },
+    {
+      "code": "47-2111",
+      "title": "Electricians",
+      "group": "Construction and Extraction"
+    },
+    {
+      "code": "47-2131",
+      "title": "Insulation Workers, Floor, Ceiling, and Wall",
+      "group": "Construction and Extraction"
+    },
+    {
+      "code": "47-2141",
+      "title": "Painters, Construction and Maintenance",
+      "group": "Construction and Extraction"
+    },
+    {
+      "code": "47-2152",
+      "title": "Plumbers, Pipefitters, and Steamfitters",
+      "group": "Construction and Extraction"
+    },
+    {
+      "code": "47-2181",
+      "title": "Roofers",
+      "group": "Construction and Extraction"
+    },
+    {
+      "code": "47-2211",
+      "title": "Sheet Metal Workers",
+      "group": "Construction and Extraction"
+    },
+    {
+      "code": "47-4011",
+      "title": "Construction and Building Inspectors",
+      "group": "Construction and Extraction"
+    },
+    {
+      "code": "49-1011",
+      "title": "First-Line Supervisors of Mechanics, Installers, and Repairers",
+      "group": "Installation, Maintenance, and Repair"
+    },
+    {
+      "code": "49-2011",
+      "title": "Computer, Automated Teller, and Office Machine Repairers",
+      "group": "Installation, Maintenance, and Repair"
+    },
+    {
+      "code": "49-2022",
+      "title": "Telecommunications Equipment Installers and Repairers, Except Line Installers",
+      "group": "Installation, Maintenance, and Repair"
+    },
+    {
+      "code": "49-3021",
+      "title": "Automotive Body and Related Repairers",
+      "group": "Installation, Maintenance, and Repair"
+    },
+    {
+      "code": "49-3023",
+      "title": "Automotive Service Technicians and Mechanics",
+      "group": "Installation, Maintenance, and Repair"
+    },
+    {
+      "code": "49-3031",
+      "title": "Bus and Truck Mechanics and Diesel Engine Specialists",
+      "group": "Installation, Maintenance, and Repair"
+    },
+    {
+      "code": "49-3042",
+      "title": "Mobile Heavy Equipment Mechanics, Except Engines",
+      "group": "Installation, Maintenance, and Repair"
+    },
+    {
+      "code": "49-9021",
+      "title": "Heating, Air Conditioning, and Refrigeration Mechanics and Installers",
+      "group": "Installation, Maintenance, and Repair"
+    },
+    {
+      "code": "49-9041",
+      "title": "Industrial Machinery Mechanics",
+      "group": "Installation, Maintenance, and Repair"
+    },
+    {
+      "code": "49-9071",
+      "title": "Maintenance and Repair Workers, General",
+      "group": "Installation, Maintenance, and Repair"
+    },
+    {
+      "code": "51-1011",
+      "title": "First-Line Supervisors of Production and Operating Workers",
+      "group": "Production"
+    },
+    {
+      "code": "51-2092",
+      "title": "Team Assemblers",
+      "group": "Production"
+    },
+    {
+      "code": "51-3011",
+      "title": "Bakers",
+      "group": "Production"
+    },
+    {
+      "code": "51-3021",
+      "title": "Butchers and Meat Cutters",
+      "group": "Production"
+    },
+    {
+      "code": "51-3023",
+      "title": "Slaughterers and Meat Packers",
+      "group": "Production"
+    },
+    {
+      "code": "51-4041",
+      "title": "Machinists",
+      "group": "Production"
+    },
+    {
+      "code": "51-4121",
+      "title": "Welders, Cutters, Solderers, and Brazers",
+      "group": "Production"
+    },
+    {
+      "code": "51-7011",
+      "title": "Cabinetmakers and Bench Carpenters",
+      "group": "Production"
+    },
+    {
+      "code": "51-9061",
+      "title": "Inspectors, Testers, Sorters, Samplers, and Weighers",
+      "group": "Production"
+    },
+    {
+      "code": "51-9111",
+      "title": "Packaging and Filling Machine Operators and Tenders",
+      "group": "Production"
+    },
+    {
+      "code": "51-9198",
+      "title": "Helpers--Production Workers",
+      "group": "Production"
+    },
+    {
+      "code": "53-1011",
+      "title": "Aircraft Cargo Handling Supervisors",
+      "group": "Transportation and Material Moving"
+    },
+    {
+      "code": "53-1031",
+      "title": "First-Line Supervisors of Transportation and Material-Moving Workers, Except Aircraft Cargo Handling Supervisors",
+      "group": "Transportation and Material Moving"
+    },
+    {
+      "code": "53-1042",
+      "title": "First-Line Supervisors of Helpers, Laborers, and Material Movers, Hand",
+      "group": "Transportation and Material Moving"
+    },
+    {
+      "code": "53-2011",
+      "title": "Airline Pilots, Copilots, and Flight Engineers",
+      "group": "Transportation and Material Moving"
+    },
+    {
+      "code": "53-2012",
+      "title": "Commercial Pilots",
+      "group": "Transportation and Material Moving"
+    },
+    {
+      "code": "53-3011",
+      "title": "Ambulance Drivers and Attendants, Except Emergency Medical Technicians",
+      "group": "Transportation and Material Moving"
+    },
+    {
+      "code": "53-3031",
+      "title": "Driver/Sales Workers",
+      "group": "Transportation and Material Moving"
+    },
+    {
+      "code": "53-3032",
+      "title": "Heavy and Tractor-Trailer Truck Drivers",
+      "group": "Transportation and Material Moving"
+    },
+    {
+      "code": "53-3033",
+      "title": "Light Truck Drivers",
+      "group": "Transportation and Material Moving"
+    },
+    {
+      "code": "53-3041",
+      "title": "Taxi Drivers",
+      "group": "Transportation and Material Moving"
+    },
+    {
+      "code": "53-3054",
+      "title": "Passenger Vehicle Drivers, Except Bus Drivers, Transit and Intercity",
+      "group": "Transportation and Material Moving"
+    },
+    {
+      "code": "53-3099",
+      "title": "Motor Vehicle Operators, All Other",
+      "group": "Transportation and Material Moving"
+    },
+    {
+      "code": "53-6021",
+      "title": "Parking Attendants",
+      "group": "Transportation and Material Moving"
+    },
+    {
+      "code": "53-7051",
+      "title": "Industrial Truck and Tractor Operators",
+      "group": "Transportation and Material Moving"
+    },
+    {
+      "code": "53-7062",
+      "title": "Laborers and Freight, Stock, and Material Movers, Hand",
+      "group": "Transportation and Material Moving"
+    },
+    {
+      "code": "53-7063",
+      "title": "Machine Feeders and Offbearers",
+      "group": "Transportation and Material Moving"
+    },
+    {
+      "code": "53-7064",
+      "title": "Packers and Packagers, Hand",
+      "group": "Transportation and Material Moving"
+    },
+    {
+      "code": "53-7065",
+      "title": "Stockers and Order Fillers",
+      "group": "Transportation and Material Moving"
+    }
+  ]
+}

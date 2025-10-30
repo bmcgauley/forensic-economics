@@ -50,6 +50,12 @@ def create_app(config=None):
         """Health check endpoint."""
         return {'status': 'ok', 'service': 'forensic-economics'}, 200
 
+    @app.route('/data/<path:filename>')
+    def serve_data(filename):
+        """Serve data files (counties, occupations, etc.)."""
+        data_folder = os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(__file__))), 'data')
+        return send_from_directory(data_folder, filename)
+
     # Register API blueprints
     from src.api.generate import generate_bp
     app.register_blueprint(generate_bp, url_prefix='/api')
