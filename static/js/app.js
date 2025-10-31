@@ -685,7 +685,7 @@ function updateProgress(percent) {
 }
 
 /**
- * Show download link
+ * Show download link and load Excel viewer
  */
 function showDownloadLink(url, filename) {
     downloadLink.innerHTML = `
@@ -694,6 +694,97 @@ function showDownloadLink(url, filename) {
         </a>
     `;
     downloadLink.classList.remove('hidden');
+
+    // Load Excel file into viewer
+    loadExcelViewer(url, filename);
+}
+
+/**
+ * Load and display Excel file in viewer
+ */
+async function loadExcelViewer(url, filename) {
+    const viewerSection = document.getElementById('excel-viewer-section');
+    const viewerTabs = document.getElementById('viewer-tabs');
+    const viewerContent = document.getElementById('viewer-content');
+    const viewerDownloadBtn = document.getElementById('viewer-download-btn');
+
+    try {
+        // Show loading state
+        viewerContent.innerHTML = '<div class="viewer-loading">Loading Excel data...</div>';
+        viewerSection.classList.remove('hidden');
+
+        // Fetch the Excel file
+        const response = await fetch(url);
+        const arrayBuffer = await response.arrayBuffer();
+
+        // Parse Excel file using SheetJS
+        const workbook = XLSX.read(arrayBuffer, { type: 'array' });
+
+        // Clear loading state
+        viewerContent.innerHTML = '';
+        viewerTabs.innerHTML = '';
+
+        // Create tabs for each sheet
+        const sheetNames = workbook.SheetNames;
+        let activeSheet = sheetNames[0];
+
+        sheetNames.forEach((sheetName, index) => {
+            const tab = document.createElement('button');
+            tab.className = `viewer-tab ${index === 0 ? 'active' : ''}`;
+            tab.textContent = sheetName;
+            tab.onclick = () => {
+                // Update active tab
+                document.querySelectorAll('.viewer-tab').forEach(t => t.classList.remove('active'));
+                tab.classList.add('active');
+
+                // Show corresponding sheet
+                activeSheet = sheetName;
+                displaySheet(workbook, sheetName);
+            };
+            viewerTabs.appendChild(tab);
+        });
+
+        // Display first sheet
+        displaySheet(workbook, activeSheet);
+
+        // Setup download button - use direct navigation to preserve Flask headers
+        viewerDownloadBtn.onclick = (e) => {
+            e.preventDefault();
+            // Use window.location to trigger proper download with Flask headers
+            window.location.href = url;
+        };
+
+    } catch (error) {
+        console.error('Failed to load Excel file:', error);
+        viewerContent.innerHTML = '<div class="viewer-error">Failed to load Excel preview. Please download the file to view it.</div>';
+    }
+}
+
+/**
+ * Display a specific sheet in the viewer
+ */
+function displaySheet(workbook, sheetName) {
+    const viewerContent = document.getElementById('viewer-content');
+    const sheet = workbook.Sheets[sheetName];
+
+    // Convert sheet to HTML table
+    const htmlTable = XLSX.utils.sheet_to_html(sheet, {
+        id: 'excel-table',
+        editable: false
+    });
+
+    // Create wrapper with scrolling
+    viewerContent.innerHTML = `
+        <div class="table-wrapper">
+            ${htmlTable}
+        </div>
+    `;
+
+    // Add styling to generated table
+    const table = viewerContent.querySelector('table');
+    if (table) {
+        table.className = 'excel-preview-table';
+    }
 }
 
 /**

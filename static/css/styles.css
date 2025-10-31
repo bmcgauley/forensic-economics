@@ -756,3 +756,213 @@ footer {
         opacity: 0;
     }
 }
+
+/* Excel Viewer Section */
+.excel-viewer-section {
+    background: white;
+    border-radius: 12px;
+    padding: 0;
+    margin-top: 20px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    border: 1px solid #e0e0e0;
+    overflow: hidden;
+}
+
+.viewer-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.viewer-header .section-icon-title {
+    color: white;
+    margin: 0;
+    font-size: 1.1em;
+}
+
+.viewer-download-btn {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 20px;
+    background: rgba(255, 255, 255, 0.2);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    border-radius: 6px;
+    color: white;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-size: 0.9em;
+    font-weight: 500;
+}
+
+.viewer-download-btn:hover {
+    background: rgba(255, 255, 255, 0.3);
+    border-color: rgba(255, 255, 255, 0.5);
+    transform: translateY(-1px);
+}
+
+.viewer-download-btn svg {
+    width: 18px;
+    height: 18px;
+}
+
+.viewer-tabs {
+    display: flex;
+    background: #f5f5f5;
+    border-bottom: 2px solid #e0e0e0;
+    overflow-x: auto;
+    scrollbar-width: thin;
+}
+
+.viewer-tabs::-webkit-scrollbar {
+    height: 6px;
+}
+
+.viewer-tabs::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+
+.viewer-tabs::-webkit-scrollbar-thumb {
+    background: #888;
+    border-radius: 3px;
+}
+
+.viewer-tab {
+    padding: 12px 24px;
+    background: transparent;
+    border: none;
+    border-bottom: 3px solid transparent;
+    cursor: pointer;
+    font-size: 0.9em;
+    font-weight: 500;
+    color: #666;
+    transition: all 0.2s ease;
+    white-space: nowrap;
+}
+
+.viewer-tab:hover {
+    background: rgba(0, 0, 0, 0.05);
+    color: #333;
+}
+
+.viewer-tab.active {
+    color: #667eea;
+    border-bottom-color: #667eea;
+    background: white;
+}
+
+.viewer-content {
+    padding: 20px;
+    max-height: 600px;
+    overflow: auto;
+    background: white;
+}
+
+.viewer-loading {
+    text-align: center;
+    padding: 60px 20px;
+    color: #666;
+    font-size: 1.1em;
+}
+
+.viewer-error {
+    text-align: center;
+    padding: 60px 20px;
+    color: var(--error-color);
+    font-size: 1em;
+}
+
+.table-wrapper {
+    overflow-x: auto;
+    overflow-y: auto;
+    max-height: 550px;
+}
+
+.excel-preview-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.85em;
+    border: 1px solid #e0e0e0;
+}
+
+.excel-preview-table th,
+.excel-preview-table td {
+    padding: 10px 12px;
+    text-align: left;
+    border: 1px solid #e0e0e0;
+}
+
+.excel-preview-table th {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    font-weight: 600;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+}
+
+.excel-preview-table tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+.excel-preview-table tr:hover {
+    background-color: #f0f0f0;
+}
+
+.excel-preview-table td {
+    color: #333;
+}
+
+/* Handle numeric columns */
+.excel-preview-table td[data-t="n"] {
+    text-align: right;
+    font-family: 'Courier New', monospace;
+}
+
+/* Full-width viewer positioning */
+.status-panel .excel-viewer-section {
+    margin-top: 30px;
+    width: 100%;
+    max-width: 100%;
+}
+
+.excel-viewer-section {
+    margin-bottom: 30px;
+}
+
+/* Ensure tables are responsive */
+@media (max-width: 1200px) {
+    .excel-preview-table {
+        font-size: 0.75em;
+    }
+
+    .excel-preview-table th,
+    .excel-preview-table td {
+        padding: 8px 10px;
+    }
+}
+
+@media (max-width: 768px) {
+    .viewer-header {
+        flex-direction: column;
+        gap: 15px;
+        text-align: center;
+    }
+
+    .viewer-download-btn {
+        width: 100%;
+        justify-content: center;
+    }
+
+    .excel-preview-table {
+        font-size: 0.7em;
+    }
+
+    .excel-preview-table th,
+    .excel-preview-table td {
+        padding: 6px 8px;
+    }
+}

@@ -15,6 +15,46 @@ from .skoog_table_agent import SkoogTableAgent
 from ..utils.ollama_client import get_ollama_client
 
 
+# Structured schema for AI analysis output
+AI_ANALYSIS_SCHEMA = {
+    "type": "object",
+    "properties": {
+        "key_findings": {
+            "type": "array",
+            "items": {"type": "string"},
+            "minItems": 2,
+            "maxItems": 3,
+            "description": "2-3 key findings about worklife expectancy"
+        },
+        "risk_factors": {
+            "type": "array",
+            "items": {"type": "string"},
+            "minItems": 1,
+            "maxItems": 2,
+            "description": "1-2 risk factors to consider"
+        },
+        "assumptions": {
+            "type": "array",
+            "items": {"type": "string"},
+            "minItems": 1,
+            "maxItems": 2,
+            "description": "1-2 key assumptions made"
+        },
+        "confidence_level": {
+            "type": "string",
+            "enum": ["high", "medium", "low"],
+            "description": "Confidence level in the projection"
+        },
+        "recommendation": {
+            "type": "string",
+            "maxLength": 300,
+            "description": "Brief recommendation (max 300 chars)"
+        }
+    },
+    "required": ["key_findings", "risk_factors", "assumptions", "confidence_level", "recommendation"]
+}
+
+
 class WorklifeExpectancyAgent:
     """AI Agent for analyzing worklife expectancy with LLM reasoning."""
 
@@ -105,68 +145,78 @@ class WorklifeExpectancyAgent:
         # Estimate retirement age (current age + worklife years)
         retirement_age = int(victim_age + worklife_years)
 
-        # Use AI to analyze and provide reasoning
-        print(f"[WORKLIFE_EXPECTANCY_AGENT] Querying LLM for analysis...")
+        # Use AI to analyze and provide structured reasoning
+        print(f"[WORKLIFE_EXPECTANCY_AGENT] Querying LLM for structured analysis...")
 
-        ai_prompt = f"""You are a forensic economics AI agent analyzing worklife expectancy for a wrongful death case.
+        ai_prompt = f"""Analyze worklife expectancy for forensic economics case.
 
 CASE DATA:
 - Victim Age: {victim_age} years old
 - Gender: {victim_sex}
 - Occupation: {occupation}
-- Education Level: {education}
-- Location: {location}
-- Skoog Table Worklife Years: {worklife_years:.2f} years
+- Education: {education}
+- Skoog Table Worklife: {worklife_years:.2f} years
 - Estimated Retirement Age: {retirement_age} years
 
 CONTEXT:
-The Skoog Tables (2019) use a Markov Model of Labor Force Activity based on 2012-2017 data to predict expected years of labor force participation by age, gender, and education.
+Skoog Tables (2019) use Markov Model based on 2012-2017 labor force data.
 
 TASK:
-Analyze this worklife expectancy data for forensic economic purposes. Consider:
-1. The statistical baseline from Skoog tables
-2. How the occupation and education level affect worklife
-3. Current labor market trends and retirement patterns
-4. Any relevant factors for this specific case
-5. Forensic economics best practices
-
-Provide your analysis in 2-3 sentences, discussing the expected worklife years and any relevant considerations for the economic loss calculation.
-
-Your response should be professional and suitable for a legal/forensic report."""
+Provide structured analysis with:
+- 2-3 key findings about the worklife expectancy
+- 1-2 risk factors to consider
+- 1-2 key assumptions made
+- Confidence level (high/medium/low)
+- Brief recommendation (max 300 chars) suitable for legal/forensic report"""
 
         try:
-            ai_analysis = self.llm.generate_completion(
+            ai_analysis = self.llm.generate_structured_completion(
                 prompt=ai_prompt,
-                system_prompt="You are an expert forensic economist AI agent specializing in worklife expectancy analysis for wrongful death cases.",
-                temperature=0.5  # Lower temperature for more consistent analysis
+                system_prompt="You are a forensic economist analyzing worklife expectancy. Respond ONLY with valid JSON.",
+                schema=AI_ANALYSIS_SCHEMA,
+                temperature=0.3  # Low temperature for consistent structured output
             )
 
-            print(f"[WORKLIFE_EXPECTANCY_AGENT] AI analysis complete ({len(ai_analysis)} chars)")
+            print(f"[WORKLIFE_EXPECTANCY_AGENT] Structured AI analysis complete")
 
             provenance_log.append({
                 'step': 'ai_analysis',
-                'description': 'AI reasoning and contextual analysis',
-                'formula': 'Ollama Gemma3 LLM Analysis',
+                'description': 'Structured AI reasoning and contextual analysis',
+                'formula': 'Ollama Gemma3 LLM Structured Analysis',
                 'source_url': None,
                 'source_date': datetime.utcnow().isoformat(),
                 'value': {
                     'ai_model': self.llm.model,
-                    'analysis_length': len(ai_analysis),
-                    'temperature': 0.5
+                    'analysis_structure': 'structured_json',
+                    'temperature': 0.3
                 }
             })
 
         except Exception as e:
-            print(f"[WORKLIFE_EXPECTANCY_AGENT] LLM error: {e}")
-            ai_analysis = f"Statistical analysis based on Skoog Tables shows {worklife_years:.2f} expected remaining worklife years for a {victim_sex} aged {victim_age} with {education} education."
+            print(f"[WORKLIFE_EXPECTANCY_AGENT] LLM error: {e}, using fallback")
+            # Structured fallback instead of freeform text
+            ai_analysis = {
+                "key_findings": [
+                    f"Skoog Tables project {worklife_years:.2f} years of remaining worklife",
+                    f"Education level ({education}) factored into projection"
+                ],
+                "risk_factors": [
+                    "Labor market conditions may vary from 2012-2017 baseline"
+                ],
+                "assumptions": [
+                    "Victim continues in labor force per Skoog model"
+                ],
+                "confidence_level": "high",
+                "recommendation": f"Worklife expectancy of {worklife_years:.2f} years is statistically sound"
+            }
 
             provenance_log.append({
                 'step': 'ai_analysis_fallback',
-                'description': 'AI analysis failed, using statistical summary',
+                'description': 'AI analysis failed, using structured fallback',
                 'formula': None,
                 'source_url': None,
                 'source_date': datetime.utcnow().isoformat(),
-                'value': {'error': str(e)}
+                'value': {'error': str(e), 'fallback_used': True}
             })
 
         provenance_log.append({

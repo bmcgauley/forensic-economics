@@ -10,16 +10,62 @@ Single-file agent (target <=300 lines)
 
 from datetime import datetime
 from typing import Dict, Any
+from dotenv import load_dotenv
 
 from ..utils.ollama_client import get_ollama_client
+from ..utils.external_apis import CALaborMarketClient
+
+# Load environment variables from .env file
+load_dotenv()
+
+
+# Structured schema for AI analysis output
+AI_ANALYSIS_SCHEMA = {
+    "type": "object",
+    "properties": {
+        "key_findings": {
+            "type": "array",
+            "items": {"type": "string"},
+            "minItems": 2,
+            "maxItems": 3,
+            "description": "2-3 key findings about the wage growth projection"
+        },
+        "risk_factors": {
+            "type": "array",
+            "items": {"type": "string"},
+            "minItems": 1,
+            "maxItems": 2,
+            "description": "1-2 risk factors to consider"
+        },
+        "assumptions": {
+            "type": "array",
+            "items": {"type": "string"},
+            "minItems": 1,
+            "maxItems": 2,
+            "description": "1-2 key assumptions made in the projection"
+        },
+        "confidence_level": {
+            "type": "string",
+            "enum": ["high", "medium", "low"],
+            "description": "Confidence level in the projection"
+        },
+        "recommendation": {
+            "type": "string",
+            "maxLength": 300,
+            "description": "Brief recommendation for the calculation (max 300 chars)"
+        }
+    },
+    "required": ["key_findings", "risk_factors", "assumptions", "confidence_level", "recommendation"]
+}
 
 
 class WageGrowthAgent:
     """AI Agent for projecting wage growth rates with LLM reasoning."""
 
     def __init__(self):
-        """Initialize the AI agent with Ollama LLM."""
+        """Initialize the AI agent with Ollama LLM and CA Labor Market client."""
         self.llm = get_ollama_client(model="gemma3:1b")
+        self.ca_labor_client = CALaborMarketClient()
 
     def run(self, input_json: Dict[str, Any]) -> Dict[str, Any]:
         """
@@ -66,17 +112,60 @@ class WageGrowthAgent:
             }
         })
 
-        # Baseline wage growth rate (historical average ~3%)
-        base_growth_rate = 0.03
+        # Check if location is California - if so, use CA Labor Market data
+        if location and location.upper() in ['CA', 'CALIFORNIA']:
+            print(f"[WAGE_GROWTH_AGENT] Location is California, fetching CA-specific wage growth data...")
+            try:
+                ca_data = self.ca_labor_client.get_wage_growth_by_occupation(
+                    occupation=occupation,
+                    county=None,  # Statewide
+                    use_fallback_on_error=True
+                )
 
-        provenance_log.append({
-            'step': 'base_growth_rate',
-            'description': 'Historical average wage growth rate',
-            'formula': 'BLS Employment Cost Index average',
-            'source_url': 'https://www.bls.gov/ncs/ect/',
-            'source_date': '2023-01-01',
-            'value': base_growth_rate
-        })
+                base_growth_rate = ca_data['growth_rate']
+                print(f"[WAGE_GROWTH_AGENT] CA wage growth rate: {base_growth_rate*100:.2f}%")
+
+                provenance_log.append({
+                    'step': 'ca_labor_market_fetch',
+                    'description': f'Fetched California-specific wage growth for {occupation}',
+                    'formula': 'CA Labor Market Info - OES Year-over-Year Growth',
+                    'source_url': ca_data['source_url'],
+                    'source_date': ca_data['retrieved_at'],
+                    'value': {
+                        'growth_rate': base_growth_rate,
+                        'occupation': occupation,
+                        'source': ca_data['source'],
+                        'warning': ca_data.get('warning')
+                    }
+                })
+
+            except Exception as e:
+                print(f"[WAGE_GROWTH_AGENT] Error fetching CA data: {e}, using BLS baseline")
+                base_growth_rate = 0.03
+
+                provenance_log.append({
+                    'step': 'ca_labor_market_error',
+                    'description': 'Failed to fetch CA data, using BLS baseline',
+                    'formula': None,
+                    'source_url': None,
+                    'source_date': datetime.utcnow().isoformat(),
+                    'value': {
+                        'error': str(e),
+                        'fallback_rate': base_growth_rate
+                    }
+                })
+        else:
+            # Non-CA location: use national BLS baseline
+            base_growth_rate = 0.03
+
+            provenance_log.append({
+                'step': 'base_growth_rate',
+                'description': 'Historical average wage growth rate (BLS national average)',
+                'formula': 'BLS Employment Cost Index average',
+                'source_url': 'https://www.bls.gov/ncs/ect/',
+                'source_date': '2023-01-01',
+                'value': base_growth_rate
+            })
 
         # Education adjustment (higher education = higher growth potential)
         education_adjustment_map = {
@@ -100,10 +189,10 @@ class WageGrowthAgent:
             'value': adjusted_growth_rate
         })
 
-        # Use AI to analyze and provide reasoning
-        print(f"[WAGE_GROWTH_AGENT] Querying LLM for analysis...")
+        # Use AI to analyze and provide structured reasoning
+        print(f"[WAGE_GROWTH_AGENT] Querying LLM for structured analysis...")
 
-        ai_prompt = f"""You are a forensic economics AI agent analyzing wage growth projections for a wrongful death case.
+        ai_prompt = f"""Analyze wage growth projection for forensic economics case.
 
 CASE DATA:
 - Occupation: {occupation}
@@ -115,53 +204,64 @@ CASE DATA:
 - Projected Salary in 20 years: ${salary * ((1 + adjusted_growth_rate) ** 20):,.2f}
 
 CONTEXT:
-The wage growth rate is based on BLS Employment Cost Index averages (≈3% baseline) adjusted for education level. Higher education typically correlates with stronger wage growth potential.
+Wage growth rate based on BLS Employment Cost Index (~3% baseline) adjusted for education level.
 
 TASK:
-Analyze this wage growth projection for forensic economic purposes. Consider:
-1. The reasonableness of the calculated growth rate
-2. Economic factors that might affect this occupation
-3. Education level's impact on career progression
-4. Potential for wage inflation or deflation
-5. Forensic economics best practices
-
-Provide your analysis in 2-3 sentences, discussing the wage growth assumptions and any relevant considerations for the economic loss calculation.
-
-Your response should be professional and suitable for a legal/forensic report."""
+Provide structured analysis with:
+- 2-3 key findings about the wage growth projection
+- 1-2 risk factors to consider
+- 1-2 key assumptions made
+- Confidence level (high/medium/low)
+- Brief recommendation (max 300 chars) suitable for legal/forensic report"""
 
         try:
-            ai_analysis = self.llm.generate_completion(
+            ai_analysis = self.llm.generate_structured_completion(
                 prompt=ai_prompt,
-                system_prompt="You are an expert forensic economist AI agent specializing in wage growth analysis for wrongful death cases.",
-                temperature=0.5  # Lower temperature for more consistent analysis
+                system_prompt="You are a forensic economist analyzing wage growth. Respond ONLY with valid JSON.",
+                schema=AI_ANALYSIS_SCHEMA,
+                temperature=0.3  # Low temperature for consistent structured output
             )
 
-            print(f"[WAGE_GROWTH_AGENT] AI analysis complete ({len(ai_analysis)} chars)")
+            print(f"[WAGE_GROWTH_AGENT] Structured AI analysis complete")
 
             provenance_log.append({
                 'step': 'ai_analysis',
-                'description': 'AI reasoning and contextual analysis',
-                'formula': 'Ollama Gemma3 LLM Analysis',
+                'description': 'Structured AI reasoning and contextual analysis',
+                'formula': 'Ollama Gemma3 LLM Structured Analysis',
                 'source_url': None,
                 'source_date': datetime.utcnow().isoformat(),
                 'value': {
                     'ai_model': self.llm.model,
-                    'analysis_length': len(ai_analysis),
-                    'temperature': 0.5
+                    'analysis_structure': 'structured_json',
+                    'temperature': 0.3
                 }
             })
 
         except Exception as e:
-            print(f"[WAGE_GROWTH_AGENT] LLM error: {e}")
-            ai_analysis = f"Economic analysis projects {adjusted_growth_rate*100:.2f}% annual wage growth based on historical BLS data and {education} education level."
+            print(f"[WAGE_GROWTH_AGENT] LLM error: {e}, using fallback")
+            # Structured fallback instead of freeform text
+            ai_analysis = {
+                "key_findings": [
+                    f"Projected growth rate of {adjusted_growth_rate*100:.2f}% based on BLS data",
+                    f"Education level ({education}) supports growth assumptions"
+                ],
+                "risk_factors": [
+                    "Economic conditions may vary from historical averages"
+                ],
+                "assumptions": [
+                    "Historical wage growth patterns continue"
+                ],
+                "confidence_level": "medium",
+                "recommendation": f"Growth rate of {adjusted_growth_rate*100:.2f}% is reasonable based on historical data"
+            }
 
             provenance_log.append({
                 'step': 'ai_analysis_fallback',
-                'description': 'AI analysis failed, using statistical summary',
+                'description': 'AI analysis failed, using structured fallback',
                 'formula': None,
                 'source_url': None,
                 'source_date': datetime.utcnow().isoformat(),
-                'value': {'error': str(e)}
+                'value': {'error': str(e), 'fallback_used': True}
             })
 
         # Generate growth rate series for next 50 years

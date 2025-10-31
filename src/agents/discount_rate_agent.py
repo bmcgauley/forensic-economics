@@ -15,6 +15,46 @@ from .fed_rate_agent import FedRateAgent
 from ..utils.ollama_client import get_ollama_client
 
 
+# Structured schema for AI analysis output
+AI_ANALYSIS_SCHEMA = {
+    "type": "object",
+    "properties": {
+        "key_findings": {
+            "type": "array",
+            "items": {"type": "string"},
+            "minItems": 2,
+            "maxItems": 3,
+            "description": "2-3 key findings about the discount rate"
+        },
+        "risk_factors": {
+            "type": "array",
+            "items": {"type": "string"},
+            "minItems": 1,
+            "maxItems": 2,
+            "description": "1-2 risk factors to consider"
+        },
+        "assumptions": {
+            "type": "array",
+            "items": {"type": "string"},
+            "minItems": 1,
+            "maxItems": 2,
+            "description": "1-2 key assumptions made"
+        },
+        "confidence_level": {
+            "type": "string",
+            "enum": ["high", "medium", "low"],
+            "description": "Confidence level in the rate"
+        },
+        "recommendation": {
+            "type": "string",
+            "maxLength": 300,
+            "description": "Brief recommendation (max 300 chars)"
+        }
+    },
+    "required": ["key_findings", "risk_factors", "assumptions", "confidence_level", "recommendation"]
+}
+
+
 class DiscountRateAgent:
     """AI Agent for determining appropriate discount rates with LLM reasoning."""
 
@@ -99,68 +139,77 @@ class DiscountRateAgent:
         # Using 1-year Treasury as baseline
         recommended_rate = treasury_1yr_rate
 
-        # Use AI to analyze and provide reasoning
-        print(f"[DISCOUNT_RATE_AGENT] Querying LLM for analysis...")
+        # Use AI to analyze and provide structured reasoning
+        print(f"[DISCOUNT_RATE_AGENT] Querying LLM for structured analysis...")
 
-        ai_prompt = f"""You are a forensic economics AI agent analyzing discount rates for a wrongful death case.
+        ai_prompt = f"""Analyze discount rate for forensic economics case.
 
 CASE DATA:
 - Case Type: {case_type}
 - Jurisdiction: {location}
-- Present Date: {present_date}
-- Current 1-Year Treasury Rate: {treasury_1yr_rate*100:.2f}%
+- 1-Year Treasury Rate: {treasury_1yr_rate*100:.2f}%
 - Recommended Discount Rate: {recommended_rate*100:.2f}%
 - Rate Source: {fed_rate_result["outputs"]["source"]}
-- Is Fallback Rate: {is_fallback}
 
 CONTEXT:
-Forensic economics typically uses risk-free rates (Treasury bonds) as discount rates for present value calculations. Legal jurisdictions often prefer rates in the 2-4% range. The discount rate converts future earnings to present value.
+Forensic economics uses risk-free rates (Treasury bonds) for present value calculations. Legal jurisdictions often prefer 2-4% range.
 
 TASK:
-Analyze this discount rate recommendation for forensic economic purposes. Consider:
-1. The appropriateness of using the Treasury rate as a baseline
-2. Legal standards and precedents for discount rates
-3. Economic environment and interest rate context
-4. Potential adjustments for jurisdiction-specific factors
-5. Forensic economics best practices
-
-Provide your analysis in 2-3 sentences, discussing the discount rate recommendation and any relevant considerations for the present value calculation.
-
-Your response should be professional and suitable for a legal/forensic report."""
+Provide structured analysis with:
+- 2-3 key findings about the discount rate recommendation
+- 1-2 risk factors to consider
+- 1-2 key assumptions made
+- Confidence level (high/medium/low)
+- Brief recommendation (max 300 chars) suitable for legal/forensic report"""
 
         try:
-            ai_analysis = self.llm.generate_completion(
+            ai_analysis = self.llm.generate_structured_completion(
                 prompt=ai_prompt,
-                system_prompt="You are an expert forensic economist AI agent specializing in discount rate analysis for wrongful death cases.",
-                temperature=0.5  # Lower temperature for more consistent analysis
+                system_prompt="You are a forensic economist analyzing discount rates. Respond ONLY with valid JSON.",
+                schema=AI_ANALYSIS_SCHEMA,
+                temperature=0.3  # Low temperature for consistent structured output
             )
 
-            print(f"[DISCOUNT_RATE_AGENT] AI analysis complete ({len(ai_analysis)} chars)")
+            print(f"[DISCOUNT_RATE_AGENT] Structured AI analysis complete")
 
             provenance_log.append({
                 'step': 'ai_analysis',
-                'description': 'AI reasoning and contextual analysis',
-                'formula': 'Ollama Gemma3 LLM Analysis',
+                'description': 'Structured AI reasoning and contextual analysis',
+                'formula': 'Ollama Gemma3 LLM Structured Analysis',
                 'source_url': None,
                 'source_date': datetime.utcnow().isoformat(),
                 'value': {
                     'ai_model': self.llm.model,
-                    'analysis_length': len(ai_analysis),
-                    'temperature': 0.5
+                    'analysis_structure': 'structured_json',
+                    'temperature': 0.3
                 }
             })
 
         except Exception as e:
-            print(f"[DISCOUNT_RATE_AGENT] LLM error: {e}")
-            ai_analysis = f"Economic analysis recommends {recommended_rate*100:.2f}% discount rate based on current 1-Year Treasury rate from Federal Reserve."
+            print(f"[DISCOUNT_RATE_AGENT] LLM error: {e}, using fallback")
+            # Structured fallback instead of freeform text
+            ai_analysis = {
+                "key_findings": [
+                    f"Treasury rate of {treasury_1yr_rate*100:.2f}% provides risk-free baseline",
+                    "Rate aligns with forensic economics best practices"
+                ],
+                "risk_factors": [
+                    "Interest rate environment may change"
+                ],
+                "assumptions": [
+                    "Risk-free rate appropriate for economic loss calculation"
+                ],
+                "confidence_level": "high",
+                "recommendation": f"Discount rate of {recommended_rate*100:.2f}% is appropriate for this calculation"
+            }
 
             provenance_log.append({
                 'step': 'ai_analysis_fallback',
-                'description': 'AI analysis failed, using statistical summary',
+                'description': 'AI analysis failed, using structured fallback',
                 'formula': None,
                 'source_url': None,
                 'source_date': datetime.utcnow().isoformat(),
-                'value': {'error': str(e)}
+                'value': {'error': str(e), 'fallback_used': True}
             })
 
         provenance_log.append({

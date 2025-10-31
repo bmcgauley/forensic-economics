@@ -10,9 +10,13 @@ economic analysis. Each agent must:
 """
 
 __all__ = [
+    'PersonInvestigationAgent',
     'LifeExpectancyAgent',
     'WorklifeExpectancyAgent',
     'WageGrowthAgent',
     'DiscountRateAgent',
     'PresentValueAgent',
+    'FedRateAgent',
+    'SkoogTableAgent',
+    'SupervisorAgent',
 ]

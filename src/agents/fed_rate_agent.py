@@ -11,8 +11,12 @@ Single-file agent (target <=300 lines)
 from datetime import datetime
 from typing import Dict, Any
 import os
+from dotenv import load_dotenv
 
 from ..utils.external_apis import FedClient
+
+# Load environment variables from .env file
+load_dotenv()
 
 
 class FedRateAgent:
