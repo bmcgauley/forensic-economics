@@ -1,0 +1,554 @@
+[
+  {
+    "id": "T001",
+    "completed": true,
+    "priority": null,
+    "user_story": null,
+    "description": "Create project structure per implementation plan: create `src/`, `src/agents/`, `src/models/`, `src/api/`, `src/jobs/`, `src/utils/`, `src/xlsx/`, `static/`, `tests/`, `licenses/`, `docs/` (path: repository root)",
+    "milestone": 1
+  },
+  {
+    "id": "T002",
+    "completed": true,
+    "priority": null,
+    "user_story": null,
+    "description": "Initialize Python virtual environment and `requirements.txt` (path: repository root) \u2014 include `flask`, `openpyxl`, `requests`, `pytest`",
+    "milestone": 1
+  },
+  {
+    "id": "T003",
+    "completed": true,
+    "priority": null,
+    "user_story": null,
+    "description": "Add `.gitignore` and `README.md` with project overview (paths: `.gitignore`, `README.md`)",
+    "milestone": 1
+  },
+  {
+    "id": "T004",
+    "completed": true,
+    "priority": null,
+    "user_story": null,
+    "description": "Create minimal Flask app scaffold `src/api/app.py` implementing app factory and basic routing",
+    "milestone": 1
+  },
+  {
+    "id": "T005",
+    "completed": true,
+    "priority": null,
+    "user_story": null,
+    "description": "Add single-page dashboard scaffold `static/index.html`, `static/css/styles.css`, `static/js/app.js`",
+    "milestone": 1
+  },
+  {
+    "id": "T006",
+    "completed": true,
+    "priority": null,
+    "user_story": null,
+    "description": "Create agent stubs directory and placeholder files: `src/agents/__init__.py`, `src/agents/life_expectancy_agent.py`, `src/agents/worklife_expectancy_agent.py`, `src/agents/wage_growth_agent.py`, `src/agents/discount_rate_agent.py`, `src/agents/present_value_agent.py` (each must implement `run(input_json: dict) -> dict` contract)",
+    "milestone": 2
+  },
+  {
+    "id": "T007",
+    "completed": true,
+    "priority": null,
+    "user_story": null,
+    "description": "Implement aggregator stub `src/aggregator.py` that accepts AgentResult objects and produces `FinalWorkbook` JSON",
+    "milestone": 2
+  },
+  {
+    "id": "T008",
+    "completed": true,
+    "priority": null,
+    "user_story": null,
+    "description": "Implement XLSX generator stub `src/xlsx/xlsx_generator.py` that consumes `FinalWorkbook` and writes an XLSX to a temp path using `openpyxl`",
+    "milestone": 2
+  },
+  {
+    "id": "T009",
+    "completed": true,
+    "priority": null,
+    "user_story": null,
+    "description": "Add temporary storage utility `src/utils/temp_storage.py` for job temp directories and cleanup policy",
+    "milestone": 2
+  },
+  {
+    "id": "T010",
+    "completed": true,
+    "priority": null,
+    "user_story": null,
+    "description": "Implement HTTP API wrappers `src/utils/external_apis.py` with timeouts and retries for BLS/SSA/Fed calls",
+    "milestone": 2
+  },
+  {
+    "id": "T011",
+    "completed": true,
+    "priority": null,
+    "user_story": null,
+    "description": "Implement provenance helper `src/utils/provenance.py` to normalize provenance_log entries and serialize to JSON",
+    "milestone": 2
+  },
+  {
+    "id": "T012",
+    "completed": true,
+    "priority": null,
+    "user_story": null,
+    "description": "Add `licenses/` folder and include license text files for `openpyxl` and `requests` (paths: `licenses/openpyxl_LICENSE.txt`, `licenses/requests_LICENSE.txt`)",
+    "milestone": 2
+  },
+  {
+    "id": "T013",
+    "completed": true,
+    "priority": null,
+    "user_story": null,
+    "description": "Configure testing harness: `pytest.ini`, `tests/__init__.py`, and CI-friendly test layout",
+    "milestone": 2
+  },
+  {
+    "id": "T014",
+    "completed": true,
+    "priority": null,
+    "user_story": "US1",
+    "description": "Create Intake model `src/models/intake.py` with validation rules per `data-model.md`",
+    "milestone": 3
+  },
+  {
+    "id": "T015",
+    "completed": true,
+    "priority": null,
+    "user_story": "US1",
+    "description": "Implement POST endpoint `src/api/generate.py` that accepts Intake JSON and returns `{ job_id, status_url }`",
+    "milestone": 3
+  },
+  {
+    "id": "T016",
+    "completed": true,
+    "priority": null,
+    "user_story": "US1",
+    "description": "Implement in-memory job manager `src/jobs/manager.py` to queue jobs, track status, and manage temp job folders",
+    "milestone": 3
+  },
+  {
+    "id": "T017",
+    "completed": true,
+    "priority": "P",
+    "user_story": null,
+    "description": "[US1] Implement `src/agents/life_expectancy_agent.py` (single-file, <=300 lines) \u2014 produce `expected_remaining_years_by_age` and provenance_log",
+    "milestone": 3
+  },
+  {
+    "id": "T018",
+    "completed": true,
+    "priority": "P",
+    "user_story": null,
+    "description": "[US1] Implement `src/agents/worklife_expectancy_agent.py` (single-file, <=300 lines) \u2014 produce `worklife_years` and provenance_log",
+    "milestone": 3
+  },
+  {
+    "id": "T019",
+    "completed": true,
+    "priority": "P",
+    "user_story": null,
+    "description": "[US1] Implement `src/agents/wage_growth_agent.py` (single-file, <=300 lines) \u2014 produce `growth_rate_series` and provenance_log",
+    "milestone": 3
+  },
+  {
+    "id": "T020",
+    "completed": true,
+    "priority": "P",
+    "user_story": null,
+    "description": "[US1] Implement `src/agents/discount_rate_agent.py` (single-file, <=300 lines) \u2014 produce `recommended_discount_curve` and provenance_log",
+    "milestone": 3
+  },
+  {
+    "id": "T021",
+    "completed": true,
+    "priority": "P",
+    "user_story": null,
+    "description": "[US1] Implement `src/agents/present_value_agent.py` (single-file, <=300 lines) \u2014 compute `yearly_cashflows` and `pv_table` and provide provenance_log",
+    "milestone": 3
+  },
+  {
+    "id": "T022",
+    "completed": true,
+    "priority": null,
+    "user_story": "US1",
+    "description": "Implement `src/aggregator.py` to assemble AgentResults into `FinalWorkbook` JSON (path: `src/aggregator.py`)",
+    "milestone": 3
+  },
+  {
+    "id": "T023",
+    "completed": true,
+    "priority": null,
+    "user_story": "US1",
+    "description": "Implement `src/xlsx/xlsx_generator.py` to generate the XLSX workbook and include validation against the canonical template (path: `src/xlsx/xlsx_generator.py`)",
+    "milestone": 3
+  },
+  {
+    "id": "T024",
+    "completed": true,
+    "priority": null,
+    "user_story": "US1",
+    "description": "Add integration test `tests/integration/test_generate_xlsx.py` that runs through `POST /api/generate` \u2192 status \u2192 download and validates workbook sheets and key labels",
+    "milestone": 3
+  },
+  {
+    "id": "T025",
+    "completed": true,
+    "priority": null,
+    "user_story": "US1",
+    "description": "Add sample input file `specs/1-wrongful-death-econ/samples/sample_intake.json` for integration tests",
+    "milestone": 3
+  },
+  {
+    "id": "T039",
+    "completed": true,
+    "priority": "P0",
+    "user_story": null,
+    "description": "Update `static/index.html` dashboard form to match assignment requirements:",
+    "milestone": 4
+  },
+  {
+    "id": "T040",
+    "completed": true,
+    "priority": "P0",
+    "user_story": null,
+    "description": "Update `src/models/intake.py` validation to match new field requirements:",
+    "milestone": 4
+  },
+  {
+    "id": "T041",
+    "completed": true,
+    "priority": "P0",
+    "user_story": null,
+    "description": "Add California counties data file `data/california_counties.json` with all 58 county names",
+    "milestone": 4
+  },
+  {
+    "id": "T042",
+    "completed": true,
+    "priority": "P0",
+    "user_story": null,
+    "description": "Add SOC occupation codes data file `data/soc_occupations.json` with standard occupation codes and titles",
+    "milestone": 4
+  },
+  {
+    "id": "T043",
+    "completed": true,
+    "priority": "P0",
+    "user_story": null,
+    "description": "Update `static/js/app.js` to handle:",
+    "milestone": 4
+  },
+  {
+    "id": "T044",
+    "completed": true,
+    "priority": "P0",
+    "user_story": null,
+    "description": "Update `static/css/styles.css` to match assignment UI styling (green header, clean form layout)",
+    "milestone": 4
+  },
+  {
+    "id": "T045",
+    "completed": true,
+    "priority": "P0",
+    "user_story": null,
+    "description": "Download/obtain Skoog Tables data from \"Markov Model of Labor Force Activity 2012-17\" (Journal of Forensic Economics 28(1-2), 2019):",
+    "milestone": 5
+  },
+  {
+    "id": "T046",
+    "completed": true,
+    "priority": "P0",
+    "user_story": null,
+    "description": "Download/obtain CDC Life Tables from National Vital Statistics Reports:",
+    "milestone": 5
+  },
+  {
+    "id": "T047",
+    "completed": true,
+    "priority": "P0",
+    "user_story": null,
+    "description": "Create data loading utility `src/utils/data_loader.py`:",
+    "milestone": 5
+  },
+  {
+    "id": "T048",
+    "completed": true,
+    "priority": "P0",
+    "user_story": null,
+    "description": "Add data source documentation `data/README.md`:",
+    "milestone": 5
+  },
+  {
+    "id": "T049",
+    "completed": true,
+    "priority": "P0",
+    "user_story": null,
+    "description": "Implement Federal Reserve H.15 live data fetching in `src/utils/external_apis.py`:",
+    "milestone": 6
+  },
+  {
+    "id": "T050",
+    "completed": true,
+    "priority": "P0",
+    "user_story": null,
+    "description": "Add California Labor Market Info client to `src/utils/external_apis.py`:",
+    "milestone": 6
+  },
+  {
+    "id": "T051",
+    "completed": true,
+    "priority": "P0",
+    "user_story": null,
+    "description": "Add API integration tests `tests/integration/test_live_apis.py`:",
+    "milestone": 6
+  },
+  {
+    "id": "T052",
+    "completed": true,
+    "priority": "P0",
+    "user_story": null,
+    "description": "Update `.env.example` with API configuration:",
+    "milestone": 6
+  },
+  {
+    "id": "T053",
+    "completed": true,
+    "priority": "P0",
+    "user_story": null,
+    "description": "Implement Federal Reserve Rate Agent `src/agents/fed_rate_agent.py`:",
+    "milestone": 7
+  },
+  {
+    "id": "T054",
+    "completed": true,
+    "priority": "P0",
+    "user_story": null,
+    "description": "Implement Skoog Table Agent `src/agents/skoog_table_agent.py`:",
+    "milestone": 7
+  },
+  {
+    "id": "T055",
+    "completed": true,
+    "priority": "P0",
+    "user_story": null,
+    "description": "Update `src/agents/discount_rate_agent.py` to call Federal Reserve Rate Agent:",
+    "milestone": 7
+  },
+  {
+    "id": "T056",
+    "completed": true,
+    "priority": "P0",
+    "user_story": null,
+    "description": "Update `src/agents/worklife_expectancy_agent.py` to call Skoog Table Agent:",
+    "milestone": 7
+  },
+  {
+    "id": "T057",
+    "completed": true,
+    "priority": "P1",
+    "user_story": null,
+    "description": "Implement Supervisor Agent `src/agents/supervisor_agent.py`:",
+    "milestone": 8
+  },
+  {
+    "id": "T058",
+    "completed": true,
+    "priority": "P1",
+    "user_story": null,
+    "description": "Update `src/jobs/manager.py` to use Supervisor Agent:",
+    "milestone": 8
+  },
+  {
+    "id": "T059",
+    "completed": true,
+    "priority": "P1",
+    "user_story": null,
+    "description": "Add real-time progress tracking in Supervisor Agent:",
+    "milestone": 8
+  },
+  {
+    "id": "T060",
+    "completed": false,
+    "priority": "P1",
+    "user_story": null,
+    "description": "Add Supervisor Agent tests `tests/unit/test_supervisor_agent.py`: \u23f3 TODO",
+    "milestone": 8
+  },
+  {
+    "id": "T061",
+    "completed": true,
+    "priority": "P1",
+    "user_story": null,
+    "description": "Update API endpoint `src/api/status.py` to return detailed agent progress:",
+    "milestone": 9
+  },
+  {
+    "id": "T062",
+    "completed": true,
+    "priority": "P1",
+    "user_story": null,
+    "description": "Update `static/index.html` with new progress dashboard UI:",
+    "milestone": 9
+  },
+  {
+    "id": "T063",
+    "completed": true,
+    "priority": "P1",
+    "user_story": null,
+    "description": "Update `static/js/app.js` for 3-second polling with detailed updates:",
+    "milestone": 9
+  },
+  {
+    "id": "T064",
+    "completed": true,
+    "priority": "P1",
+    "user_story": null,
+    "description": "Update `static/css/styles.css` for progress dashboard styling:",
+    "milestone": 9
+  },
+  {
+    "id": "T065",
+    "completed": false,
+    "priority": "P1",
+    "user_story": null,
+    "description": "Add progress dashboard integration test `tests/integration/test_progress_dashboard.py`: \u23f3 TODO",
+    "milestone": 9
+  },
+  {
+    "id": "T066",
+    "completed": false,
+    "priority": "P1",
+    "user_story": null,
+    "description": "Update `src/xlsx/xlsx_generator.py` to match assignment template:",
+    "milestone": 10
+  },
+  {
+    "id": "T067",
+    "completed": false,
+    "priority": "P1",
+    "user_story": null,
+    "description": "Add Excel template validation utility `src/xlsx/template_validator.py`:",
+    "milestone": 10
+  },
+  {
+    "id": "T068",
+    "completed": false,
+    "priority": "P1",
+    "user_story": null,
+    "description": "Create reference template Excel file `docs/examples/assignment_template.xlsx`:",
+    "milestone": 10
+  },
+  {
+    "id": "T069",
+    "completed": false,
+    "priority": "P1",
+    "user_story": null,
+    "description": "Add Excel output verification test `tests/integration/test_excel_output_format.py`:",
+    "milestone": 10
+  },
+  {
+    "id": "T026",
+    "completed": false,
+    "priority": null,
+    "user_story": "US2",
+    "description": "Implement standardized `provenance_log` capture across agents in `src/utils/provenance.py` and refactor agents to use it",
+    "milestone": 11
+  },
+  {
+    "id": "T027",
+    "completed": false,
+    "priority": null,
+    "user_story": "US2",
+    "description": "Populate `Data Sources` worksheet from `FinalWorkbook.data_sources` inside `src/xlsx/xlsx_generator.py`",
+    "milestone": 11
+  },
+  {
+    "id": "T028",
+    "completed": false,
+    "priority": null,
+    "user_story": "US2",
+    "description": "Create reviewer checklist and sample verified workbook `docs/examples/verified_sample_workbook.xlsx` and `docs/reviewer_checklist.md`",
+    "milestone": 11
+  },
+  {
+    "id": "T029",
+    "completed": false,
+    "priority": null,
+    "user_story": "US2",
+    "description": "Add integration test `tests/integration/test_provenance_sheet.py` verifying provenance entries map to final totals",
+    "milestone": 11
+  },
+  {
+    "id": "T030",
+    "completed": false,
+    "priority": null,
+    "user_story": "US3",
+    "description": "Implement parameter override endpoint `src/api/override.py` or extend `POST /api/generate` to accept overrides and reference previous jobs",
+    "milestone": 12
+  },
+  {
+    "id": "T031",
+    "completed": false,
+    "priority": null,
+    "user_story": "US3",
+    "description": "Implement workbook versioning metadata in `src/jobs/manager.py` and in `FinalWorkbook.version_metadata`",
+    "milestone": 12
+  },
+  {
+    "id": "T032",
+    "completed": false,
+    "priority": null,
+    "user_story": "US3",
+    "description": "Add frontend override UI `static/js/overrides.js` and UI controls in `static/index.html`",
+    "milestone": 12
+  },
+  {
+    "id": "T033",
+    "completed": false,
+    "priority": null,
+    "user_story": "US3",
+    "description": "Add integration test `tests/integration/test_override_scenario.py` that runs an initial job, then an override job, and validates versioning and provenance",
+    "milestone": 12
+  },
+  {
+    "id": "T034",
+    "completed": false,
+    "priority": null,
+    "user_story": null,
+    "description": "Configure formatting and linting: add `pyproject.toml` or `setup.cfg` with Black and Flake8 settings (path: repository root)",
+    "milestone": 13
+  },
+  {
+    "id": "T035",
+    "completed": false,
+    "priority": null,
+    "user_story": null,
+    "description": "Add dependency license & security review task: include `licenses/` entries and `docs/dependency_justification.md`",
+    "milestone": 13
+  },
+  {
+    "id": "T036",
+    "completed": false,
+    "priority": null,
+    "user_story": null,
+    "description": "Add CI workflow `/.github/workflows/ci.yml` to run tests and style checks",
+    "milestone": 13
+  },
+  {
+    "id": "T037",
+    "completed": false,
+    "priority": null,
+    "user_story": null,
+    "description": "Write developer docs `docs/developer.md` and update `specs/1-wrongful-death-econ/quickstart.md` with any changes",
+    "milestone": 13
+  },
+  {
+    "id": "T038",
+    "completed": false,
+    "priority": null,
+    "user_story": null,
+    "description": "Run constitution compliance audit: verify each agent file is single-file and <=300 lines and that provenance is produced (task owner: reviewer) \u2014 report path: `specs/1-wrongful-death-econ/constituion-audit.md`",
+    "milestone": 13
+  }
+]
